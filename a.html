@@ -4,67 +4,122 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1">
 
 <title>Jornada Empreendedora AR</title>
 
 
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
 
 <style>
 
+
 html,body{
 
 margin:0;
 padding:0;
+
 width:100%;
 height:100%;
+
 overflow:hidden;
-background:black;
+
 font-family:Arial;
+
+background:transparent;
 
 }
 
 
-/* INTRO */
+/* =====================
+   CORREÇÃO CAMERA IOS
+===================== */
+
+
+canvas,
+.a-canvas,
+a-scene{
+
+background:transparent!important;
+
+}
+
+
+video{
+
+object-fit:cover;
+
+z-index:0!important;
+
+}
+
+
+
+canvas{
+
+z-index:1!important;
+
+}
+
+
+
+/* =====================
+   INTRO
+===================== */
 
 
 #intro{
 
 position:fixed;
+
 inset:0;
-background:#000;
+
+background:black;
+
 z-index:99999;
 
 }
 
 
+
 #introVideo{
 
 width:100%;
+
 height:100%;
+
 object-fit:cover;
 
 }
 
 
+
+
 #btnStart{
 
 position:absolute;
+
 bottom:60px;
+
 left:50%;
+
 transform:translateX(-50%);
 
 padding:20px 45px;
 
 border:none;
+
 border-radius:50px;
 
 background:#ffcc00;
 
 font-size:22px;
+
 font-weight:bold;
 
 box-shadow:0 0 30px #ffaa00;
@@ -73,7 +128,11 @@ box-shadow:0 0 30px #ffaa00;
 
 
 
-/* HUD */
+
+
+/* =====================
+   HUD
+===================== */
 
 
 #hud{
@@ -83,16 +142,17 @@ display:none;
 }
 
 
+
+
 #topo{
 
 position:fixed;
 
-top:20px;
+top:25px;
+
 left:50%;
 
 transform:translateX(-50%);
-
-z-index:50;
 
 background:#000000aa;
 
@@ -104,7 +164,10 @@ border-radius:40px;
 
 font-size:18px;
 
+z-index:9999;
+
 }
+
 
 
 
@@ -113,25 +176,27 @@ font-size:18px;
 position:fixed;
 
 right:20px;
-top:90px;
 
-z-index:50;
+top:90px;
 
 background:#000000aa;
 
-color:white;
+border:3px solid #ffd000;
 
-border:2px solid #ffd000;
+color:white;
 
 padding:15px;
 
-border-radius:25px;
+border-radius:30px;
 
 font-size:32px;
 
 text-align:center;
 
+z-index:9999;
+
 }
+
 
 
 
@@ -160,9 +225,10 @@ text-align:center;
 
 display:none;
 
-z-index:100;
+z-index:9999;
 
 }
+
 
 
 #iconeCard{
@@ -172,15 +238,14 @@ font-size:80px;
 }
 
 
+
 #capturar{
 
-margin-top:15px;
-
-padding:18px 40px;
+padding:18px 45px;
 
 border:none;
 
-border-radius:40px;
+border-radius:50px;
 
 background:#00ff99;
 
@@ -191,19 +256,25 @@ font-weight:bold;
 }
 
 
+
 </style>
 
 
 </head>
 
 
+
 <body>
+
+
+
 
 
 <!-- INTRO -->
 
 
 <div id="intro">
+
 
 <video
 
@@ -215,7 +286,10 @@ playsinline
 
 webkit-playsinline>
 
+
 </video>
+
+
 
 
 <button id="btnStart">
@@ -226,6 +300,8 @@ webkit-playsinline>
 
 
 </div>
+
+
 
 
 
@@ -243,6 +319,8 @@ webkit-playsinline>
 🚀 Jornada 0/5
 
 </div>
+
+
 
 
 
@@ -266,6 +344,7 @@ webkit-playsinline>
 
 
 
+
 <div id="card">
 
 
@@ -285,7 +364,9 @@ PEGAR SKILL ⭐
 </div>
 
 
+
 </div>
+
 
 
 
@@ -299,30 +380,58 @@ PEGAR SKILL ⭐
 
 <a-scene
 
+
 id="scene"
 
 
+embedded
+
+
 mindar-image="
+
 imageTargetSrc: ./targets.mind;
+
 filterMinCF:0.01;
+
 filterBeta:10;
+
 warmupTolerance:5;
+
 missTolerance:5;
+
 "
+
 
 
 renderer="
+
+alpha:true;
+
 antialias:false;
+
 precision:mediump;
+
 colorManagement:true;
+
 "
+
+
+
+background="transparent"
+
 
 
 vr-mode-ui="enabled:false"
 
+
+
 device-orientation-permission-ui="enabled:false"
 
+
 >
+
+
+
 
 
 
@@ -332,6 +441,7 @@ position="0 0 0"
 
 look-controls="enabled:false">
 
+
 </a-camera>
 
 
@@ -339,7 +449,8 @@ look-controls="enabled:false">
 
 
 
-<!-- BÚSSOLA -->
+
+<!-- ESTRATEGIA -->
 
 
 <a-entity id="item0" mindar-image-target="targetIndex:0">
@@ -351,14 +462,14 @@ color="#FFD700"
 
 radius=".45"
 
-opacity=".6"
+opacity=".5"
 
 animation="
 property:scale;
 dir:alternate;
 loop:true;
-to:1.3 1.3 1.3;
-dur:700">
+to:1.4 1.4 1.4;
+dur:800">
 
 </a-circle>
 
@@ -400,7 +511,6 @@ scale=".4 .4 .4">
 
 
 
-
 <!-- FINANCEIRO -->
 
 
@@ -408,31 +518,31 @@ scale=".4 .4 .4">
 
 
 <a-circle color="#00ff99"
+
 radius=".45"
-opacity=".6"
-animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
+
+opacity=".5">
 
 </a-circle>
 
 
-<a-text value="💎"
+<a-text
+
+value="💎"
+
 align="center"
+
 position="0 0 .05"
+
 scale="2 2 2">
 
-</a-text>
-
-
-<a-text value="FINANCAS"
-align="center"
-position="0 -.6 0"
-color="white"
-scale=".4 .4 .4">
 
 </a-text>
+
 
 
 </a-entity>
+
 
 
 
@@ -447,27 +557,24 @@ scale=".4 .4 .4">
 
 
 <a-circle color="#ff6600"
+
 radius=".45"
-opacity=".6"
-animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
+
+opacity=".5">
 
 </a-circle>
 
 
 
-<a-text value="🚀"
+<a-text
+
+value="🚀"
+
 align="center"
+
 position="0 0 .05"
+
 scale="2 2 2">
-
-</a-text>
-
-
-<a-text value="VENDAS"
-align="center"
-position="0 -.6 0"
-color="white"
-scale=".4 .4 .4">
 
 </a-text>
 
@@ -481,34 +588,31 @@ scale=".4 .4 .4">
 
 
 
-<!-- INOVAÇÃO -->
+<!-- INOVACAO -->
 
 
 <a-entity id="item3" mindar-image-target="targetIndex:3">
 
 
 <a-circle color="#ffff00"
+
 radius=".45"
-opacity=".6"
-animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
+
+opacity=".5">
 
 </a-circle>
 
 
 
-<a-text value="💡"
+<a-text
+
+value="💡"
+
 align="center"
+
 position="0 0 .05"
+
 scale="2 2 2">
-
-</a-text>
-
-
-<a-text value="INOVACAO"
-align="center"
-position="0 -.6 0"
-color="white"
-scale=".4 .4 .4">
 
 </a-text>
 
@@ -522,34 +626,32 @@ scale=".4 .4 .4">
 
 
 
-<!-- LIDERANÇA -->
+
+<!-- LIDERANCA -->
 
 
 <a-entity id="item4" mindar-image-target="targetIndex:4">
 
 
 <a-circle color="#cc00ff"
+
 radius=".45"
-opacity=".6"
-animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
+
+opacity=".5">
 
 </a-circle>
 
 
 
-<a-text value="👑"
+<a-text
+
+value="👑"
+
 align="center"
+
 position="0 0 .05"
+
 scale="2 2 2">
-
-</a-text>
-
-
-<a-text value="LIDERANCA"
-align="center"
-position="0 -.6 0"
-color="white"
-scale=".4 .4 .4">
 
 </a-text>
 
@@ -571,6 +673,7 @@ scale=".4 .4 .4">
 <script>
 
 
+
 const itens=[
 
 ["Bússola da Estratégia","🧭"],
@@ -584,6 +687,7 @@ const itens=[
 ["Coroa da Liderança","👑"]
 
 ];
+
 
 
 let encontrado=null;
@@ -623,16 +727,21 @@ hud.style.display="block";
 
 
 
+
+
 for(let i=0;i<5;i++){
 
 
-document.querySelector("#item"+i)
+document
+
+.querySelector("#item"+i)
 
 .addEventListener(
 
 "targetFound",
 
 ()=>{
+
 
 
 if(capturados.includes(i))
@@ -645,7 +754,9 @@ encontrado=i;
 
 
 
+
 iconeCard.innerHTML=itens[i][1];
+
 
 
 nomeCard.innerHTML=
@@ -666,11 +777,14 @@ navigator.vibrate(300);
 
 
 
-});
+}
 
+);
 
 
 }
+
+
 
 
 
@@ -695,6 +809,7 @@ capturados.push(encontrado);
 card.style.display="none";
 
 
+
 atualizar();
 
 
@@ -711,15 +826,18 @@ if(capturados.length===5){
 setTimeout(()=>{
 
 
+
 card.style.display="block";
 
 
 iconeCard.innerHTML="🏆";
 
 
+
 nomeCard.innerHTML=
 
-"Parabéns!<br>Você completou sua Jornada Empreendedora 🚀";
+"Parabéns!<br>Você completou a Jornada Empreendedora 🚀";
+
 
 
 capturar.style.display="none";
@@ -729,10 +847,13 @@ capturar.style.display="none";
 },1000);
 
 
+
 }
 
 
+
 };
+
 
 
 
@@ -773,17 +894,22 @@ slots.innerHTML=html;
 
 
 
+
 topo.innerHTML=
 
 "🚀 Jornada "+capturados.length+"/5";
 
 
+
 }
+
 
 
 </script>
 
 
+
 </body>
+
 
 </html>
