@@ -4,18 +4,14 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>
-Jornada Empreendedora AR
-</title>
+<title>Jornada Empreendedora AR</title>
 
 
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
 
 
 <style>
@@ -36,6 +32,9 @@ font-family:Arial;
 background:#000;
 
 }
+
+
+/* câmera fullscreen */
 
 
 video,
@@ -65,7 +64,7 @@ position:fixed;
 
 inset:0;
 
-background:black;
+background:#000;
 
 z-index:50000;
 
@@ -81,13 +80,11 @@ justify-content:center;
 
 #videoIntro{
 
-
 width:100%;
 
 height:100%;
 
 object-fit:cover;
-
 
 }
 
@@ -95,43 +92,34 @@ object-fit:cover;
 
 #btnComecar{
 
-
 position:absolute;
 
 bottom:60px;
 
-
 padding:20px 45px;
 
+border:0;
 
 border-radius:50px;
 
-
-border:none;
-
-
 font-size:22px;
-
 
 font-weight:bold;
 
-
 background:#ffcc00;
 
+color:#000;
 
-z-index:2;
-
+box-shadow:0 0 30px #000;
 
 }
 
 
 
-
-/* HUD */
+/* PROGRESSO */
 
 
 #progresso{
-
 
 position:fixed;
 
@@ -139,113 +127,82 @@ top:20px;
 
 left:20px;
 
-
-background:
-
-rgba(0,0,0,.6);
-
+background:rgba(0,0,0,.7);
 
 color:white;
 
-
-padding:15px 25px;
-
+padding:14px 25px;
 
 border-radius:30px;
 
-
 font-size:18px;
 
-
 z-index:9999;
-
 
 }
 
 
 
+/* INVENTÁRIO */
 
 
 #inventario{
 
-
 position:fixed;
-
 
 right:20px;
 
-
 top:20px;
 
-
-background:
-
-rgba(0,0,0,.6);
-
-
+background:rgba(0,0,0,.7);
 
 color:white;
 
-
 padding:15px;
-
 
 border-radius:25px;
 
-
-font-size:28px;
-
+font-size:30px;
 
 text-align:center;
 
-
 z-index:9999;
 
-
 }
-
 
 
 #tituloInv{
 
-
 font-size:12px;
+
+margin-bottom:8px;
 
 }
 
 
 
+/* BORDA AO ENCONTRAR */
 
 
 #scanner{
-
 
 position:fixed;
 
 inset:0;
 
-
 border:8px solid #00ff88;
-
 
 display:none;
 
-
 box-sizing:border-box;
-
 
 animation:pulse 1s infinite;
 
+pointer-events:none;
 
 z-index:9000;
 
-
-pointer-events:none;
-
-
 }
-
-
 
 
 @keyframes pulse{
@@ -260,99 +217,43 @@ pointer-events:none;
 
 
 
+/* ALERTA */
+
 
 #alerta{
 
-
 position:fixed;
-
 
 bottom:40px;
 
-
 left:50%;
-
 
 transform:translateX(-50%);
 
-
 width:85%;
 
-
-background:
-
-rgba(0,0,0,.8);
-
+background:rgba(0,0,0,.85);
 
 color:white;
 
-
 padding:25px;
-
 
 border-radius:30px;
 
-
 font-size:22px;
-
 
 text-align:center;
 
-
 display:none;
-
 
 z-index:10000;
 
-
 }
-
-
-
-
-
-/* VIDEOS */
-
-
-#videoBox{
-
-
-position:fixed;
-
-
-inset:0;
-
-
-background:black;
-
-
-display:none;
-
-
-z-index:30000;
-
-
-}
-
-
-
-#videoSkill{
-
-
-width:100%;
-
-height:100%;
-
-
-object-fit:contain;
-
-
-}
-
 
 
 
 </style>
+
 
 </head>
 
@@ -363,8 +264,7 @@ object-fit:contain;
 
 
 
-
-<!-- INTRO -->
+<!-- VIDEO INICIAL -->
 
 
 <div id="intro">
@@ -380,12 +280,13 @@ autoplay
 
 muted
 
+loop
+
 playsinline
 
 webkit-playsinline>
 
 </video>
-
 
 
 
@@ -402,11 +303,7 @@ webkit-playsinline>
 
 
 
-
-
-
 <div id="scanner"></div>
-
 
 
 
@@ -420,6 +317,7 @@ webkit-playsinline>
 
 
 <div id="inventario">
+
 
 <div id="tituloInv">
 
@@ -439,12 +337,10 @@ SKILLS
 ⬜<br>
 ⬜
 
-
 </div>
 
 
 </div>
-
 
 
 
@@ -455,32 +351,10 @@ SKILLS
 
 
 
-<div id="videoBox">
-
-
-<video
-
-id="videoSkill"
-
-controls
-
-playsinline
-
-webkit-playsinline>
-
-
-</video>
-
-
-</div>
 
 
 
-
-
-
-
-
+<!-- CENA AR -->
 
 <a-scene
 
@@ -509,13 +383,11 @@ device-orientation-permission-ui="enabled:false"
 
 
 
-
 <a-camera
 
 position="0 0 0"
 
 look-controls="enabled:false">
-
 
 </a-camera>
 
@@ -567,10 +439,7 @@ look-controls="enabled:false">
 
 
 
-
 </a-scene>
-
-
 
 
 
@@ -582,46 +451,41 @@ look-controls="enabled:false">
 <script>
 
 
-
 const itens=[
 
 
 {
-nome:"Visão Estratégica",
-icone:"🧭",
-video:"videos/01-estrategia.mp4"
+nome:"Bússola da Estratégia",
+icone:"🧭"
 },
 
 
 {
-nome:"Gestão Financeira",
-icone:"💰",
-video:"videos/02-financas.mp4"
+nome:"Cristal Financeiro",
+icone:"💰"
 },
 
 
 {
-nome:"Vendas",
-icone:"🚀",
-video:"videos/03-vendas.mp4"
+nome:"Foguete das Vendas",
+icone:"🚀"
 },
 
 
 {
-nome:"Inovação",
-icone:"💡",
-video:"videos/04-inovacao.mp4"
+nome:"Lâmpada da Inovação",
+icone:"💡"
 },
 
 
 {
-nome:"Liderança",
-icone:"👑",
-video:"videos/05-lideranca.mp4"
+nome:"Coroa da Liderança",
+icone:"👑"
 }
 
 
 ];
+
 
 
 
@@ -632,7 +496,7 @@ let capturados=[];
 
 
 
-const sceneEl = 
+const sceneEl=
 
 document.querySelector("#ar");
 
@@ -640,13 +504,14 @@ document.querySelector("#ar");
 
 
 
+/* iniciar AR */
+
 
 document
 
 .querySelector("#btnComecar")
 
-.onclick = async()=>{
-
+.onclick=async()=>{
 
 
 document
@@ -657,13 +522,11 @@ document
 
 
 
-
 await sceneEl.systems[
 
 "mindar-image-system"
 
 ].start();
-
 
 
 };
@@ -673,10 +536,10 @@ await sceneEl.systems[
 
 
 
+/* encontrou objetos */
 
 
 for(let i=0;i<5;i++){
-
 
 
 let alvo=
@@ -686,18 +549,14 @@ document.querySelector("#item"+i);
 
 
 
-
 alvo.addEventListener(
 
-
 "targetFound",
-
 
 ()=>{
 
 
 encontrado=i;
-
 
 
 
@@ -714,22 +573,25 @@ mostrar(
 
 "✨ ITEM ENCONTRADO ✨<br><br>"+
 
+"<span style='font-size:70px'>"+
+
 itens[i].icone+
 
-"<br>"+
+"</span><br>"+
 
 itens[i].nome+
 
 "<br><br>👇 Toque para capturar"
 
-
 );
 
 
 
-if(navigator.vibrate)
+if(navigator.vibrate){
 
 navigator.vibrate(300);
+
+}
 
 
 
@@ -741,12 +603,9 @@ navigator.vibrate(300);
 
 
 
-
 alvo.addEventListener(
 
-
 "targetLost",
-
 
 ()=>{
 
@@ -758,7 +617,6 @@ document
 .style.display="none";
 
 
-
 }
 
 
@@ -775,21 +633,19 @@ document
 
 
 
+/* captura */
+
 
 window.addEventListener(
 
-
 "click",
 
-
 ()=>{
-
 
 
 if(encontrado===null)
 
 return;
-
 
 
 
@@ -804,15 +660,32 @@ return;
 
 
 
-capturados.push(encontrado);
+capturados.push(
 
-
-
-abrirVideo(
-
-itens[encontrado].video
+encontrado
 
 );
+
+
+
+mostrar(
+
+"🎉 PARABÉNS!<br><br>"+
+
+"Você conquistou:<br>"+
+
+"<span style='font-size:70px'>"+
+
+itens[encontrado].icone+
+
+"</span><br>"+
+
+itens[encontrado].nome+
+
+"<br><br>Adicionado ao inventário 🎒"
+
+);
+
 
 
 
@@ -820,60 +693,16 @@ atualizar();
 
 
 
+document
+
+.querySelector("#scanner")
+
+.style.display="none";
+
+
+
 encontrado=null;
 
-
-
-}
-
-
-
-);
-
-
-
-
-
-
-
-
-function abrirVideo(src){
-
-
-
-let box=
-
-document.querySelector("#videoBox");
-
-
-
-let video=
-
-document.querySelector("#videoSkill");
-
-
-
-
-video.src=src;
-
-
-box.style.display="block";
-
-
-
-video.play();
-
-
-
-
-
-video.onended=()=>{
-
-
-box.style.display="none";
-
-
-video.src="";
 
 
 
@@ -885,67 +714,32 @@ capturados.length===5
 ){
 
 
+
 setTimeout(()=>{
 
 
-abrirFinal();
+mostrar(
+
+"🏆 JORNADA COMPLETA!<br><br>"+
+
+"Você encontrou os cinco artefatos.<br><br>"+
+
+"Você desbloqueou seu potencial empreendedor 🚀"
+
+);
 
 
-},1000);
+},2000);
 
 
 }
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function abrirFinal(){
-
-
-
-let video=
-
-document.querySelector("#videoSkill");
-
-
-
-let box=
-
-document.querySelector("#videoBox");
-
-
-
-
-video.src=
-
-"videos/final.mp4";
-
-
-
-box.style.display="block";
-
-
-
-video.play();
 
 
 
 }
 
 
+);
 
 
 
@@ -964,7 +758,6 @@ let html="";
 itens.forEach(
 
 (item,i)=>{
-
 
 
 html +=
@@ -994,24 +787,17 @@ document
 
 
 
-
 document
 
 .querySelector("#progresso")
 
 .innerHTML=
 
+"🚀 Jornada "+
 
-"🚀 Jornada "
-
-+
-
-capturados.length
-
-+
+capturados.length+
 
 "/5";
-
 
 
 }
@@ -1022,33 +808,26 @@ capturados.length
 
 
 
+function mostrar(txt){
 
 
-function mostrar(texto){
-
-
-
-let a=
+let alerta=
 
 document.querySelector("#alerta");
 
 
 
-a.innerHTML=texto;
+alerta.innerHTML=txt;
 
 
-a.style.display="block";
-
+alerta.style.display="block";
 
 
 }
 
 
 
-
 </script>
-
-
 
 
 </body>
