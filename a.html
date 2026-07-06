@@ -1,77 +1,138 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Jornada Empreendedora AR</title>
+
+
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+
 <style>
 
 html,body{
+
 margin:0;
 padding:0;
+
 width:100%;
 height:100%;
+
 overflow:hidden;
-background:black;
+
 font-family:Arial;
+
 }
 
 
-/* INTRO */
+/* ==================
+TELA INICIAL
+================== */
 
 
-#intro{
+#inicio{
+
 position:fixed;
+
 inset:0;
-background:#000;
+
 z-index:99999;
+
+background:
+linear-gradient(160deg,#06142e,#102c57,#ffb703);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+text-align:center;
+
+color:white;
+
+padding:30px;
+
 }
 
 
-#introVideo{
+#inicio h1{
 
-width:100%;
-height:100%;
-object-fit:cover;
+font-size:34px;
 
 }
 
 
-#btnStart{
-position:absolute;
-bottom:60px;
-left:50%;
-transform:translateX(-50%);
-padding:20px 45px;
+#inicio p{
+
+font-size:20px;
+
+line-height:1.4;
+
+}
+
+
+#start{
+
+margin-top:30px;
+
+padding:20px 50px;
+
 border:none;
+
 border-radius:50px;
-background:#ffcc00;
+
+background:#00ff99;
+
 font-size:22px;
+
 font-weight:bold;
-box-shadow:0 0 30px #ffaa00;
+
+box-shadow:0 0 30px #00ff99;
+
 }
+
 
 
 
 /* HUD */
+
+
 #hud{
+
 display:none;
+
 }
 
 
-#topo{
+#missao{
+
 position:fixed;
+
 top:20px;
+
 left:50%;
+
 transform:translateX(-50%);
-z-index:50;
-background:#000000aa;
+
+background:#000000bb;
+
 color:white;
+
 padding:15px 30px;
 
 border-radius:40px;
+
+z-index:999;
 
 font-size:18px;
 
@@ -79,20 +140,21 @@ font-size:18px;
 
 
 
+
+
 #inventario{
 
 position:fixed;
 
-right:20px;
-top:90px;
+right:15px;
 
-z-index:50;
+top:90px;
 
 background:#000000aa;
 
-color:white;
+border:3px solid #ffd000;
 
-border:2px solid #ffd000;
+color:white;
 
 padding:15px;
 
@@ -102,16 +164,20 @@ font-size:32px;
 
 text-align:center;
 
+z-index:999;
+
 }
 
 
+
+/* CARD */
 
 
 #card{
 
 position:fixed;
 
-bottom:40px;
+bottom:35px;
 
 left:50%;
 
@@ -123,41 +189,49 @@ background:#000000dd;
 
 color:white;
 
-padding:25px;
-
 border-radius:30px;
 
-text-align:center;
+padding:25px;
 
 display:none;
 
-z-index:100;
+text-align:center;
+
+z-index:999;
 
 }
 
 
-#iconeCard{
+#icone{
 
-font-size:80px;
+font-size:90px;
 
 }
 
 
 #capturar{
 
-margin-top:15px;
+padding:18px 45px;
 
-padding:18px 40px;
+border:0;
 
-border:none;
+border-radius:50px;
 
-border-radius:40px;
-
-background:#00ff99;
+background:#ffd000;
 
 font-size:22px;
 
 font-weight:bold;
+
+}
+
+
+
+canvas,
+.a-canvas,
+a-scene{
+
+background:transparent!important;
 
 }
 
@@ -171,27 +245,34 @@ font-weight:bold;
 <body>
 
 
-<!-- INTRO -->
 
 
-<div id="intro">
-
-<video
-
-id="introVideo"
-
-src="intro.mp4"
-
-playsinline
-
-webkit-playsinline>
-
-</video>
+<div id="inicio">
 
 
-<button id="btnStart">
+<h1>
+🚀 Jornada Empreendedora
+</h1>
 
-🚀 COMEÇAR
+
+<p>
+
+Encontre os 5 artefatos escondidos pelo ambiente usando realidade aumentada.
+
+</p>
+
+
+<p>
+
+🧭 💎 🚀 💡 👑
+
+</p>
+
+
+
+<button id="start">
+
+COMEÇAR MISSÃO
 
 </button>
 
@@ -203,15 +284,13 @@ webkit-playsinline>
 
 
 
-<!-- HUD -->
-
 
 <div id="hud">
 
 
-<div id="topo">
+<div id="missao">
 
-🚀 Jornada 0/5
+🚀 0/5 habilidades
 
 </div>
 
@@ -231,8 +310,8 @@ webkit-playsinline>
 
 </div>
 
-
 </div>
+
 
 
 
@@ -240,10 +319,11 @@ webkit-playsinline>
 <div id="card">
 
 
-<div id="iconeCard"></div>
+<div id="icone"></div>
 
 
-<h2 id="nomeCard"></h2>
+<h2 id="titulo"></h2>
+
 
 
 <button id="capturar">
@@ -265,35 +345,30 @@ PEGAR SKILL ⭐
 
 
 
-<!-- REALIDADE AUMENTADA -->
-
-
 <a-scene
+
 
 id="scene"
 
+
 embedded
+
 
 mindar-image="
 imageTargetSrc: ./targets.mind;
-filterMinCF:0.01;
-filterBeta:10;
-warmupTolerance:5;
-missTolerance:5;
+autoStart:false;
 "
 
 
 renderer="
 alpha:true;
 antialias:false;
-precision:mediump;
 colorManagement:true;
 "
 
 
-background="transparent"
-
 vr-mode-ui="enabled:false"
+
 
 device-orientation-permission-ui="enabled:false"
 
@@ -301,9 +376,8 @@ device-orientation-permission-ui="enabled:false"
 
 
 
-<a-camera
 
-position="0 0 0"
+<a-camera
 
 look-controls="enabled:false">
 
@@ -314,56 +388,14 @@ look-controls="enabled:false">
 
 
 
-<!-- BÚSSOLA -->
-
 
 <a-entity id="item0" mindar-image-target="targetIndex:0">
 
+<a-circle color="#ffd000" radius=".5"></a-circle>
 
-<a-circle
-
-color="#FFD700"
-
-radius=".45"
-
-opacity=".6"
-
-animation="
-property:scale;
-dir:alternate;
-loop:true;
-to:1.3 1.3 1.3;
-dur:700">
-
-</a-circle>
-
-
-
-<a-text
-
-value="🧭"
-
+<a-text value="🧭"
 align="center"
-
-position="0 0 .05"
-
 scale="2 2 2">
-
-</a-text>
-
-
-
-<a-text
-
-value="ESTRATEGIA"
-
-align="center"
-
-position="0 -.6 0"
-
-color="white"
-
-scale=".4 .4 .4">
 
 </a-text>
 
@@ -372,37 +404,17 @@ scale=".4 .4 .4">
 
 
 
-
-
-
-
-<!-- FINANCEIRO -->
 
 
 <a-entity id="item1" mindar-image-target="targetIndex:1">
 
 
-<a-circle color="#00ff99"
-radius=".45"
-opacity=".6"
-animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
-
-</a-circle>
+<a-circle color="#00ff99" radius=".5"></a-circle>
 
 
 <a-text value="💎"
 align="center"
-position="0 0 .05"
 scale="2 2 2">
-
-</a-text>
-
-
-<a-text value="FINANCAS"
-align="center"
-position="0 -.6 0"
-color="white"
-scale=".4 .4 .4">
 
 </a-text>
 
@@ -412,37 +424,17 @@ scale=".4 .4 .4">
 
 
 
-
-
-
-<!-- VENDAS -->
 
 
 <a-entity id="item2" mindar-image-target="targetIndex:2">
 
 
-<a-circle color="#ff6600"
-radius=".45"
-opacity=".6"
-animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
-
-</a-circle>
-
+<a-circle color="#ff6600" radius=".5"></a-circle>
 
 
 <a-text value="🚀"
 align="center"
-position="0 0 .05"
 scale="2 2 2">
-
-</a-text>
-
-
-<a-text value="VENDAS"
-align="center"
-position="0 -.6 0"
-color="white"
-scale=".4 .4 .4">
 
 </a-text>
 
@@ -453,37 +445,17 @@ scale=".4 .4 .4">
 
 
 
-
-
-
-<!-- INOVAÇÃO -->
 
 
 <a-entity id="item3" mindar-image-target="targetIndex:3">
 
 
-<a-circle color="#ffff00"
-radius=".45"
-opacity=".6"
-animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
-
-</a-circle>
-
+<a-circle color="#ffff00" radius=".5"></a-circle>
 
 
 <a-text value="💡"
 align="center"
-position="0 0 .05"
 scale="2 2 2">
-
-</a-text>
-
-
-<a-text value="INOVACAO"
-align="center"
-position="0 -.6 0"
-color="white"
-scale=".4 .4 .4">
 
 </a-text>
 
@@ -494,42 +466,23 @@ scale=".4 .4 .4">
 
 
 
-
-
-
-<!-- LIDERANÇA -->
 
 
 <a-entity id="item4" mindar-image-target="targetIndex:4">
 
 
-<a-circle color="#cc00ff"
-radius=".45"
-opacity=".6"
-animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
-
-</a-circle>
-
+<a-circle color="#cc00ff" radius=".5"></a-circle>
 
 
 <a-text value="👑"
 align="center"
-position="0 0 .05"
 scale="2 2 2">
 
 </a-text>
 
 
-<a-text value="LIDERANCA"
-align="center"
-position="0 -.6 0"
-color="white"
-scale=".4 .4 .4">
-
-</a-text>
-
-
 </a-entity>
+
 
 
 
@@ -568,30 +521,26 @@ let capturados=[];
 
 
 
-
-btnStart.onclick=()=>{
-
-
-btnStart.style.display="none";
+start.onclick=async()=>{
 
 
-introVideo.play();
-
-
-
-introVideo.onended=()=>{
-
-
-intro.style.display="none";
+inicio.style.display="none";
 
 
 hud.style.display="block";
 
 
-};
+
+await scene.systems[
+
+"mindar-image-system"
+
+].start();
 
 
 };
+
+
 
 
 
@@ -602,6 +551,7 @@ for(let i=0;i<5;i++){
 
 
 document.querySelector("#item"+i)
+
 
 .addEventListener(
 
@@ -620,12 +570,12 @@ encontrado=i;
 
 
 
-iconeCard.innerHTML=itens[i][1];
+icone.innerHTML=itens[i][1];
 
 
-nomeCard.innerHTML=
+titulo.innerHTML=
 
-"✨ Encontrado<br>"+
+"✨ Artefato encontrado<br>"+
 
 itens[i][0];
 
@@ -644,8 +594,8 @@ navigator.vibrate(300);
 });
 
 
-
 }
+
 
 
 
@@ -670,41 +620,40 @@ capturados.push(encontrado);
 card.style.display="none";
 
 
+
 atualizar();
 
 
 
-encontrado=null;
-
-
-
-
-if(capturados.length===5){
+if(capturados.length==5){
 
 
 
 setTimeout(()=>{
 
 
+icone.innerHTML="🏆";
+
+
+titulo.innerHTML=
+
+"Parabéns! Você completou a Jornada Empreendedora 🚀";
+
+
 card.style.display="block";
-
-
-iconeCard.innerHTML="🏆";
-
-
-nomeCard.innerHTML=
-
-"Parabéns!<br>Você completou sua Jornada Empreendedora 🚀";
 
 
 capturar.style.display="none";
 
 
-
-},1000);
+},800);
 
 
 }
+
+
+
+encontrado=null;
 
 
 };
@@ -721,7 +670,6 @@ function atualizar(){
 
 
 let html="";
-
 
 
 itens.forEach((x,i)=>{
@@ -748,9 +696,9 @@ slots.innerHTML=html;
 
 
 
-topo.innerHTML=
+missao.innerHTML=
 
-"🚀 Jornada "+capturados.length+"/5";
+"🚀 "+capturados.length+"/5 habilidades";
 
 
 }
