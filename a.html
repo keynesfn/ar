@@ -6,9 +6,9 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+content="width=device-width, initial-scale=1">
 
-<title>Jornada Empreendedora AR</title>
+<title>Jornada Empreendedora</title>
 
 
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
@@ -19,8 +19,7 @@ content="width=device-width, initial-scale=1.0">
 <style>
 
 
-html,
-body{
+html,body{
 
 margin:0;
 padding:0;
@@ -30,46 +29,31 @@ height:100%;
 
 overflow:hidden;
 
-background:black;
-
 font-family:Arial;
+
+background:black;
 
 }
 
 
-
-/* =====================
-   INTRO
-===================== */
+/* INTRO */
 
 
 #intro{
 
 position:fixed;
-
-top:0;
-left:0;
-
-width:100vw;
-height:100vh;
+inset:0;
 
 background:black;
 
 z-index:99999;
 
-display:flex;
-
-align-items:center;
-justify-content:center;
-
 }
-
 
 
 #introVideo{
 
 width:100%;
-
 height:100%;
 
 object-fit:cover;
@@ -77,68 +61,49 @@ object-fit:cover;
 }
 
 
-
 #btnStart{
+
 
 position:absolute;
 
 bottom:60px;
+left:50%;
+
+transform:translateX(-50%);
+
 
 padding:20px 45px;
+
+
+border:0;
+
+border-radius:50px;
+
 
 font-size:22px;
 
 font-weight:bold;
 
-border-radius:40px;
 
-border:0;
+background:
 
-background:#ffcc00;
+linear-gradient(
+45deg,
+#ffd000,
+#ff8c00
+);
+
+
+box-shadow:
+
+0 0 40px #ffaa00;
+
 
 }
 
 
 
-
-
-
-
-/* =====================
-   FORÇA CAMERA
-===================== */
-
-
-video{
-
-object-fit:cover;
-
-}
-
-
-
-.a-canvas{
-
-position:fixed!important;
-
-top:0!important;
-
-left:0!important;
-
-width:100vw!important;
-
-height:100vh!important;
-
-z-index:1!important;
-
-}
-
-
-
-/* =====================
-   HUD
-===================== */
-
+/* HUD */
 
 
 #hud{
@@ -149,56 +114,90 @@ display:none;
 
 
 
-#progresso{
+
+#topo{
 
 position:fixed;
 
-top:20px;
+top:15px;
+left:50%;
 
-left:20px;
+transform:translateX(-50%);
 
-background:#000000aa;
+
+background:
+
+rgba(0,0,0,.65);
+
 
 color:white;
 
-padding:15px 25px;
 
-border-radius:30px;
+padding:
+
+15px 30px;
+
+
+border-radius:40px;
+
+
+z-index:50;
+
 
 font-size:18px;
 
-z-index:20;
+
+backdrop-filter:blur(10px);
 
 }
+
+
+
 
 
 
 
 #inventario{
 
-
 position:fixed;
 
-right:20px;
+right:15px;
 
-top:20px;
+top:90px;
 
-background:#000000aa;
 
-color:white;
+background:
+
+rgba(0,0,0,.7);
+
+
+border:
+
+2px solid #ffd000;
+
+
+
+border-radius:25px;
+
+
 
 padding:15px;
 
-border-radius:20px;
 
-font-size:32px;
+z-index:50;
+
+
 
 text-align:center;
 
-z-index:20;
+
+color:white;
+
+
+font-size:30px;
+
 
 }
-
 
 
 
@@ -206,87 +205,200 @@ z-index:20;
 
 #scanner{
 
+
 position:fixed;
+
 
 inset:0;
 
-border:8px solid #00ff88;
 
 display:none;
 
-z-index:15;
+
+z-index:20;
+
 
 pointer-events:none;
 
-animation:pulse 1s infinite;
-
-}
-
-
-@keyframes pulse{
-
-50%{
-
-opacity:.3;
-
-}
 
 }
 
 
 
+
+#scanner:after{
+
+
+content:"";
+
+
+position:absolute;
+
+
+top:50%;
+
+left:50%;
+
+
+width:220px;
+
+height:220px;
+
+
+transform:
+
+translate(-50%,-50%);
+
+
+
+border:
+
+6px solid #00ff99;
+
+
+border-radius:50%;
+
+
+animation:
+
+scan 1s infinite;
+
+
+}
+
+
+
+
+@keyframes scan{
+
+
+0%{
+
+opacity:1;
+
+transform:
+
+translate(-50%,-50%)
+
+scale(.6);
+
+}
+
+
+100%{
+
+
+opacity:0;
+
+
+transform:
+
+translate(-50%,-50%)
+
+scale(1.5);
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+/* CARD */
 
 
 #card{
 
+
 position:fixed;
+
 
 bottom:40px;
 
+
 left:50%;
 
-transform:translateX(-50%);
+
+transform:
+
+translateX(-50%);
+
+
 
 width:85%;
 
-background:#000000dd;
+
+max-width:430px;
+
+
+background:
+
+linear-gradient(
+
+160deg,
+
+#111,
+
+#333
+
+);
+
+
 
 color:white;
 
-padding:25px;
 
-border-radius:25px;
+padding:30px;
 
-text-align:center;
+
+
+border-radius:30px;
+
 
 display:none;
 
-z-index:30;
+
+text-align:center;
+
+
+z-index:100;
+
+
+
+box-shadow:
+
+0 0 50px black;
+
 
 }
+
+
 
 
 
 #icone{
 
-font-size:80px;
+
+font-size:90px;
+
 
 }
 
 
 
-#capturar{
 
 
-padding:18px 40px;
+#nome{
 
-border:0;
 
-border-radius:40px;
+font-size:26px;
 
-background:#00ff99;
-
-font-size:20px;
 
 font-weight:bold;
 
@@ -296,31 +408,193 @@ font-weight:bold;
 
 
 
+
+#descricao{
+
+
+opacity:.8;
+
+
+}
+
+
+
+
+
+#capturar{
+
+
+margin-top:20px;
+
+
+
+padding:
+
+18px 45px;
+
+
+
+border:0;
+
+
+border-radius:50px;
+
+
+font-size:22px;
+
+
+
+font-weight:bold;
+
+
+
+background:#00ff99;
+
+
+}
+
+
+
+
 </style>
 
+
 </head>
-
-
-
 
 <body>
 
 
 
 
-<!-- AR PRIMEIRO -->
+
+<div id="intro">
+
+
+<video
+
+id="introVideo"
+
+src="intro.mp4"
+
+playsinline>
+
+
+</video>
+
+
+
+<button id="btnStart">
+
+🚀 COMEÇAR
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+<div id="hud">
+
+
+<div id="topo">
+
+🚀 Jornada 0/5
+
+</div>
+
+
+
+<div id="scanner"></div>
+
+
+
+
+<div id="inventario">
+
+🎒
+
+<div id="slots">
+
+⬜<br>
+⬜<br>
+⬜<br>
+⬜<br>
+⬜
+
+</div>
+
+</div>
+
+
+
+
+
+
+<div id="card">
+
+
+<div id="icone"></div>
+
+
+
+<div id="nome"></div>
+
+
+<p id="descricao"></p>
+
+
+
+
+<button id="capturar">
+
+PEGAR SKILL ⭐
+
+</button>
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
 
 
 <a-scene
 
 
-mindar-image="imageTargetSrc: ./targets.mind;"
+id="scene"
 
 
-color-space="sRGB"
+mindar-image="
+imageTargetSrc: ./targets.mind;
+
+filterMinCF:0.01;
+
+filterBeta:10;
+
+warmupTolerance:5;
+
+missTolerance:5;
+"
 
 
-renderer="colorManagement:true"
+renderer="
+antialias:false;
+precision:mediump;
+colorManagement:true
+"
 
 
 vr-mode-ui="enabled:false"
@@ -328,8 +602,9 @@ vr-mode-ui="enabled:false"
 
 device-orientation-permission-ui="enabled:false"
 
-
 >
+
+
 
 
 
@@ -356,109 +631,9 @@ look-controls="enabled:false">
 
 
 
+
 </a-scene>
 
-
-
-
-
-
-
-<!-- INTRO POR CIMA -->
-
-
-<div id="intro">
-
-
-<video
-
-id="introVideo"
-
-src="intro.mp4"
-
-playsinline
-
-webkit-playsinline>
-
-
-</video>
-
-
-
-
-<button id="btnStart">
-
-▶️ Começar Jornada
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-<div id="hud">
-
-
-<div id="scanner"></div>
-
-
-
-<div id="progresso">
-
-🚀 Jornada 0/5
-
-</div>
-
-
-
-
-<div id="inventario">
-
-🎒
-
-<div id="slots">
-
-⬜<br>
-⬜<br>
-⬜<br>
-⬜<br>
-⬜
-
-</div>
-
-
-</div>
-
-
-
-
-<div id="card">
-
-
-<div id="icone"></div>
-
-
-<h2 id="titulo"></h2>
-
-
-
-<button id="capturar">
-
-CAPTURAR ⭐
-
-</button>
-
-
-</div>
-
-
-
-</div>
 
 
 
@@ -469,19 +644,48 @@ CAPTURAR ⭐
 <script>
 
 
+
 const itens=[
 
-["Bússola da Estratégia","🧭"],
 
-["Cristal Financeiro","💰"],
+{
+nome:"Bússola da Estratégia",
+icone:"🧭",
+texto:"Você encontrou a visão do empreendedor."
+},
 
-["Foguete das Vendas","🚀"],
 
-["Lâmpada da Inovação","💡"],
+{
+nome:"Cristal Financeiro",
+icone:"💎",
+texto:"Você desbloqueou inteligência financeira."
+},
 
-["Coroa da Liderança","👑"]
+
+{
+nome:"Foguete das Vendas",
+icone:"🚀",
+texto:"Você conquistou crescimento."
+},
+
+
+{
+nome:"Lâmpada da Inovação",
+icone:"💡",
+texto:"Você ativou novas ideias."
+},
+
+
+{
+nome:"Coroa da Liderança",
+icone:"👑",
+texto:"Você conquistou liderança."
+}
+
 
 ];
+
+
 
 
 
@@ -491,8 +695,18 @@ let capturados=[];
 
 
 
+const sistema=()=>{
 
-/* INTRO */
+return scene.systems[
+
+"mindar-image-system"
+
+];
+
+};
+
+
+
 
 
 btnStart.onclick=()=>{
@@ -524,32 +738,50 @@ hud.style.display="block";
 
 
 
-/* TARGETS */
+
+
 
 
 for(let i=0;i<5;i++){
 
 
-let alvo=
 
-document.querySelector("#item"+i);
+document
+
+.querySelector("#item"+i)
 
 
+.addEventListener(
 
-alvo.addEventListener(
 
 "targetFound",
+
 
 ()=>{
 
 
-if(capturados.includes(i))
+
+if(
+
+capturados.includes(i)
+
+)
 
 return;
 
 
 
+
 encontrado=i;
+
+
+
+/* ECONOMIA DE PROCESSAMENTO */
+
+
+sistema().pause();
+
+
 
 
 scanner.style.display="block";
@@ -558,18 +790,29 @@ scanner.style.display="block";
 card.style.display="block";
 
 
-icone.innerHTML=itens[i][1];
+
+icone.innerHTML=
+
+itens[i].icone;
 
 
-titulo.innerHTML=
 
-"✨ Encontrado<br>"+itens[i][0];
+nome.innerHTML=
+
+itens[i].nome;
+
+
+
+descricao.innerHTML=
+
+itens[i].texto;
 
 
 
 if(navigator.vibrate)
 
 navigator.vibrate(300);
+
 
 
 
@@ -585,8 +828,8 @@ navigator.vibrate(300);
 
 
 
-capturar.onclick=()=>{
 
+capturar.onclick=()=>{
 
 
 if(encontrado===null)
@@ -595,7 +838,13 @@ return;
 
 
 
+
 capturados.push(encontrado);
+
+
+
+atualizar();
+
 
 
 
@@ -605,19 +854,31 @@ scanner.style.display="none";
 card.style.display="none";
 
 
-atualizar();
-
-
 
 encontrado=null;
 
 
 
 
-if(capturados.length===5){
+/* VOLTA PROCURAR */
+
+
+sistema().unpause();
+
+
+
+
+
+if(
+
+capturados.length===5
+
+){
+
 
 
 setTimeout(()=>{
+
 
 
 card.style.display="block";
@@ -626,15 +887,24 @@ card.style.display="block";
 icone.innerHTML="🏆";
 
 
-titulo.innerHTML=
+nome.innerHTML=
 
-"Parabéns!<br>Você completou a Jornada Empreendedora 🚀";
+"Jornada Completa";
+
+
+
+descricao.innerHTML=
+
+"Você conquistou todas as habilidades empreendedoras 🚀";
+
 
 
 capturar.style.display="none";
 
 
-},1000);
+
+},800);
+
 
 
 }
@@ -653,18 +923,24 @@ capturar.style.display="none";
 function atualizar(){
 
 
+
 let html="";
 
 
 
-itens.forEach((x,i)=>{
+itens.forEach(
+
+(x,i)=>{
 
 
-html += capturados.includes(i)
+
+html +=
+
+capturados.includes(i)
 
 ?
 
-x[1]+"<br>"
+x.icone+"<br>"
 
 :
 
@@ -680,12 +956,15 @@ slots.innerHTML=html;
 
 
 
-progresso.innerHTML=
+topo.innerHTML=
 
 "🚀 Jornada "+capturados.length+"/5";
 
 
+
 }
+
+
 
 
 
