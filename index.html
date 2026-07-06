@@ -1,181 +1,550 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Jornada Empreendedora AR</title>
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <style>
-        body {
-            margin:0;
-            overflow:hidden;
-            font-family:Arial;
-        }
-        #painel {
-            position:fixed;
-            bottom:30px;
-            left:50%;
-            transform:translateX(-50%);
 
-            background:white;
-            padding:20px;
-            border-radius:15px;
+<meta charset="utf-8">
 
-            display:none;
-
-            width:80%;
-            text-align:center;
-
-            font-size:22px;
-            z-index:10;
-
-            box-shadow:0 0 20px #333;
-
-        }
+<title>
+Jornada Empreendedora AR
+</title>
 
 
-        #inventario {
+<style>
 
-            position:fixed;
-            top:20px;
-            left:20px;
+body{
+ margin:0;
+ overflow:hidden;
+ font-family:Arial;
+}
 
-            background:white;
 
-            padding:10px;
-            border-radius:10px;
+#hud{
 
-            z-index:10;
+ position:fixed;
+ top:20px;
+ left:20px;
 
-        }
+ background:white;
 
-    </style>
+ padding:15px;
+
+ border-radius:15px;
+
+ z-index:10;
+
+ font-size:16px;
+
+}
+
+
+#capture{
+
+ position:fixed;
+
+ bottom:40px;
+
+ left:50%;
+
+ transform:translateX(-50%);
+
+ padding:20px 40px;
+
+ border-radius:30px;
+
+ border:none;
+
+ font-size:22px;
+
+ display:none;
+
+ z-index:20;
+
+}
+
+
+</style>
 
 
 </head>
 
 
+
 <body>
 
 
+<div id="hud">
 
-<div id="inventario">
+🎒 Inventário
 
-    🎒 Inventário<br>
-    <span id="skill">
-        ⬜ Liderança
-    </span>
+<br><br>
+
+<div id="lista">
+
+⬜ Finanças<br>
+⬜ Vendas<br>
+⬜ Liderança<br>
+⬜ Estratégia<br>
+⬜ Inovação
+
+</div>
 
 </div>
 
 
 
-<div id="painel">
+<button id="capture">
 
-    🎉 Parabéns!<br><br>
+Capturar ⭐
 
-    Você encontrou:<br>
-
-    <b>⭐ Skill Liderança Empreendedora</b>
-
-</div>
+</button>
 
 
 
 
-<a-scene embedded arjs>
+
+<script type="module">
 
 
-    <!-- marcador padrão HIRO -->
-
-    <a-marker preset="hiro" id="marcador">
-
-
-        <!-- objeto 3d simples -->
-
-        <a-box
-
-            position="0 0.5 0"
-
-            color="gold"
-
-            rotation="0 45 0"
-
-            animation="
-            property: rotation;
-            to:0 405 0;
-            loop:true;
-            dur:3000">
-
-
-        </a-box>
-
-
-        <a-text
-
-            value="LIDERANCA"
-
-            position="-1 1.3 0"
-
-            color="yellow"
-
-            scale="1 1 1">
-
-        </a-text>
-
-
-    </a-marker>
+import * as THREE
+from 
+'https://unpkg.com/three@0.160.0/build/three.module.js';
 
 
 
-    <a-entity camera></a-entity>
+import {ARButton}
 
+from 
 
-</a-scene>
-
-
-
-<script>
-
-
-const marcador = document.querySelector("#marcador");
-
-
-marcador.addEventListener("markerFound",()=>{
-
-
-    document
-    .getElementById("painel")
-    .style.display="block";
-
-
-    document
-    .getElementById("skill")
-    .innerHTML="✅ Liderança";
-
-
-    localStorage.setItem(
-        "lideranca",
-        "capturada"
-    );
-
-
-});
+'https://unpkg.com/three@0.160.0/examples/jsm/webxr/ARButton.js';
 
 
 
-window.onload=()=>{
 
 
-    if(
-        localStorage.getItem("lideranca")
-    ){
+let camera;
 
-        document
-        .getElementById("skill")
-        .innerHTML="✅ Liderança";
+let scene;
 
-    }
+let renderer;
+
+
+let alvoAtual=null;
+
+
+
+const skills=[
+
+
+{
+nome:"Finanças",
+icone:"💰"
+},
+
+
+{
+nome:"Vendas",
+icone:"🚀"
+},
+
+
+{
+nome:"Liderança",
+icone:"👑"
+},
+
+
+{
+nome:"Estratégia",
+icone:"🧭"
+},
+
+
+{
+nome:"Inovação",
+icone:"💡"
+}
+
+
+];
+
+
+
+const capturadas=[];
+
+
+const objetos=[];
+
+
+
+
+init();
+
+
+
+
+function init(){
+
+
+scene=new THREE.Scene();
+
+
+
+camera=new THREE.PerspectiveCamera(
+70,
+window.innerWidth/window.innerHeight,
+0.01,
+20
+);
+
+
+
+renderer=new THREE.WebGLRenderer(
+{
+antialias:true,
+alpha:true
+}
+);
+
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+
+
+renderer.xr.enabled=true;
+
+
+document.body.appendChild(
+renderer.domElement
+);
+
+
+
+document.body.appendChild(
+
+
+ARButton.createButton(
+renderer,
+{
+requiredFeatures:[]
+}
+)
+
+);
+
+
+
+
+const luz = new THREE.HemisphereLight(
+0xffffff,
+0xbbbbff,
+3
+);
+
+
+scene.add(luz);
+
+
+
+renderer.xr.addEventListener(
+
+"sessionstart",
+
+()=>{
+
+
+criarSkills();
+
+
+}
+
+);
+
+
+
+renderer.setAnimationLoop(
+loop
+);
+
+
+}
+
+
+
+
+function criarSkills(){
+
+
+
+skills.forEach(
+
+(skill,index)=>{
+
+
+const geometria=
+
+new THREE.SphereGeometry(
+0.25,
+32,
+32
+);
+
+
+
+const material=
+
+new THREE.MeshStandardMaterial(
+{
+color:0xffcc00
+}
+);
+
+
+
+const esfera=
+
+new THREE.Mesh(
+geometria,
+material
+);
+
+
+
+const angulo=
+
+Math.random()
+*
+Math.PI
+*
+2;
+
+
+
+const distancia=
+
+2+
+Math.random()*3;
+
+
+
+esfera.position.set(
+
+Math.cos(angulo)
+*
+distancia,
+
+0,
+
+
+Math.sin(angulo)
+*
+distancia
+
+);
+
+
+
+esfera.userData.skill=skill.nome;
+
+
+
+scene.add(esfera);
+
+
+
+objetos.push(esfera);
+
+
+
+}
+
+
+);
+
+
+}
+
+
+
+
+
+
+function loop(){
+
+
+
+objetos.forEach(
+
+obj=>{
+
+
+obj.rotation.y +=0.02;
+
+
+
+const distancia=
+
+camera.position.distanceTo(
+obj.position
+);
+
+
+
+if(
+
+distancia < 1
+&&
+!capturadas.includes(
+obj.userData.skill
+)
+
+){
+
+alvoAtual=obj;
+
+
+document
+.getElementById("capture")
+.style.display="block";
+
+
+}
+
+
+
+}
+
+
+);
+
+
+
+renderer.render(
+scene,
+camera
+);
+
+
+
+}
+
+
+
+
+
+
+document
+.getElementById("capture")
+.onclick=
+
+()=>{
+
+
+if(!alvoAtual)return;
+
+
+
+const nome=
+
+alvoAtual.userData.skill;
+
+
+
+capturadas.push(nome);
+
+
+
+scene.remove(
+alvoAtual
+);
+
+
+
+atualizarInventario();
+
+
+
+document
+.getElementById("capture")
+.style.display="none";
+
+
+
+alvoAtual=null;
+
+
+
+};
+
+
+
+
+
+
+
+function atualizarInventario(){
+
+
+let html="";
+
+
+
+skills.forEach(
+
+s=>{
+
+
+html+=
+
+(
+capturadas.includes(
+s.nome
+)
+
+?
+
+"✅ "
+
+:
+
+"⬜ "
+
+)
+
++
+
+s.nome
+
++
+
+"<br>";
+
+
+}
+
+);
+
+
+document
+.getElementById("lista")
+.innerHTML=html;
+
+
+
+
+if(
+capturadas.length===5
+){
+
+
+alert(
+"🏆 Parabéns! Você completou a Jornada Empreendedora!"
+);
+
+
+}
 
 
 }
@@ -187,5 +556,6 @@ window.onload=()=>{
 
 
 </body>
+
 
 </html>
