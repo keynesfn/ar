@@ -1,63 +1,164 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RPG AR</title>
+
+<title>
+Jornada Empreendedora AR
+</title>
+
+
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
 
+
 <style>
 
-html,
-body{
 
-    margin:0;
-    padding:0;
+html,body{
 
-    width:100%;
-    height:100%;
+margin:0;
+padding:0;
 
-    overflow:hidden;
+width:100%;
+height:100%;
 
-    font-family:Arial;
+overflow:hidden;
+
+font-family:Arial;
+
+background:#000;
 
 }
 
 
-/* força câmera AR ocupar tudo */
-
-.a-canvas,
+video,
 canvas,
-video{
+.a-canvas{
 
-    position:fixed !important;
+position:fixed!important;
 
-    top:0 !important;
-    left:0 !important;
+top:0!important;
+left:0!important;
 
-    width:100vw !important;
-    height:100vh !important;
+width:100vw!important;
+height:100vh!important;
 
-    object-fit:cover !important;
+object-fit:cover!important;
 
 }
 
 
 
-/* força cena AR */
+/* INTRO */
 
-a-scene{
 
-    position:fixed !important;
+#intro{
 
-    top:0;
-    left:0;
+position:fixed;
 
-    width:100vw !important;
-    height:100vh !important;
+inset:0;
+
+background:black;
+
+z-index:50000;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+
+
+#videoIntro{
+
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+
+}
+
+
+
+#btnComecar{
+
+
+position:absolute;
+
+bottom:60px;
+
+
+padding:20px 45px;
+
+
+border-radius:50px;
+
+
+border:none;
+
+
+font-size:22px;
+
+
+font-weight:bold;
+
+
+background:#ffcc00;
+
+
+z-index:2;
+
+
+}
+
+
+
+
+/* HUD */
+
+
+#progresso{
+
+
+position:fixed;
+
+top:20px;
+
+left:20px;
+
+
+background:
+
+rgba(0,0,0,.6);
+
+
+color:white;
+
+
+padding:15px 25px;
+
+
+border-radius:30px;
+
+
+font-size:18px;
+
+
+z-index:9999;
+
 
 }
 
@@ -67,57 +168,50 @@ a-scene{
 
 #inventario{
 
-    position:fixed;
 
-    top:20px;
-    right:20px;
+position:fixed;
 
-    background:white;
 
-    padding:15px;
+right:20px;
 
-    border-radius:15px;
 
-    font-size:28px;
+top:20px;
 
-    z-index:9999;
 
-    box-shadow:0 0 15px #333;
+background:
 
-}
+rgba(0,0,0,.6);
 
 
 
+color:white;
 
 
-#alerta{
+padding:15px;
 
-    position:fixed;
 
-    bottom:40px;
+border-radius:25px;
 
-    left:50%;
 
-    transform:translateX(-50%);
+font-size:28px;
 
-    width:80%;
 
-    background:white;
+text-align:center;
 
-    padding:20px;
 
-    border-radius:20px;
+z-index:9999;
 
-    text-align:center;
-
-    font-size:24px;
-
-    display:none;
-
-    z-index:9999;
 
 }
 
+
+
+#tituloInv{
+
+
+font-size:12px;
+
+}
 
 
 
@@ -125,65 +219,140 @@ a-scene{
 
 #scanner{
 
-    position:fixed;
 
-    top:0;
+position:fixed;
 
-    left:0;
-
-    width:100vw;
-
-    height:100vh;
+inset:0;
 
 
-    border:10px solid #00ff00;
+border:8px solid #00ff88;
 
-    box-sizing:border-box;
 
-    display:none;
+display:none;
 
-    animation:pulse 1s infinite;
 
-    pointer-events:none;
+box-sizing:border-box;
 
-    z-index:9998;
+
+animation:pulse 1s infinite;
+
+
+z-index:9000;
+
+
+pointer-events:none;
+
 
 }
-
 
 
 
 
 @keyframes pulse{
 
+0%{opacity:.2;}
 
-0%{
+50%{opacity:1;}
 
-opacity:.2;
-
-}
-
-
-50%{
-
-opacity:1;
+100%{opacity:.2;}
 
 }
 
 
-100%{
 
-opacity:.2;
+
+#alerta{
+
+
+position:fixed;
+
+
+bottom:40px;
+
+
+left:50%;
+
+
+transform:translateX(-50%);
+
+
+width:85%;
+
+
+background:
+
+rgba(0,0,0,.8);
+
+
+color:white;
+
+
+padding:25px;
+
+
+border-radius:30px;
+
+
+font-size:22px;
+
+
+text-align:center;
+
+
+display:none;
+
+
+z-index:10000;
+
 
 }
 
 
+
+
+
+/* VIDEOS */
+
+
+#videoBox{
+
+
+position:fixed;
+
+
+inset:0;
+
+
+background:black;
+
+
+display:none;
+
+
+z-index:30000;
+
+
 }
+
+
+
+#videoSkill{
+
+
+width:100%;
+
+height:100%;
+
+
+object-fit:contain;
+
+
+}
+
 
 
 
 </style>
-
 
 </head>
 
@@ -194,14 +363,75 @@ opacity:.2;
 
 
 
+
+<!-- INTRO -->
+
+
+<div id="intro">
+
+
+<video
+
+id="videoIntro"
+
+src="videos/intro.mp4"
+
+autoplay
+
+muted
+
+playsinline
+
+webkit-playsinline>
+
+</video>
+
+
+
+
+<button id="btnComecar">
+
+🚀 Iniciar Jornada
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
 <div id="scanner"></div>
+
+
+
+
+<div id="progresso">
+
+🚀 Jornada 0/5
+
+</div>
 
 
 
 
 <div id="inventario">
 
-🎒<br>
+<div id="tituloInv">
+
+SKILLS
+
+</div>
+
+
+🎒
+
+
+<div id="slots">
 
 ⬜<br>
 ⬜<br>
@@ -209,14 +439,43 @@ opacity:.2;
 ⬜<br>
 ⬜
 
+
+</div>
+
+
 </div>
 
 
 
 
-<div id="alerta">
+
+<div id="alerta"></div>
+
+
+
+
+
+<div id="videoBox">
+
+
+<video
+
+id="videoSkill"
+
+controls
+
+playsinline
+
+webkit-playsinline>
+
+
+</video>
+
 
 </div>
+
+
+
 
 
 
@@ -226,13 +485,16 @@ opacity:.2;
 <a-scene
 
 
-mindar-image="imageTargetSrc: ./targets.mind;"
+id="ar"
 
 
-embedded
+embedded="false"
 
 
-color-space="sRGB"
+mindar-image="
+imageTargetSrc: ./targets.mind;
+autoStart:false;
+"
 
 
 renderer="colorManagement:true"
@@ -243,9 +505,7 @@ vr-mode-ui="enabled:false"
 
 device-orientation-permission-ui="enabled:false"
 
-
 >
-
 
 
 
@@ -256,145 +516,54 @@ position="0 0 0"
 
 look-controls="enabled:false">
 
+
 </a-camera>
 
 
 
 
 
+<a-entity id="item0" mindar-image-target="targetIndex:0">
 
-
-<a-entity id="item0"
-
-mindar-image-target="targetIndex:0">
-
-
-<a-text
-
-value="🐶"
-
-position="0 0 0"
-
-scale="3 3 3"
-
-align="center">
-
-
-</a-text>
-
+<a-text value="🧭" scale="3 3 3" align="center"></a-text>
 
 </a-entity>
 
 
 
 
+<a-entity id="item1" mindar-image-target="targetIndex:1">
 
-
-<a-entity id="item1"
-
-mindar-image-target="targetIndex:1">
-
-
-<a-text
-
-value="🐱"
-
-position="0 0 0"
-
-scale="3 3 3"
-
-align="center">
-
-
-</a-text>
-
+<a-text value="💰" scale="3 3 3" align="center"></a-text>
 
 </a-entity>
 
 
 
 
+<a-entity id="item2" mindar-image-target="targetIndex:2">
 
-
-
-
-<a-entity id="item2"
-
-mindar-image-target="targetIndex:2">
-
-
-<a-text
-
-value="🦆"
-
-position="0 0 0"
-
-scale="3 3 3"
-
-align="center">
-
-
-</a-text>
-
+<a-text value="🚀" scale="3 3 3" align="center"></a-text>
 
 </a-entity>
 
 
 
 
+<a-entity id="item3" mindar-image-target="targetIndex:3">
 
-
-
-
-<a-entity id="item3"
-
-mindar-image-target="targetIndex:3">
-
-
-<a-text
-
-value="🦁"
-
-position="0 0 0"
-
-scale="3 3 3"
-
-align="center">
-
-
-</a-text>
-
+<a-text value="💡" scale="3 3 3" align="center"></a-text>
 
 </a-entity>
 
 
 
 
+<a-entity id="item4" mindar-image-target="targetIndex:4">
 
-
-
-
-<a-entity id="item4"
-
-mindar-image-target="targetIndex:4">
-
-
-<a-text
-
-value="🐵"
-
-position="0 0 0"
-
-scale="3 3 3"
-
-align="center">
-
-
-</a-text>
-
+<a-text value="👑" scale="3 3 3" align="center"></a-text>
 
 </a-entity>
-
 
 
 
@@ -409,40 +578,46 @@ align="center">
 
 
 
+
 <script>
 
 
 
-const animais=[
+const itens=[
 
 
 {
-nome:"Guardião da Liderança",
-icone:"🐶"
+nome:"Visão Estratégica",
+icone:"🧭",
+video:"videos/01-estrategia.mp4"
 },
 
 
 {
-nome:"Guardião das Vendas",
-icone:"🐱"
+nome:"Gestão Financeira",
+icone:"💰",
+video:"videos/02-financas.mp4"
 },
 
 
 {
-nome:"Guardião da Estratégia",
-icone:"🦆"
+nome:"Vendas",
+icone:"🚀",
+video:"videos/03-vendas.mp4"
 },
 
 
 {
-nome:"Guardião da Inovação",
-icone:"🦁"
+nome:"Inovação",
+icone:"💡",
+video:"videos/04-inovacao.mp4"
 },
 
 
 {
-nome:"Guardião Financeiro",
-icone:"🐵"
+nome:"Liderança",
+icone:"👑",
+video:"videos/05-lideranca.mp4"
 }
 
 
@@ -450,41 +625,69 @@ icone:"🐵"
 
 
 
-
 let encontrado=null;
-
 
 let capturados=[];
 
 
 
 
+const sceneEl = 
 
-
-for(
-
-let i=0;
-
-i<5;
-
-i++
-
-){
-
-
-const item=
-
-document.querySelector(
-
-"#item"+i
-
-);
+document.querySelector("#ar");
 
 
 
 
 
-item.addEventListener(
+
+document
+
+.querySelector("#btnComecar")
+
+.onclick = async()=>{
+
+
+
+document
+
+.querySelector("#intro")
+
+.style.display="none";
+
+
+
+
+await sceneEl.systems[
+
+"mindar-image-system"
+
+].start();
+
+
+
+};
+
+
+
+
+
+
+
+
+for(let i=0;i<5;i++){
+
+
+
+let alvo=
+
+document.querySelector("#item"+i);
+
+
+
+
+
+alvo.addEventListener(
 
 
 "targetFound",
@@ -493,31 +696,53 @@ item.addEventListener(
 ()=>{
 
 
-
 encontrado=i;
 
 
 
-destacarItem(
 
-animais[i]
+document
+
+.querySelector("#scanner")
+
+.style.display="block";
+
+
+
+
+mostrar(
+
+"✨ ITEM ENCONTRADO ✨<br><br>"+
+
+itens[i].icone+
+
+"<br>"+
+
+itens[i].nome+
+
+"<br><br>👇 Toque para capturar"
+
 
 );
+
+
+
+if(navigator.vibrate)
+
+navigator.vibrate(300);
 
 
 
 }
 
-
-
-
 );
 
 
 
 
 
-item.addEventListener(
+
+alvo.addEventListener(
 
 
 "targetLost",
@@ -537,81 +762,7 @@ document
 }
 
 
-
-
 );
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function destacarItem(animal){
-
-
-
-document
-
-.querySelector("#scanner")
-
-.style.display="block";
-
-
-
-
-let alerta=
-
-document.querySelector(
-
-"#alerta"
-
-);
-
-
-
-alerta.style.display="block";
-
-
-
-alerta.innerHTML=
-
-
-"✨ ITEM ENCONTRADO ✨<br><br>"+
-
-
-animal.icone+
-
-"<br>"+
-
-animal.nome+
-
-"<br><br>👇 Toque para capturar";
-
-
-
-
-if(
-
-navigator.vibrate
-
-){
-
-navigator.vibrate(
-
-300
-
-);
-
-}
-
 
 
 
@@ -626,6 +777,7 @@ navigator.vibrate(
 
 
 window.addEventListener(
+
 
 "click",
 
@@ -643,11 +795,7 @@ return;
 
 if(
 
-capturados.includes(
-
-encontrado
-
-)
+capturados.includes(encontrado)
 
 )
 
@@ -656,28 +804,13 @@ return;
 
 
 
-
-capturados.push(
-
-encontrado
-
-);
+capturados.push(encontrado);
 
 
 
+abrirVideo(
 
-mostrar(
-
-"🎉 Parabéns!<br><br>Você capturou:<br>"+
-
-
-animais[encontrado].icone+
-
-"<br>"+
-
-animais[encontrado].nome+
-
-"<br><br>Seja feliz por aí 🚀"
+itens[encontrado].video
 
 );
 
@@ -687,17 +820,60 @@ atualizar();
 
 
 
-document
-
-.querySelector("#scanner")
-
-.style.display="none";
-
-
-
 encontrado=null;
 
 
+
+}
+
+
+
+);
+
+
+
+
+
+
+
+
+function abrirVideo(src){
+
+
+
+let box=
+
+document.querySelector("#videoBox");
+
+
+
+let video=
+
+document.querySelector("#videoSkill");
+
+
+
+
+video.src=src;
+
+
+box.style.display="block";
+
+
+
+video.play();
+
+
+
+
+
+video.onended=()=>{
+
+
+box.style.display="none";
+
+
+video.src="";
 
 
 
@@ -709,20 +885,20 @@ capturados.length===5
 ){
 
 
-
 setTimeout(()=>{
 
 
-mostrar(
-
-"🏆 PARABÉNS!<br><br>Você encontrou todos os guardiões.<br><br>Você é um empreendedor foda pra caralho 🚀🔥"
+abrirFinal();
 
 
-);
+},1000);
+
+
+}
 
 
 
-},2000);
+};
 
 
 
@@ -731,11 +907,43 @@ mostrar(
 
 
 
+
+
+
+
+
+function abrirFinal(){
+
+
+
+let video=
+
+document.querySelector("#videoSkill");
+
+
+
+let box=
+
+document.querySelector("#videoBox");
+
+
+
+
+video.src=
+
+"videos/final.mp4";
+
+
+
+box.style.display="block";
+
+
+
+video.play();
+
+
+
 }
-
-
-
-);
 
 
 
@@ -749,13 +957,13 @@ function atualizar(){
 
 
 
-let html="🎒<br>";
+let html="";
 
 
 
-animais.forEach(
+itens.forEach(
 
-(a,i)=>{
+(item,i)=>{
 
 
 
@@ -765,7 +973,7 @@ capturados.includes(i)
 
 ?
 
-a.icone+"<br>"
+item.icone+"<br>"
 
 :
 
@@ -776,15 +984,38 @@ a.icone+"<br>"
 });
 
 
+
 document
 
-.querySelector("#inventario")
+.querySelector("#slots")
 
 .innerHTML=html;
 
 
 
+
+
+document
+
+.querySelector("#progresso")
+
+.innerHTML=
+
+
+"🚀 Jornada "
+
++
+
+capturados.length
+
++
+
+"/5";
+
+
+
 }
+
 
 
 
@@ -797,39 +1028,21 @@ function mostrar(texto){
 
 
 
-let alerta=
+let a=
 
-document.querySelector(
-
-"#alerta"
-
-);
+document.querySelector("#alerta");
 
 
 
-alerta.innerHTML=texto;
+a.innerHTML=texto;
 
 
-alerta.style.display="block";
+a.style.display="block";
 
-
-
-
-setTimeout(()=>{
-
-
-alerta.style.display="none";
-
-
-},
-
-
-4000
-
-);
 
 
 }
+
 
 
 
@@ -837,7 +1050,7 @@ alerta.style.display="none";
 
 
 
-</body>
 
+</body>
 
 </html>
