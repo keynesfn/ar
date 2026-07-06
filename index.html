@@ -3,22 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>
-Caça AR - Empreendedor
-</title>
+<title>RPG AR</title>
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
 
-<script src="https://aframe.io/releases/1.5.0/aframe.min.js">
-</script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-
-<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js">
-</script>
 
 
 <style>
-
 
 body{
 
@@ -26,12 +19,12 @@ margin:0;
 
 font-family:Arial;
 
+overflow:hidden;
+
 }
 
 
-
 #inventario{
-
 
 position:fixed;
 
@@ -45,16 +38,17 @@ padding:15px;
 
 border-radius:15px;
 
-font-size:25px;
+font-size:28px;
 
 z-index:999;
+
+box-shadow:0 0 15px #333;
 
 }
 
 
 
-#mensagem{
-
+#alerta{
 
 position:fixed;
 
@@ -64,28 +58,83 @@ left:50%;
 
 transform:translateX(-50%);
 
-
 width:80%;
-
-padding:20px;
-
 
 background:white;
 
+padding:20px;
 
 border-radius:20px;
 
-
-font-size:22px;
-
-
 text-align:center;
+
+font-size:24px;
+
+display:none;
+
+z-index:999;
+
+}
+
+
+
+#scanner{
+
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+
+border:10px solid #00ff00;
+
+box-sizing:border-box;
 
 
 display:none;
 
+z-index:500;
 
-z-index:1000;
+
+animation:pulse 1s infinite;
+
+
+pointer-events:none;
+
+}
+
+
+
+
+@keyframes pulse{
+
+
+0%{
+
+opacity:.2;
+
+}
+
+
+50%{
+
+opacity:1;
+
+}
+
+
+100%{
+
+opacity:.2;
+
+}
+
 
 }
 
@@ -97,7 +146,14 @@ z-index:1000;
 </head>
 
 
+
+
 <body>
+
+
+
+<div id="scanner"></div>
+
 
 
 
@@ -111,13 +167,15 @@ z-index:1000;
 ⬜<br>
 ⬜
 
-
 </div>
 
 
 
 
-<div id="mensagem"></div>
+<div id="alerta">
+
+</div>
+
 
 
 
@@ -127,6 +185,9 @@ z-index:1000;
 
 
 mindar-image="imageTargetSrc: ./targets.mind;"
+
+
+embedded
 
 
 color-space="sRGB"
@@ -141,15 +202,8 @@ vr-mode-ui="enabled:false"
 device-orientation-permission-ui="enabled:false"
 
 
-
 >
 
-
-
-<a-assets>
-
-
-</a-assets>
 
 
 
@@ -158,9 +212,7 @@ device-orientation-permission-ui="enabled:false"
 
 position="0 0 0"
 
-look-controls="enabled:false"
-
->
+look-controls="enabled:false">
 
 </a-camera>
 
@@ -170,29 +222,20 @@ look-controls="enabled:false"
 
 
 
-<!-- ITEM 1 -->
+<a-entity id="item0"
 
-
-<a-entity
-
-mindar-image-target="targetIndex:0"
-
-id="item0"
-
->
+mindar-image-target="targetIndex:0">
 
 
 <a-text
 
 value="🐶"
 
-align="center"
-
 position="0 0 0"
 
 scale="3 3 3"
 
->
+align="center">
 
 
 </a-text>
@@ -205,30 +248,20 @@ scale="3 3 3"
 
 
 
+<a-entity id="item1"
 
-<!-- ITEM 2 -->
-
-
-<a-entity
-
-mindar-image-target="targetIndex:1"
-
-id="item1"
-
->
+mindar-image-target="targetIndex:1">
 
 
 <a-text
 
 value="🐱"
 
-align="center"
-
 position="0 0 0"
 
 scale="3 3 3"
 
->
+align="center">
 
 
 </a-text>
@@ -243,31 +276,20 @@ scale="3 3 3"
 
 
 
-<!-- ITEM 3 -->
+<a-entity id="item2"
 
-
-<a-entity
-
-mindar-image-target="targetIndex:2"
-
-id="item2"
-
-
->
+mindar-image-target="targetIndex:2">
 
 
 <a-text
 
 value="🦆"
 
-align="center"
-
 position="0 0 0"
 
 scale="3 3 3"
 
-
->
+align="center">
 
 
 </a-text>
@@ -282,30 +304,20 @@ scale="3 3 3"
 
 
 
-<!-- ITEM 4 -->
+<a-entity id="item3"
 
-
-<a-entity
-
-mindar-image-target="targetIndex:3"
-
-id="item3"
-
->
+mindar-image-target="targetIndex:3">
 
 
 <a-text
 
 value="🦁"
 
-align="center"
-
 position="0 0 0"
 
 scale="3 3 3"
 
-
->
+align="center">
 
 
 </a-text>
@@ -319,37 +331,27 @@ scale="3 3 3"
 
 
 
-<!-- ITEM 5 -->
 
+<a-entity id="item4"
 
-<a-entity
-
-mindar-image-target="targetIndex:4"
-
-id="item4"
-
-
->
+mindar-image-target="targetIndex:4">
 
 
 <a-text
 
 value="🐵"
 
-align="center"
-
 position="0 0 0"
 
 scale="3 3 3"
 
->
+align="center">
 
 
 </a-text>
 
 
 </a-entity>
-
 
 
 
@@ -362,43 +364,48 @@ scale="3 3 3"
 
 
 
+
+
+
 <script>
+
 
 
 const animais=[
 
 
 {
-nome:"Cachorrinho",
-emoji:"🐶"
+nome:"Guardião da Liderança",
+icone:"🐶"
 },
 
 
 {
-nome:"Gatinho",
-emoji:"🐱"
+nome:"Guardião das Vendas",
+icone:"🐱"
 },
 
 
 {
-nome:"Patinho",
-emoji:"🦆"
+nome:"Guardião da Estratégia",
+icone:"🦆"
 },
 
 
 {
-nome:"Leão",
-emoji:"🦁"
+nome:"Guardião da Inovação",
+icone:"🦁"
 },
 
 
 {
-nome:"Macaco",
-emoji:"🐵"
+nome:"Guardião Financeiro",
+icone:"🐵"
 }
 
 
 ];
+
 
 
 
@@ -423,15 +430,15 @@ i++
 ){
 
 
-let item=
+const item=
 
-document
-
-.querySelector(
+document.querySelector(
 
 "#item"+i
 
 );
+
+
 
 
 
@@ -444,12 +451,14 @@ item.addEventListener(
 ()=>{
 
 
+
 encontrado=i;
 
 
 
-}
+destacarItem(
 
+animais[i]
 
 );
 
@@ -460,11 +469,121 @@ encontrado=i;
 
 
 
+);
+
+
+
+
+
+item.addEventListener(
+
+
+"targetLost",
+
+
+()=>{
+
+
+document
+
+.querySelector("#scanner")
+
+.style.display="none";
+
+
+
+}
+
+
+
+
+);
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function destacarItem(animal){
+
+
+
+document
+
+.querySelector("#scanner")
+
+.style.display="block";
+
+
+
+
+let alerta=
+
+document.querySelector(
+
+"#alerta"
+
+);
+
+
+
+alerta.style.display="block";
+
+
+
+alerta.innerHTML=
+
+
+"✨ ITEM ENCONTRADO ✨<br><br>"+
+
+
+animal.icone+
+
+"<br>"+
+
+animal.nome+
+
+"<br><br>👇 Toque para capturar";
+
+
+
+
+if(
+
+navigator.vibrate
+
+){
+
+navigator.vibrate(
+
+300
+
+);
+
+}
+
+
+
+
+}
+
+
+
+
+
+
 
 
 
 window.addEventListener(
-
 
 "click",
 
@@ -476,6 +595,7 @@ window.addEventListener(
 if(encontrado===null)
 
 return;
+
 
 
 
@@ -504,35 +624,38 @@ encontrado
 
 
 
-
 mostrar(
 
-"🎉 Parabéns!<br><br>Você encontrou:<br>"
+"🎉 Parabéns!<br><br>Você capturou:<br>"+
 
 
-+
+animais[encontrado].icone+
 
-animais[encontrado].emoji
+"<br>"+
 
-+
-
-" "
-
-+
-
-animais[encontrado].nome
-
-+
+animais[encontrado].nome+
 
 "<br><br>Seja feliz por aí 🚀"
-
 
 );
 
 
 
+atualizar();
 
-atualizarInventario();
+
+
+document
+
+.querySelector("#scanner")
+
+.style.display="none";
+
+
+
+encontrado=null;
+
+
 
 
 
@@ -545,20 +668,42 @@ capturados.length===5
 
 
 
-setTimeout(
-()=>{
+setTimeout(()=>{
+
+
 mostrar(
-"🏆 PARABÉNS!<br><br>Você conquistou todos os itens!<br><br>Você é um empreendedor foda pra caralho 🚀🔥"
+
+"🏆 PARABÉNS!<br><br>Você encontrou todos os guardiões.<br><br>Você é um empreendedor foda pra caralho 🚀🔥"
+
+
 );
 
 
 
 },2000);
+
+
+
 }
+
+
+
+
 }
+
+
+
 );
 
-function atualizarInventario(){
+
+
+
+
+
+
+
+
+function atualizar(){
 
 
 
@@ -568,19 +713,17 @@ let html="🎒<br>";
 
 animais.forEach(
 
-(a,index)=>{
+(a,i)=>{
 
 
 
 html +=
 
-capturados.includes(index)
-
+capturados.includes(i)
 
 ?
 
-a.emoji+"<br>"
-
+a.icone+"<br>"
 
 :
 
@@ -589,7 +732,6 @@ a.emoji+"<br>"
 
 
 });
-
 
 
 document
@@ -609,43 +751,40 @@ document
 
 
 
-function mostrar(txt){
+function mostrar(texto){
 
 
 
-let msg=
+let alerta=
 
 document.querySelector(
 
-"#mensagem"
+"#alerta"
 
 );
 
 
 
-msg.innerHTML=txt;
+alerta.innerHTML=texto;
+
+
+alerta.style.display="block";
 
 
 
-msg.style.display="block";
+
+setTimeout(()=>{
 
 
-
-
-setTimeout(
-
-()=>{
-
-
-msg.style.display="none";
+alerta.style.display="none";
 
 
 },
 
+
 4000
 
 );
-
 
 
 }
