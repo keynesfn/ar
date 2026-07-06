@@ -6,11 +6,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Jornada Empreendedora AR</title>
+<title>Jornada AR</title>
 
 
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
 
 
 <style>
@@ -32,6 +34,7 @@ background:#000;
 }
 
 
+
 video,
 canvas,
 .a-canvas{
@@ -42,11 +45,13 @@ top:0!important;
 left:0!important;
 
 width:100vw!important;
+
 height:100vh!important;
 
 object-fit:cover!important;
 
 }
+
 
 
 /* INTRO */
@@ -60,13 +65,13 @@ inset:0;
 
 background:black;
 
-z-index:99999;
+z-index:10000;
 
 display:flex;
 
-justify-content:center;
-
 align-items:center;
+
+justify-content:center;
 
 }
 
@@ -84,31 +89,24 @@ object-fit:cover;
 
 
 
-#playIntro{
-
+#btnStart{
 
 position:absolute;
 
-bottom:70px;
+bottom:60px;
 
 
-font-size:25px;
+padding:20px 40px;
 
+border-radius:40px;
 
-padding:20px 45px;
-
-
-border-radius:50px;
-
-
-border:none;
-
+border:0;
 
 background:#ffcc00;
 
+font-size:22px;
 
 font-weight:bold;
-
 
 }
 
@@ -116,6 +114,14 @@ font-weight:bold;
 
 
 /* HUD */
+
+
+#hud{
+
+display:none;
+
+}
+
 
 
 #progresso{
@@ -126,18 +132,16 @@ top:20px;
 
 left:20px;
 
+z-index:999;
 
-background:rgba(0,0,0,.7);
+
+background:#000000aa;
 
 color:white;
 
 padding:15px 25px;
 
-border-radius:30px;
-
-font-size:18px;
-
-z-index:9999;
+border-radius:25px;
 
 }
 
@@ -152,7 +156,10 @@ top:20px;
 
 right:20px;
 
-background:rgba(0,0,0,.7);
+z-index:999;
+
+
+background:#000000aa;
 
 color:white;
 
@@ -164,53 +171,7 @@ font-size:30px;
 
 text-align:center;
 
-z-index:9999;
-
 }
-
-
-
-
-#scanner{
-
-position:fixed;
-
-inset:0;
-
-
-border:10px solid #00ff88;
-
-
-display:none;
-
-
-box-sizing:border-box;
-
-
-animation:pulse 1s infinite;
-
-
-z-index:9000;
-
-
-pointer-events:none;
-
-}
-
-
-
-@keyframes pulse{
-
-
-0%{opacity:.2}
-
-50%{opacity:1}
-
-100%{opacity:.2}
-
-
-}
-
 
 
 
@@ -226,48 +187,67 @@ left:50%;
 
 transform:translateX(-50%);
 
+width:80%;
 
-width:85%;
-
-
-background:rgba(0,0,0,.85);
-
+background:#000000dd;
 
 color:white;
 
-
 padding:25px;
 
-
-border-radius:30px;
-
-
-font-size:22px;
-
+border-radius:25px;
 
 text-align:center;
 
+font-size:22px;
 
 display:none;
 
+z-index:999;
 
-z-index:10000;
+}
 
+
+
+
+#scanner{
+
+position:fixed;
+
+inset:0;
+
+border:8px solid #00ff88;
+
+display:none;
+
+z-index:800;
+
+box-sizing:border-box;
+
+pointer-events:none;
+
+animation:pulse 1s infinite;
+
+}
+
+
+@keyframes pulse{
+
+50%{opacity:.3;}
 
 }
 
 
 </style>
 
-</head>
 
+</head>
 
 <body>
 
 
 
 <!-- INTRO -->
-
 
 <div id="intro">
 
@@ -276,7 +256,7 @@ z-index:10000;
 
 id="introVideo"
 
-src="./intro.mp4"
+src="intro.mp4"
 
 playsinline
 
@@ -286,7 +266,7 @@ webkit-playsinline>
 
 
 
-<button id="playIntro">
+<button id="btnStart">
 
 ▶️ Começar
 
@@ -297,6 +277,9 @@ webkit-playsinline>
 
 
 
+
+
+<div id="hud">
 
 
 <div id="scanner"></div>
@@ -313,7 +296,7 @@ webkit-playsinline>
 
 <div id="inventario">
 
-🎒<br>
+🎒
 
 <div id="slots">
 
@@ -328,20 +311,27 @@ webkit-playsinline>
 </div>
 
 
-
-
 <div id="alerta"></div>
 
 
+</div>
 
 
 
+
+
+<!-- AR -->
 
 
 <a-scene
 
+id="scene"
 
-mindar-image="imageTargetSrc: ./targets.mind;"
+
+mindar-image="
+imageTargetSrc: ./targets.mind;
+autoStart:false;
+"
 
 
 embedded
@@ -359,16 +349,14 @@ device-orientation-permission-ui="enabled:false"
 >
 
 
-
 <a-camera
 
 position="0 0 0"
 
 look-controls="enabled:false">
 
+
 </a-camera>
-
-
 
 
 
@@ -389,11 +377,13 @@ look-controls="enabled:false">
 
 
 
+
 <a-entity id="item2" mindar-image-target="targetIndex:2">
 
 <a-text value="🚀" scale="3 3 3"></a-text>
 
 </a-entity>
+
 
 
 
@@ -405,12 +395,12 @@ look-controls="enabled:false">
 
 
 
+
 <a-entity id="item4" mindar-image-target="targetIndex:4">
 
 <a-text value="👑" scale="3 3 3"></a-text>
 
 </a-entity>
-
 
 
 </a-scene>
@@ -419,42 +409,22 @@ look-controls="enabled:false">
 
 
 
-
-
 <script>
-
 
 
 const itens=[
 
-{
-nome:"Bússola da Estratégia",
-icone:"🧭"
-},
+["Bússola da Estratégia","🧭"],
 
-{
-nome:"Cristal Financeiro",
-icone:"💰"
-},
+["Cristal Financeiro","💰"],
 
-{
-nome:"Foguete das Vendas",
-icone:"🚀"
-},
+["Foguete das Vendas","🚀"],
 
-{
-nome:"Lâmpada da Inovação",
-icone:"💡"
-},
+["Lâmpada da Inovação","💡"],
 
-{
-nome:"Coroa da Liderança",
-icone:"👑"
-}
+["Coroa da Liderança","👑"]
 
 ];
-
-
 
 
 
@@ -465,26 +435,28 @@ let capturados=[];
 
 
 
-
-
-/* VIDEO COM SOM */
-
-
-document
-
-.querySelector("#playIntro")
-
-.onclick=()=>{
-
-
-let video=
+const video=
 
 document.querySelector("#introVideo");
 
 
+
+const scene=
+
+document.querySelector("#scene");
+
+
+
+
+
 document
 
-.querySelector("#playIntro")
+.querySelector("#btnStart")
+
+.onclick=()=>{
+
+
+document.querySelector("#btnStart")
 
 .style.display="none";
 
@@ -494,111 +466,87 @@ video.play();
 
 
 
-video.onended=()=>{
+video.onended=async()=>{
 
 
-document
-
-.querySelector("#intro")
+document.querySelector("#intro")
 
 .style.display="none";
 
 
-};
 
-
-};
-
-
-
-
-
-
-
-
-
-/* RECONHECIMENTO */
-
-
-for(let i=0;i<5;i++){
-
-
-
-let item=
-
-document.querySelector("#item"+i);
-
-
-
-
-item.addEventListener(
-
-"targetFound",
-
-()=>{
-
-
-
-encontrado=i;
-
-
-
-document
-
-.querySelector("#scanner")
+document.querySelector("#hud")
 
 .style.display="block";
 
 
 
 
+await scene.systems[
+
+"mindar-image-system"
+
+].start();
+
+
+
+};
+
+
+};
+
+
+
+
+
+
+
+
+
+for(let i=0;i<5;i++){
+
+
+let obj=
+
+document.querySelector("#item"+i);
+
+
+
+
+obj.addEventListener(
+
+"targetFound",
+
+()=>{
+
+
+encontrado=i;
+
+
+
+document.querySelector("#scanner")
+
+.style.display="block";
+
+
+
 mostrar(
 
-"✨ ITEM ENCONTRADO ✨<br><br>"+
+"✨ Encontrado ✨<br><br>"+
 
 "<span style='font-size:70px'>"+
 
-itens[i].icone+
+itens[i][1]+
 
 "</span><br>"+
 
-itens[i].nome+
+itens[i][0]+
 
 "<br><br>Toque para capturar"
 
 );
 
 
-
-if(navigator.vibrate){
-
-navigator.vibrate(300);
-
-}
-
-
-
-});
-
-
-
-
-
-
-item.addEventListener(
-
-"targetLost",
-
-()=>{
-
-
-document
-
-.querySelector("#scanner")
-
-.style.display="none";
-
-
 });
 
 
@@ -607,20 +555,7 @@ document
 
 
 
-
-
-
-
-
-/* CAPTURA */
-
-
-window.addEventListener(
-
-"click",
-
-()=>{
-
+window.onclick=()=>{
 
 
 if(encontrado===null)
@@ -640,27 +575,7 @@ return;
 
 
 
-
-capturados.push(
-
-encontrado
-
-);
-
-
-
-mostrar(
-
-"🎉 Capturado<br><br>"+
-
-itens[encontrado].icone+
-
-"<br>"+
-
-itens[encontrado].nome
-
-
-);
+capturados.push(encontrado);
 
 
 
@@ -668,17 +583,21 @@ atualizar();
 
 
 
+mostrar(
+
+"🎉 Capturado<br>"+
+
+itens[encontrado][1]
+
+);
+
+
+
 encontrado=null;
 
 
 
-
-
-if(
-
-capturados.length===5
-
-){
+if(capturados.length==5){
 
 
 setTimeout(()=>{
@@ -686,7 +605,7 @@ setTimeout(()=>{
 
 mostrar(
 
-"🏆 Jornada Completa<br><br>Você desbloqueou seu potencial empreendedor 🚀"
+"🏆 Jornada completa 🚀"
 
 );
 
@@ -694,13 +613,15 @@ mostrar(
 },1500);
 
 
-
 }
 
 
+};
 
 
-});
+
+
+
 
 
 function atualizar(){
@@ -709,9 +630,7 @@ function atualizar(){
 let html="";
 
 
-itens.forEach(
-
-(item,i)=>{
+itens.forEach((x,i)=>{
 
 
 html+=
@@ -720,7 +639,7 @@ capturados.includes(i)
 
 ?
 
-item.icone+"<br>"
+x[1]+"<br>"
 
 :
 
@@ -730,17 +649,15 @@ item.icone+"<br>"
 });
 
 
-document
 
-.querySelector("#slots")
+document.querySelector("#slots")
 
 .innerHTML=html;
 
 
 
-document
 
-.querySelector("#progresso")
+document.querySelector("#progresso")
 
 .innerHTML=
 
@@ -755,20 +672,18 @@ document
 
 
 
-function mostrar(txt){
+function mostrar(t){
 
 
-let alerta=
+let a=
 
 document.querySelector("#alerta");
 
 
-
-alerta.innerHTML=txt;
-
+a.innerHTML=t;
 
 
-alerta.style.display="block";
+a.style.display="block";
 
 
 }
@@ -778,7 +693,7 @@ alerta.style.display="block";
 </script>
 
 
-
 </body>
+
 
 </html>
