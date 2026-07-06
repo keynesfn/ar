@@ -1,112 +1,117 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
 
-<title>
-RPG AR - Caça aos Pets
-</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Caça AR</title>
 
 <style>
 
 body{
- margin:0;
- overflow:hidden;
- font-family:Arial;
-}
-
-
-#hud{
-
- position:fixed;
- top:20px;
- right:20px;
-
- background:white;
-
- padding:15px;
-
- border-radius:20px;
-
- z-index:10;
-
- font-size:25px;
-
-}
-
-
-#msg{
-
- position:fixed;
-
- bottom:40px;
-
- left:50%;
-
- transform:translateX(-50%);
-
- background:white;
-
- padding:20px;
-
- border-radius:20px;
-
- display:none;
-
- z-index:20;
-
- text-align:center;
-
- font-size:22px;
-
+    margin:0;
+    overflow:hidden;
+    font-family:Arial;
 }
 
 
 #start{
 
- position:fixed;
+    position:fixed;
+    top:50%;
+    left:50%;
 
- top:50%;
+    transform:translate(-50%,-50%);
 
- left:50%;
+    padding:25px 35px;
 
- transform:translate(-50%,-50%);
+    border-radius:25px;
 
- padding:25px;
+    border:0;
 
- font-size:24px;
+    font-size:24px;
 
- border-radius:30px;
+    background:white;
 
- z-index:30;
+    z-index:10;
+
+}
+
+
+
+#inventario{
+
+    position:fixed;
+
+    right:20px;
+
+    top:20px;
+
+    background:white;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    z-index:5;
+
+    font-size:30px;
+
+}
+
+
+
+#mensagem{
+
+    position:fixed;
+
+    bottom:40px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:80%;
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    display:none;
+
+    font-size:22px;
+
+    z-index:20;
 
 }
 
 
 </style>
 
-
 </head>
-
 
 
 <body>
 
 
 <button id="start">
-🚀 Começar Jornada AR
+
+📷 Entrar na Jornada
+
 </button>
 
 
 
-<div id="hud">
+<div id="inventario">
 
 🎒<br>
-
-<div id="inventario">
 
 ⬜<br>
 ⬜<br>
@@ -116,12 +121,10 @@ body{
 
 </div>
 
-</div>
 
 
+<div id="mensagem"></div>
 
-
-<div id="msg"></div>
 
 
 
@@ -129,69 +132,60 @@ body{
 <script type="module">
 
 
-import * as THREE from
+import * as THREE from 
 
 "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
 
 
-import {ARButton} from
 
-"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/webxr/ARButton.js";
-
-
-
-
+let cena;
 
 let camera;
 
-let scene;
-
-let renderer;
+let renderizador;
 
 
 
-let animais=[];
-
+let objetos=[];
 
 let capturados=[];
-
 
 let alvo=null;
 
 
 
 
-const pets=[
+const animais=[
 
 
 {
 nome:"Cachorrinho",
-emoji:"🐶"
+icone:"🐶"
 },
 
 
 {
 nome:"Gatinho",
-emoji:"🐱"
+icone:"🐱"
 },
 
 
 {
 nome:"Patinho",
-emoji:"🦆"
+icone:"🦆"
 },
 
 
 {
 nome:"Leãozinho",
-emoji:"🦁"
+icone:"🦁"
 },
 
 
 {
-nome:"Macaco",
-emoji:"🐵"
+nome:"Macaquinho",
+icone:"🐵"
 }
 
 
@@ -203,35 +197,39 @@ emoji:"🐵"
 
 document
 .getElementById("start")
-.onclick=()=>{
+.onclick = iniciarAR;
+
+
+
+
+
+async function iniciarAR(){
+
+
+if(!navigator.xr){
+
+alert(
+"Seu aparelho não suporta WebXR"
+);
+
+return;
+
+}
+
 
 
 document
 .getElementById("start")
-.remove();
+.style.display="none";
 
 
-iniciar();
 
-
-};
-
+cena = new THREE.Scene();
 
 
 
 
-
-function iniciar(){
-
-
-
-scene =
-new THREE.Scene();
-
-
-
-camera =
-new THREE.PerspectiveCamera(
+camera = new THREE.PerspectiveCamera(
 
 70,
 
@@ -245,17 +243,21 @@ window.innerWidth/window.innerHeight,
 
 
 
-renderer =
-new THREE.WebGLRenderer(
+
+
+renderizador = new THREE.WebGLRenderer(
+
 {
 alpha:true,
+
 antialias:true
 }
+
 );
 
 
 
-renderer.setSize(
+renderizador.setSize(
 
 window.innerWidth,
 
@@ -265,36 +267,21 @@ window.innerHeight
 
 
 
-renderer.xr.enabled=true;
+renderizador.xr.enabled=true;
 
-
-
-document.body.appendChild(
-
-renderer.domElement
-
-);
 
 
 
 document.body.appendChild(
 
-ARButton.createButton(
-
-renderer,
-
-{
-requiredFeatures:[]
-}
-
-)
+renderizador.domElement
 
 );
 
 
 
 
-let luz=
+const luz = 
 
 new THREE.HemisphereLight(
 
@@ -307,41 +294,78 @@ new THREE.HemisphereLight(
 );
 
 
-scene.add(luz);
+
+cena.add(luz);
 
 
 
 
 
-renderer.xr.addEventListener(
+try{
 
 
-"sessionstart",
+const sessao =
 
-()=>{
+await navigator.xr.requestSession(
+
+"immersive-ar",
+
+{
+
+requiredFeatures:[
+
+"local"
+
+]
+
+}
+
+);
+
+
+
+await renderizador.xr.setSession(
+
+sessao
+
+);
+
 
 
 criarAnimais();
 
 
-}
 
 
-);
+renderizador.setAnimationLoop(
 
-
-
-renderer.setAnimationLoop(
-
-jogo
+loop
 
 );
 
 
 
+
+}
+
+catch(e){
+
+
+alert(
+
+"Não consegui abrir a câmera AR"
+
+);
+
+
+console.error(e);
+
+
 }
 
 
+
+}
 
 
 
@@ -353,15 +377,16 @@ function criarAnimais(){
 
 
 
-pets.forEach(
+animais.forEach(
 
-(pet)=>{
+animal=>{
 
 
 
-const canvas =
+let canvas=
 
 document.createElement("canvas");
+
 
 
 canvas.width=256;
@@ -369,13 +394,15 @@ canvas.width=256;
 canvas.height=256;
 
 
-const ctx=
+
+
+let ctx=
 
 canvas.getContext("2d");
 
 
 
-ctx.font="150px Arial";
+ctx.font="160px Arial";
 
 
 ctx.textAlign="center";
@@ -383,7 +410,7 @@ ctx.textAlign="center";
 
 ctx.fillText(
 
-pet.emoji,
+animal.icone,
 
 128,
 
@@ -394,33 +421,38 @@ pet.emoji,
 
 
 
-const textura=
+let textura=
 
-new THREE.CanvasTexture(canvas);
+new THREE.CanvasTexture(
+
+canvas
+
+);
 
 
 
-
-const material=
+let material=
 
 new THREE.SpriteMaterial(
 
 {
+
 map:textura
+
 }
 
 );
 
 
 
-const sprite=
+
+let sprite=
 
 new THREE.Sprite(
 
 material
 
 );
-
 
 
 
@@ -455,9 +487,9 @@ Math.PI
 
 let distancia=
 
-2+
+2 +
 
-Math.random()*4;
+Math.random()*3;
 
 
 
@@ -482,7 +514,6 @@ Math.sin(angulo)
 distancia
 
 
-
 );
 
 
@@ -490,50 +521,52 @@ distancia
 
 sprite.userData.nome=
 
-pet.nome;
+animal.nome;
+
+
+
+sprite.userData.icone=
+
+animal.icone;
 
 
 
 
-scene.add(sprite);
+cena.add(sprite);
 
 
 
-animais.push(sprite);
+objetos.push(sprite);
+
+
+
+});
+
 
 
 
 }
 
 
-);
-
-
-
-}
 
 
 
 
 
 
-
-
-
-function jogo(){
-
+function loop(){
 
 
 alvo=null;
 
 
 
-animais.forEach(
+objetos.forEach(
 
-animal=>{
+obj=>{
 
 
-animal.lookAt(
+obj.lookAt(
 
 camera.position
 
@@ -541,11 +574,12 @@ camera.position
 
 
 
+
 let distancia=
 
 camera.position.distanceTo(
 
-animal.position
+obj.position
 
 );
 
@@ -559,31 +593,27 @@ distancia < 1.5
 
 !capturados.includes(
 
-animal.userData.nome
+obj.userData.nome
 
 )
 
 ){
 
-
-alvo=animal;
-
+alvo=obj;
 
 }
 
 
 
-}
 
-
-);
+});
 
 
 
 
-renderer.render(
+renderizador.render(
 
-scene,
+cena,
 
 camera
 
@@ -591,7 +621,6 @@ camera
 
 
 }
-
 
 
 
@@ -608,7 +637,6 @@ window.addEventListener(
 ()=>{
 
 
-
 if(!alvo)
 
 return;
@@ -616,37 +644,50 @@ return;
 
 
 
-let nome=
+capturados.push(
 
-alvo.userData.nome;
-
-
-
-
-capturados.push(nome);
-
-
-
-scene.remove(alvo);
-
-
-
-
-mostrarMensagem(
-
-"🎉 Parabéns!<br><br>Você encontrou seu "
-
-+
-
-nome+
-
-"<br><br>Seja feliz por aí 🚀"
+alvo.userData.nome
 
 );
 
 
 
+mostrar(
+
+"🎉 Parabéns!<br><br>Você encontrou:<br><br>"
+
++
+
+alvo.userData.icone
+
++
+
+" "
+
++
+
+alvo.userData.nome
+
++
+
+"<br><br>Seja feliz por aí!"
+
+);
+
+
+
+
+cena.remove(
+
+alvo
+
+);
+
+
+
+
 atualizarInventario();
+
 
 
 
@@ -661,23 +702,22 @@ capturados.length===5
 setTimeout(()=>{
 
 
-mostrarMensagem(
+mostrar(
 
-"🏆 PARABÉNS!<br><br>Você conquistou todos os desafios.<br><br>Você é um empreendedor foda pra caralho 🚀🔥"
+"🏆 PARABÉNS!<br><br>Você conquistou todos os itens!<br><br>Você é um empreendedor foda pra caralho 🚀🔥"
 
 );
 
 
-},1500);
-
-
-
-}
-
+},2000);
 
 
 }
 
+
+
+
+}
 
 
 );
@@ -693,39 +733,34 @@ function atualizarInventario(){
 
 
 
-let html="";
+let html="🎒<br>";
 
 
 
-pets.forEach(
+animais.forEach(
 
-pet=>{
-
+a=>{
 
 
 html +=
 
+capturados.includes(
 
-capturados.includes(pet.nome)
+a.nome
 
+)
 
 ?
 
-
-pet.emoji+"<br>"
-
+a.icone+"<br>"
 
 :
-
 
 "⬜<br>";
 
 
 
-}
-
-
-);
+});
 
 
 
@@ -745,13 +780,18 @@ document
 
 
 
-function mostrarMensagem(texto){
+
+function mostrar(texto){
 
 
 
 let div=
 
-document.getElementById("msg");
+document.getElementById(
+
+"mensagem"
+
+);
 
 
 
@@ -760,6 +800,7 @@ div.innerHTML=texto;
 
 
 div.style.display="block";
+
 
 
 
@@ -777,14 +818,9 @@ div.style.display="none";
 
 
 
-
-
 </script>
 
 
-
-
 </body>
-
 
 </html>
