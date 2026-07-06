@@ -10,12 +10,10 @@
 
 
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
 
 <style>
-
 
 html,body{
 
@@ -32,9 +30,6 @@ font-family:Arial;
 background:#000;
 
 }
-
-
-/* câmera fullscreen */
 
 
 video,
@@ -54,7 +49,6 @@ object-fit:cover!important;
 }
 
 
-
 /* INTRO */
 
 
@@ -64,21 +58,21 @@ position:fixed;
 
 inset:0;
 
-background:#000;
+background:black;
 
-z-index:50000;
+z-index:99999;
 
 display:flex;
 
-align-items:center;
-
 justify-content:center;
+
+align-items:center;
 
 }
 
 
 
-#videoIntro{
+#introVideo{
 
 width:100%;
 
@@ -90,33 +84,38 @@ object-fit:cover;
 
 
 
-#btnComecar{
+#playIntro{
+
 
 position:absolute;
 
-bottom:60px;
+bottom:70px;
+
+
+font-size:25px;
+
 
 padding:20px 45px;
 
-border:0;
 
 border-radius:50px;
 
-font-size:22px;
 
-font-weight:bold;
+border:none;
+
 
 background:#ffcc00;
 
-color:#000;
 
-box-shadow:0 0 30px #000;
+font-weight:bold;
+
 
 }
 
 
 
-/* PROGRESSO */
+
+/* HUD */
 
 
 #progresso{
@@ -127,11 +126,12 @@ top:20px;
 
 left:20px;
 
+
 background:rgba(0,0,0,.7);
 
 color:white;
 
-padding:14px 25px;
+padding:15px 25px;
 
 border-radius:30px;
 
@@ -143,16 +143,14 @@ z-index:9999;
 
 
 
-/* INVENTÁRIO */
-
 
 #inventario{
 
 position:fixed;
 
-right:20px;
-
 top:20px;
+
+right:20px;
 
 background:rgba(0,0,0,.7);
 
@@ -160,7 +158,7 @@ color:white;
 
 padding:15px;
 
-border-radius:25px;
+border-radius:20px;
 
 font-size:30px;
 
@@ -171,17 +169,6 @@ z-index:9999;
 }
 
 
-#tituloInv{
-
-font-size:12px;
-
-margin-bottom:8px;
-
-}
-
-
-
-/* BORDA AO ENCONTRAR */
 
 
 #scanner{
@@ -190,34 +177,43 @@ position:fixed;
 
 inset:0;
 
-border:8px solid #00ff88;
+
+border:10px solid #00ff88;
+
 
 display:none;
 
+
 box-sizing:border-box;
+
 
 animation:pulse 1s infinite;
 
-pointer-events:none;
 
 z-index:9000;
 
+
+pointer-events:none;
+
 }
+
 
 
 @keyframes pulse{
 
-0%{opacity:.2;}
 
-50%{opacity:1;}
+0%{opacity:.2}
 
-100%{opacity:.2;}
+50%{opacity:1}
+
+100%{opacity:.2}
+
 
 }
 
 
 
-/* ALERTA */
+
 
 
 #alerta{
@@ -230,41 +226,47 @@ left:50%;
 
 transform:translateX(-50%);
 
+
 width:85%;
+
 
 background:rgba(0,0,0,.85);
 
+
 color:white;
+
 
 padding:25px;
 
+
 border-radius:30px;
+
 
 font-size:22px;
 
+
 text-align:center;
+
 
 display:none;
 
+
 z-index:10000;
+
 
 }
 
 
-
 </style>
 
-
 </head>
-
-
 
 
 <body>
 
 
 
-<!-- VIDEO INICIAL -->
+<!-- INTRO -->
 
 
 <div id="intro">
@@ -272,15 +274,9 @@ z-index:10000;
 
 <video
 
-id="videoIntro"
+id="introVideo"
 
-src="intro.mp4"
-
-autoplay
-
-muted
-
-loop
+src="./intro.mp4"
 
 playsinline
 
@@ -290,9 +286,9 @@ webkit-playsinline>
 
 
 
-<button id="btnComecar">
+<button id="playIntro">
 
-🚀 Iniciar Jornada
+▶️ Começar
 
 </button>
 
@@ -315,19 +311,9 @@ webkit-playsinline>
 
 
 
-
 <div id="inventario">
 
-
-<div id="tituloInv">
-
-SKILLS
-
-</div>
-
-
-🎒
-
+🎒<br>
 
 <div id="slots">
 
@@ -338,7 +324,6 @@ SKILLS
 ⬜
 
 </div>
-
 
 </div>
 
@@ -353,22 +338,13 @@ SKILLS
 
 
 
-
-<!-- CENA AR -->
-
 <a-scene
 
 
-id="ar"
+mindar-image="imageTargetSrc: ./targets.mind;"
 
 
-embedded="false"
-
-
-mindar-image="
-imageTargetSrc: ./targets.mind;
-autoStart:false;
-"
+embedded
 
 
 renderer="colorManagement:true"
@@ -378,6 +354,7 @@ vr-mode-ui="enabled:false"
 
 
 device-orientation-permission-ui="enabled:false"
+
 
 >
 
@@ -395,45 +372,42 @@ look-controls="enabled:false">
 
 
 
+
 <a-entity id="item0" mindar-image-target="targetIndex:0">
 
-<a-text value="🧭" scale="3 3 3" align="center"></a-text>
+<a-text value="🧭" scale="3 3 3"></a-text>
 
 </a-entity>
-
 
 
 
 <a-entity id="item1" mindar-image-target="targetIndex:1">
 
-<a-text value="💰" scale="3 3 3" align="center"></a-text>
+<a-text value="💰" scale="3 3 3"></a-text>
 
 </a-entity>
-
 
 
 
 <a-entity id="item2" mindar-image-target="targetIndex:2">
 
-<a-text value="🚀" scale="3 3 3" align="center"></a-text>
+<a-text value="🚀" scale="3 3 3"></a-text>
 
 </a-entity>
-
 
 
 
 <a-entity id="item3" mindar-image-target="targetIndex:3">
 
-<a-text value="💡" scale="3 3 3" align="center"></a-text>
+<a-text value="💡" scale="3 3 3"></a-text>
 
 </a-entity>
 
 
 
-
 <a-entity id="item4" mindar-image-target="targetIndex:4">
 
-<a-text value="👑" scale="3 3 3" align="center"></a-text>
+<a-text value="👑" scale="3 3 3"></a-text>
 
 </a-entity>
 
@@ -447,44 +421,39 @@ look-controls="enabled:false">
 
 
 
-
 <script>
 
 
-const itens=[
 
+const itens=[
 
 {
 nome:"Bússola da Estratégia",
 icone:"🧭"
 },
 
-
 {
 nome:"Cristal Financeiro",
 icone:"💰"
 },
-
 
 {
 nome:"Foguete das Vendas",
 icone:"🚀"
 },
 
-
 {
 nome:"Lâmpada da Inovação",
 icone:"💡"
 },
-
 
 {
 nome:"Coroa da Liderança",
 icone:"👑"
 }
 
-
 ];
+
 
 
 
@@ -496,22 +465,36 @@ let capturados=[];
 
 
 
-const sceneEl=
-
-document.querySelector("#ar");
 
 
-
-
-
-/* iniciar AR */
+/* VIDEO COM SOM */
 
 
 document
 
-.querySelector("#btnComecar")
+.querySelector("#playIntro")
 
-.onclick=async()=>{
+.onclick=()=>{
+
+
+let video=
+
+document.querySelector("#introVideo");
+
+
+document
+
+.querySelector("#playIntro")
+
+.style.display="none";
+
+
+
+video.play();
+
+
+
+video.onended=()=>{
 
 
 document
@@ -521,12 +504,7 @@ document
 .style.display="none";
 
 
-
-await sceneEl.systems[
-
-"mindar-image-system"
-
-].start();
+};
 
 
 };
@@ -536,24 +514,29 @@ await sceneEl.systems[
 
 
 
-/* encontrou objetos */
+
+
+
+/* RECONHECIMENTO */
 
 
 for(let i=0;i<5;i++){
 
 
-let alvo=
+
+let item=
 
 document.querySelector("#item"+i);
 
 
 
 
-alvo.addEventListener(
+item.addEventListener(
 
 "targetFound",
 
 ()=>{
+
 
 
 encontrado=i;
@@ -581,7 +564,7 @@ itens[i].icone+
 
 itens[i].nome+
 
-"<br><br>👇 Toque para capturar"
+"<br><br>Toque para capturar"
 
 );
 
@@ -595,15 +578,14 @@ navigator.vibrate(300);
 
 
 
-}
-
-);
+});
 
 
 
 
 
-alvo.addEventListener(
+
+item.addEventListener(
 
 "targetLost",
 
@@ -617,11 +599,7 @@ document
 .style.display="none";
 
 
-}
-
-
-);
-
+});
 
 
 }
@@ -633,7 +611,8 @@ document
 
 
 
-/* captura */
+
+/* CAPTURA */
 
 
 window.addEventListener(
@@ -643,9 +622,11 @@ window.addEventListener(
 ()=>{
 
 
+
 if(encontrado===null)
 
 return;
+
 
 
 
@@ -670,34 +651,20 @@ encontrado
 
 mostrar(
 
-"🎉 PARABÉNS!<br><br>"+
-
-"Você conquistou:<br>"+
-
-"<span style='font-size:70px'>"+
+"🎉 Capturado<br><br>"+
 
 itens[encontrado].icone+
 
-"</span><br>"+
+"<br>"+
 
-itens[encontrado].nome+
+itens[encontrado].nome
 
-"<br><br>Adicionado ao inventário 🎒"
 
 );
 
 
 
-
 atualizar();
-
-
-
-document
-
-.querySelector("#scanner")
-
-.style.display="none";
 
 
 
@@ -714,45 +681,32 @@ capturados.length===5
 ){
 
 
-
 setTimeout(()=>{
 
 
 mostrar(
 
-"🏆 JORNADA COMPLETA!<br><br>"+
-
-"Você encontrou os cinco artefatos.<br><br>"+
-
-"Você desbloqueou seu potencial empreendedor 🚀"
+"🏆 Jornada Completa<br><br>Você desbloqueou seu potencial empreendedor 🚀"
 
 );
 
 
-},2000);
+},1500);
+
 
 
 }
 
 
 
-}
 
-
-);
-
-
-
-
-
+});
 
 
 function atualizar(){
 
 
-
 let html="";
-
 
 
 itens.forEach(
@@ -760,7 +714,7 @@ itens.forEach(
 (item,i)=>{
 
 
-html +=
+html+=
 
 capturados.includes(i)
 
@@ -773,9 +727,7 @@ item.icone+"<br>"
 "⬜<br>";
 
 
-
 });
-
 
 
 document
@@ -786,18 +738,13 @@ document
 
 
 
-
 document
 
 .querySelector("#progresso")
 
 .innerHTML=
 
-"🚀 Jornada "+
-
-capturados.length+
-
-"/5";
+"🚀 Jornada "+capturados.length+"/5";
 
 
 }
@@ -820,6 +767,7 @@ document.querySelector("#alerta");
 alerta.innerHTML=txt;
 
 
+
 alerta.style.display="block";
 
 
@@ -828,6 +776,7 @@ alerta.style.display="block";
 
 
 </script>
+
 
 
 </body>
