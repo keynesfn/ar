@@ -5,7 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport"
+content="width=device-width, initial-scale=1">
 
 
 <title>Jornada Empreendedora AR</title>
@@ -16,16 +17,24 @@
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
 
-
 <style>
+
+
+*{
+
+box-sizing:border-box;
+
+}
 
 
 html,body{
 
 margin:0;
+
 padding:0;
 
 width:100%;
+
 height:100%;
 
 overflow:hidden;
@@ -37,63 +46,26 @@ font-family:Arial;
 }
 
 
-
-/* força câmera */
-
-
-video,
-canvas,
-.a-canvas{
-
-
-position:fixed!important;
-
-
-top:0!important;
-
-left:0!important;
-
-
-width:100vw!important;
-
-
-height:100vh!important;
-
-
-object-fit:cover!important;
-
-}
-
-
-
-
-
-
-/* INTRO */
+/* ===================
+   VIDEO INTRO
+=================== */
 
 
 #intro{
-
 
 position:fixed;
 
 inset:0;
 
-
 background:#000;
-
 
 z-index:99999;
 
-
 display:flex;
-
-
-align-items:center;
-
 
 justify-content:center;
 
+align-items:center;
 
 }
 
@@ -101,173 +73,172 @@ justify-content:center;
 
 #introVideo{
 
+position:fixed;
 
-width:100%;
+top:0;
 
-height:100%;
+left:0;
+
+width:100vw;
+
+height:100vh;
 
 object-fit:cover;
 
-
 }
-
 
 
 
 
 #btnStart{
 
-
 position:absolute;
 
 bottom:60px;
 
-
-padding:20px 40px;
-
-
-border-radius:50px;
-
+padding:20px 45px;
 
 border:none;
 
-
-background:#ffcc00;
-
+border-radius:50px;
 
 font-size:22px;
 
-
 font-weight:bold;
 
+background:#ffcc00;
+
+box-shadow:0 0 30px #ffcc00;
 
 }
 
 
 
 
+/* ===================
+   MINDAR CAMERA
+=================== */
 
 
-/* HUD */
+.a-canvas{
+
+position:fixed!important;
+
+top:0!important;
+
+left:0!important;
+
+width:100%!important;
+
+height:100%!important;
+
+}
+
+
+
+/* vídeo interno da câmera */
+
+body > video{
+
+position:absolute!important;
+
+top:0!important;
+
+left:0!important;
+
+width:100%!important;
+
+height:100%!important;
+
+object-fit:cover!important;
+
+}
+
+
+
+/* ===================
+   HUD
+=================== */
 
 
 #hud{
 
-
 display:none;
 
-
 }
-
 
 
 
 #progresso{
 
-
 position:fixed;
-
 
 top:20px;
 
 left:20px;
 
+z-index:9999;
 
-background:
-
-rgba(0,0,0,.7);
-
-
+background:rgba(0,0,0,.7);
 
 color:white;
 
-
 padding:15px 25px;
-
 
 border-radius:30px;
 
-
-z-index:9999;
-
+font-size:18px;
 
 }
-
-
 
 
 
 #inventario{
 
-
 position:fixed;
-
-
-right:20px;
 
 top:20px;
 
-
-
-background:
-
-rgba(0,0,0,.7);
-
-
-color:white;
-
-
-padding:15px;
-
-
-border-radius:20px;
-
-
-font-size:32px;
-
-
-text-align:center;
-
+right:20px;
 
 z-index:9999;
 
+background:rgba(0,0,0,.7);
+
+color:white;
+
+padding:15px;
+
+border-radius:25px;
+
+text-align:center;
+
+font-size:32px;
 
 }
-
-
 
 
 
 #scanner{
 
-
 position:fixed;
-
 
 inset:0;
 
+display:none;
 
 border:8px solid #00ff99;
 
-
-display:none;
-
-
-z-index:999;
-
-
 animation:pulse 1s infinite;
 
+z-index:8000;
 
 pointer-events:none;
-
 
 }
 
 
-
 @keyframes pulse{
-
 
 50%{
 
@@ -275,103 +246,66 @@ opacity:.3;
 
 }
 
-
 }
 
 
 
-
+/* CARD */
 
 
 #card{
 
-
 position:fixed;
-
 
 bottom:40px;
 
-
 left:50%;
 
-
-transform:
-
-translateX(-50%);
-
-
+transform:translateX(-50%);
 
 width:85%;
 
-
-
-background:
-
-rgba(0,0,0,.85);
-
-
+background:rgba(0,0,0,.85);
 
 color:white;
 
-
 padding:25px;
-
-
 
 border-radius:30px;
 
-
 text-align:center;
-
-
-z-index:9999;
-
 
 display:none;
 
+z-index:9999;
 
 }
-
-
 
 
 
 #icone{
 
-
 font-size:80px;
 
-
 }
-
 
 
 
 #capturar{
 
-
 padding:18px 45px;
 
+border:0;
 
 border-radius:40px;
 
-
-border:none;
-
+background:#00ff99;
 
 font-size:22px;
 
-
-background:#00ff99;
-
-
 font-weight:bold;
 
-
 }
-
-
-
 
 
 </style>
@@ -383,14 +317,9 @@ font-weight:bold;
 <body>
 
 
-
-
-
 <!-- INTRO -->
 
-
 <div id="intro">
-
 
 
 <video
@@ -406,14 +335,11 @@ webkit-playsinline>
 </video>
 
 
-
-
 <button id="btnStart">
 
 ▶️ Começar Jornada
 
 </button>
-
 
 
 </div>
@@ -423,11 +349,10 @@ webkit-playsinline>
 
 
 
-
+<!-- HUD -->
 
 
 <div id="hud">
-
 
 
 <div id="scanner"></div>
@@ -442,8 +367,6 @@ webkit-playsinline>
 
 
 
-
-
 <div id="inventario">
 
 
@@ -452,24 +375,16 @@ webkit-playsinline>
 
 <div id="slots">
 
-
 ⬜<br>
-
 ⬜<br>
-
 ⬜<br>
-
 ⬜<br>
-
 ⬜
 
-
 </div>
 
 
 </div>
-
-
 
 
 
@@ -477,25 +392,22 @@ webkit-playsinline>
 <div id="card">
 
 
-
 <div id="icone"></div>
-
 
 
 <h2 id="titulo"></h2>
 
 
 
-
 <button id="capturar">
 
-
 CAPTURAR ⭐
-
 
 </button>
 
 
+</div>
+
 
 </div>
 
@@ -503,14 +415,9 @@ CAPTURAR ⭐
 
 
 
-</div>
 
 
-
-
-
-
-
+<!-- AR -->
 
 
 <a-scene
@@ -522,16 +429,18 @@ id="scene"
 embedded
 
 
+style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+"
+
+
 mindar-image="
-
 imageTargetSrc: ./targets.mind;
-
 autoStart:false;
-
-filterMinCF:0.0001;
-
-filterBeta:0.001;
-
 "
 
 
@@ -543,80 +452,33 @@ vr-mode-ui="enabled:false"
 
 device-orientation-permission-ui="enabled:false"
 
-
 >
-
-
 
 
 
 <a-camera
 
-look-controls="enabled:false">
+position="0 0 0"
 
+look-controls="enabled:false">
 
 </a-camera>
 
 
 
+<a-entity id="item0" mindar-image-target="targetIndex:0"></a-entity>
 
 
-
-<a-entity
-
-id="item0"
-
-mindar-image-target="targetIndex:0">
-
-</a-entity>
+<a-entity id="item1" mindar-image-target="targetIndex:1"></a-entity>
 
 
+<a-entity id="item2" mindar-image-target="targetIndex:2"></a-entity>
 
 
-<a-entity
-
-id="item1"
-
-mindar-image-target="targetIndex:1">
-
-</a-entity>
+<a-entity id="item3" mindar-image-target="targetIndex:3"></a-entity>
 
 
-
-
-<a-entity
-
-id="item2"
-
-mindar-image-target="targetIndex:2">
-
-</a-entity>
-
-
-
-
-
-<a-entity
-
-id="item3"
-
-mindar-image-target="targetIndex:3">
-
-</a-entity>
-
-
-
-
-<a-entity
-
-id="item4"
-
-mindar-image-target="targetIndex:4">
-
-</a-entity>
-
-
-
+<a-entity id="item4" mindar-image-target="targetIndex:4"></a-entity>
 
 
 
@@ -628,89 +490,67 @@ mindar-image-target="targetIndex:4">
 
 
 
-
-
-
-
 <script>
-
-
 
 
 const itens=[
 
-
 ["Bússola da Estratégia","🧭"],
-
 
 ["Cristal Financeiro","💰"],
 
-
 ["Foguete das Vendas","🚀"],
-
 
 ["Lâmpada da Inovação","💡"],
 
-
 ["Coroa da Liderança","👑"]
-
 
 ];
 
 
 
-
-
-
 let encontrado=null;
-
 
 let capturados=[];
 
 
-
-
-
-const ar =
-
-document.querySelector("#scene");
+const scene=document.querySelector("#scene");
 
 
 
 
 
+/* START */
 
-/* INICIO */
 
-
-btnStart.onclick = async()=>{
-
+btnStart.onclick=()=>{
 
 
 btnStart.style.display="none";
 
 
+introVideo.play();
 
 
-/* começa AR no clique */
+
+introVideo.onended=async()=>{
+
+
+intro.style.display="none";
+
+
+hud.style.display="block";
+
 
 
 try{
 
 
-await ar.systems[
+await scene.systems[
 
 "mindar-image-system"
 
 ].start();
-
-
-
-console.log(
-
-"AR iniciado"
-
-);
 
 
 
@@ -719,41 +559,17 @@ console.log(
 catch(e){
 
 
-
 alert(
 
-"Erro câmera: "+e.message
+"Erro câmera: "+e
 
 );
-
 
 
 }
 
 
 
-
-
-/* toca vídeo */
-
-
-introVideo.play();
-
-
-
-
-introVideo.onended=()=>{
-
-
-
-intro.style.display="none";
-
-
-
-hud.style.display="block";
-
-
-
 };
 
 
@@ -766,28 +582,23 @@ hud.style.display="block";
 
 
 
-
-
-/* DETECTA */
+/* DETECTAR */
 
 
 for(let i=0;i<5;i++){
 
 
+let alvo=
 
-document
-
-.querySelector("#item"+i)
+document.querySelector("#item"+i);
 
 
-.addEventListener(
 
+alvo.addEventListener(
 
 "targetFound",
 
-
 ()=>{
-
 
 
 if(
@@ -800,14 +611,14 @@ return;
 
 
 
-
-
 encontrado=i;
 
 
 
-
 scanner.style.display="block";
+
+
+card.style.display="block";
 
 
 
@@ -825,24 +636,15 @@ itens[i][0];
 
 
 
-
-card.style.display="block";
-
-
-
-if(
-
-navigator.vibrate
-
-)
+if(navigator.vibrate){
 
 navigator.vibrate(300);
+
+}
 
 
 
 });
-
-
 
 
 }
@@ -852,11 +654,10 @@ navigator.vibrate(300);
 
 
 
-
+/* CAPTURAR */
 
 
 capturar.onclick=()=>{
-
 
 
 if(
@@ -869,14 +670,11 @@ return;
 
 
 
-
 capturados.push(
 
 encontrado
 
 );
-
-
 
 
 
@@ -887,14 +685,11 @@ card.style.display="none";
 
 
 
-
 atualizar();
 
 
 
-
 encontrado=null;
-
 
 
 
@@ -906,27 +701,21 @@ capturados.length===5
 ){
 
 
-
 setTimeout(()=>{
-
 
 
 card.style.display="block";
 
 
-
 icone.innerHTML="🏆";
-
 
 
 titulo.innerHTML=
 
-"Jornada Completa!<br>Você desbloqueou seu potencial empreendedor 🚀";
-
+"Parabéns!<br>Você completou a Jornada Empreendedora 🚀";
 
 
 capturar.style.display="none";
-
 
 
 },1000);
@@ -936,11 +725,7 @@ capturar.style.display="none";
 }
 
 
-
 };
-
-
-
 
 
 
@@ -950,32 +735,28 @@ capturar.style.display="none";
 function atualizar(){
 
 
-
 let html="";
 
 
+itens.forEach(
+
+(item,i)=>{
 
 
-itens.forEach((i,index)=>{
+html+=
 
-
-
-html +=
-
-capturados.includes(index)
+capturados.includes(i)
 
 ?
 
-i[1]+"<br>"
+item[1]+"<br>"
 
 :
 
 "⬜<br>";
 
 
-
 });
-
 
 
 
@@ -988,17 +769,13 @@ progresso.innerHTML=
 "🚀 Jornada "+capturados.length+"/5";
 
 
-
 }
-
 
 
 
 </script>
 
 
-
 </body>
-
 
 </html>
