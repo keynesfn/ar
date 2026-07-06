@@ -1,42 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+Caça AR - Empreendedor
+</title>
 
-<title>Caça AR</title>
+
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js">
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js">
+</script>
+
 
 <style>
 
+
 body{
-    margin:0;
-    overflow:hidden;
-    font-family:Arial;
-}
 
+margin:0;
 
-#start{
-
-    position:fixed;
-    top:50%;
-    left:50%;
-
-    transform:translate(-50%,-50%);
-
-    padding:25px 35px;
-
-    border-radius:25px;
-
-    border:0;
-
-    font-size:24px;
-
-    background:white;
-
-    z-index:10;
+font-family:Arial;
 
 }
 
@@ -44,21 +32,22 @@ body{
 
 #inventario{
 
-    position:fixed;
 
-    right:20px;
+position:fixed;
 
-    top:20px;
+top:20px;
 
-    background:white;
+right:20px;
 
-    padding:15px;
+background:white;
 
-    border-radius:15px;
+padding:15px;
 
-    z-index:5;
+border-radius:15px;
 
-    font-size:30px;
+font-size:25px;
+
+z-index:999;
 
 }
 
@@ -66,46 +55,49 @@ body{
 
 #mensagem{
 
-    position:fixed;
 
-    bottom:40px;
+position:fixed;
 
-    left:50%;
+bottom:40px;
 
-    transform:translateX(-50%);
+left:50%;
 
-    width:80%;
+transform:translateX(-50%);
 
-    background:white;
 
-    padding:20px;
+width:80%;
 
-    border-radius:20px;
+padding:20px;
 
-    text-align:center;
 
-    display:none;
+background:white;
 
-    font-size:22px;
 
-    z-index:20;
+border-radius:20px;
+
+
+font-size:22px;
+
+
+text-align:center;
+
+
+display:none;
+
+
+z-index:1000;
 
 }
 
 
+
 </style>
+
 
 </head>
 
 
 <body>
-
-
-<button id="start">
-
-📷 Entrar na Jornada
-
-</button>
 
 
 
@@ -119,7 +111,9 @@ body{
 ⬜<br>
 ⬜
 
+
 </div>
+
 
 
 
@@ -129,31 +123,246 @@ body{
 
 
 
-<script type="module">
+<a-scene
 
 
-import * as THREE from 
-
-"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+mindar-image="imageTargetSrc: ./targets.mind;"
 
 
+color-space="sRGB"
 
 
-let cena;
-
-let camera;
-
-let renderizador;
+renderer="colorManagement:true"
 
 
-
-let objetos=[];
-
-let capturados=[];
-
-let alvo=null;
+vr-mode-ui="enabled:false"
 
 
+device-orientation-permission-ui="enabled:false"
+
+
+
+>
+
+
+
+<a-assets>
+
+
+</a-assets>
+
+
+
+
+<a-camera
+
+position="0 0 0"
+
+look-controls="enabled:false"
+
+>
+
+</a-camera>
+
+
+
+
+
+
+
+<!-- ITEM 1 -->
+
+
+<a-entity
+
+mindar-image-target="targetIndex:0"
+
+id="item0"
+
+>
+
+
+<a-text
+
+value="🐶"
+
+align="center"
+
+position="0 0 0"
+
+scale="3 3 3"
+
+>
+
+
+</a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+
+<!-- ITEM 2 -->
+
+
+<a-entity
+
+mindar-image-target="targetIndex:1"
+
+id="item1"
+
+>
+
+
+<a-text
+
+value="🐱"
+
+align="center"
+
+position="0 0 0"
+
+scale="3 3 3"
+
+>
+
+
+</a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+
+
+<!-- ITEM 3 -->
+
+
+<a-entity
+
+mindar-image-target="targetIndex:2"
+
+id="item2"
+
+
+>
+
+
+<a-text
+
+value="🦆"
+
+align="center"
+
+position="0 0 0"
+
+scale="3 3 3"
+
+
+>
+
+
+</a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+
+
+<!-- ITEM 4 -->
+
+
+<a-entity
+
+mindar-image-target="targetIndex:3"
+
+id="item3"
+
+>
+
+
+<a-text
+
+value="🦁"
+
+align="center"
+
+position="0 0 0"
+
+scale="3 3 3"
+
+
+>
+
+
+</a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+
+<!-- ITEM 5 -->
+
+
+<a-entity
+
+mindar-image-target="targetIndex:4"
+
+id="item4"
+
+
+>
+
+
+<a-text
+
+value="🐵"
+
+align="center"
+
+position="0 0 0"
+
+scale="3 3 3"
+
+>
+
+
+</a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+</a-scene>
+
+
+
+
+
+
+<script>
 
 
 const animais=[
@@ -161,31 +370,31 @@ const animais=[
 
 {
 nome:"Cachorrinho",
-icone:"🐶"
+emoji:"🐶"
 },
 
 
 {
 nome:"Gatinho",
-icone:"🐱"
+emoji:"🐱"
 },
 
 
 {
 nome:"Patinho",
-icone:"🦆"
+emoji:"🦆"
 },
 
 
 {
-nome:"Leãozinho",
-icone:"🦁"
+nome:"Leão",
+emoji:"🦁"
 },
 
 
 {
-nome:"Macaquinho",
-icone:"🐵"
+nome:"Macaco",
+emoji:"🐵"
 }
 
 
@@ -193,431 +402,57 @@ icone:"🐵"
 
 
 
+let encontrado=null;
 
 
-document
-.getElementById("start")
-.onclick = iniciarAR;
+let capturados=[];
 
 
 
 
 
-async function iniciarAR(){
 
+for(
 
-if(!navigator.xr){
+let i=0;
 
-alert(
-"Seu aparelho não suporta WebXR"
-);
+i<5;
 
-return;
-
-}
-
-
-
-document
-.getElementById("start")
-.style.display="none";
-
-
-
-cena = new THREE.Scene();
-
-
-
-
-camera = new THREE.PerspectiveCamera(
-
-70,
-
-window.innerWidth/window.innerHeight,
-
-0.01,
-
-50
-
-);
-
-
-
-
-
-renderizador = new THREE.WebGLRenderer(
-
-{
-alpha:true,
-
-antialias:true
-}
-
-);
-
-
-
-renderizador.setSize(
-
-window.innerWidth,
-
-window.innerHeight
-
-);
-
-
-
-renderizador.xr.enabled=true;
-
-
-
-
-document.body.appendChild(
-
-renderizador.domElement
-
-);
-
-
-
-
-const luz = 
-
-new THREE.HemisphereLight(
-
-0xffffff,
-
-0xffffff,
-
-3
-
-);
-
-
-
-cena.add(luz);
-
-
-
-
-
-try{
-
-
-const sessao =
-
-await navigator.xr.requestSession(
-
-"immersive-ar",
-
-{
-
-requiredFeatures:[
-
-"local"
-
-]
-
-}
-
-);
-
-
-
-await renderizador.xr.setSession(
-
-sessao
-
-);
-
-
-
-criarAnimais();
-
-
-
-
-renderizador.setAnimationLoop(
-
-loop
-
-);
-
-
-
-
-}
-
-catch(e){
-
-
-alert(
-
-"Não consegui abrir a câmera AR"
-
-);
-
-
-console.error(e);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-function criarAnimais(){
-
-
-
-animais.forEach(
-
-animal=>{
-
-
-
-let canvas=
-
-document.createElement("canvas");
-
-
-
-canvas.width=256;
-
-canvas.height=256;
-
-
-
-
-let ctx=
-
-canvas.getContext("2d");
-
-
-
-ctx.font="160px Arial";
-
-
-ctx.textAlign="center";
-
-
-ctx.fillText(
-
-animal.icone,
-
-128,
-
-170
-
-);
-
-
-
-
-let textura=
-
-new THREE.CanvasTexture(
-
-canvas
-
-);
-
-
-
-let material=
-
-new THREE.SpriteMaterial(
-
-{
-
-map:textura
-
-}
-
-);
-
-
-
-
-let sprite=
-
-new THREE.Sprite(
-
-material
-
-);
-
-
-
-sprite.scale.set(
-
-0.8,
-
-0.8,
-
-0.8
-
-);
-
-
-
-
-
-let angulo=
-
-Math.random()
-
-*
-
-Math.PI
-
-*
-
-2;
-
-
-
-
-let distancia=
-
-2 +
-
-Math.random()*3;
-
-
-
-
-sprite.position.set(
-
-
-Math.cos(angulo)
-
-*
-
-distancia,
-
-
-0,
-
-
-Math.sin(angulo)
-
-*
-
-distancia
-
-
-);
-
-
-
-
-sprite.userData.nome=
-
-animal.nome;
-
-
-
-sprite.userData.icone=
-
-animal.icone;
-
-
-
-
-cena.add(sprite);
-
-
-
-objetos.push(sprite);
-
-
-
-});
-
-
-
-
-}
-
-
-
-
-
-
-
-
-function loop(){
-
-
-alvo=null;
-
-
-
-objetos.forEach(
-
-obj=>{
-
-
-obj.lookAt(
-
-camera.position
-
-);
-
-
-
-
-let distancia=
-
-camera.position.distanceTo(
-
-obj.position
-
-);
-
-
-
-if(
-
-distancia < 1.5
-
-&&
-
-!capturados.includes(
-
-obj.userData.nome
-
-)
+i++
 
 ){
 
-alvo=obj;
+
+let item=
+
+document
+
+.querySelector(
+
+"#item"+i
+
+);
+
+
+
+item.addEventListener(
+
+
+"targetFound",
+
+
+()=>{
+
+
+encontrado=i;
+
+
 
 }
 
 
-
-
-});
-
-
-
-
-renderizador.render(
-
-cena,
-
-camera
-
 );
+
 
 
 }
@@ -637,28 +472,47 @@ window.addEventListener(
 ()=>{
 
 
-if(!alvo)
+
+if(encontrado===null)
+
+return;
+
+
+
+if(
+
+capturados.includes(
+
+encontrado
+
+)
+
+)
 
 return;
 
 
 
 
+
 capturados.push(
 
-alvo.userData.nome
+encontrado
 
 );
 
 
 
+
+
 mostrar(
 
-"🎉 Parabéns!<br><br>Você encontrou:<br><br>"
+"🎉 Parabéns!<br><br>Você encontrou:<br>"
+
 
 +
 
-alvo.userData.icone
+animais[encontrado].emoji
 
 +
 
@@ -666,20 +520,12 @@ alvo.userData.icone
 
 +
 
-alvo.userData.nome
+animais[encontrado].nome
 
 +
 
-"<br><br>Seja feliz por aí!"
+"<br><br>Seja feliz por aí 🚀"
 
-);
-
-
-
-
-cena.remove(
-
-alvo
 
 );
 
@@ -691,7 +537,6 @@ atualizarInventario();
 
 
 
-
 if(
 
 capturados.length===5
@@ -699,14 +544,19 @@ capturados.length===5
 ){
 
 
-setTimeout(()=>{
+
+setTimeout(
+
+()=>{
 
 
 mostrar(
 
 "🏆 PARABÉNS!<br><br>Você conquistou todos os itens!<br><br>Você é um empreendedor foda pra caralho 🚀🔥"
 
+
 );
+
 
 
 },2000);
@@ -718,6 +568,7 @@ mostrar(
 
 
 }
+
 
 
 );
@@ -739,20 +590,19 @@ let html="🎒<br>";
 
 animais.forEach(
 
-a=>{
+(a,index)=>{
+
 
 
 html +=
 
-capturados.includes(
+capturados.includes(index)
 
-a.nome
-
-)
 
 ?
 
-a.icone+"<br>"
+a.emoji+"<br>"
+
 
 :
 
@@ -766,7 +616,7 @@ a.icone+"<br>"
 
 document
 
-.getElementById("inventario")
+.querySelector("#inventario")
 
 .innerHTML=html;
 
@@ -781,36 +631,42 @@ document
 
 
 
-function mostrar(texto){
+function mostrar(txt){
 
 
 
-let div=
+let msg=
 
-document.getElementById(
+document.querySelector(
 
-"mensagem"
+"#mensagem"
 
 );
 
 
 
-div.innerHTML=texto;
+msg.innerHTML=txt;
 
 
 
-div.style.display="block";
+msg.style.display="block";
 
 
 
 
-setTimeout(()=>{
+setTimeout(
+
+()=>{
 
 
-div.style.display="none";
+msg.style.display="none";
 
 
-},4000);
+},
+
+4000
+
+);
 
 
 
@@ -821,6 +677,8 @@ div.style.display="none";
 </script>
 
 
+
 </body>
+
 
 </html>
