@@ -4,34 +4,26 @@
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1">
-
-<title>Jornada Empreendedora</title>
+<title>Jornada Empreendedora AR</title>
 
 
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
 
 <style>
 
-
 html,body{
 
 margin:0;
 padding:0;
-
 width:100%;
 height:100%;
-
 overflow:hidden;
-
-font-family:Arial;
-
 background:black;
+font-family:Arial;
 
 }
 
@@ -43,9 +35,7 @@ background:black;
 
 position:fixed;
 inset:0;
-
-background:black;
-
+background:#000;
 z-index:99999;
 
 }
@@ -55,7 +45,6 @@ z-index:99999;
 
 width:100%;
 height:100%;
-
 object-fit:cover;
 
 }
@@ -63,41 +52,22 @@ object-fit:cover;
 
 #btnStart{
 
-
 position:absolute;
-
 bottom:60px;
 left:50%;
-
 transform:translateX(-50%);
-
 
 padding:20px 45px;
 
-
-border:0;
-
+border:none;
 border-radius:50px;
 
+background:#ffcc00;
 
 font-size:22px;
-
 font-weight:bold;
 
-
-background:
-
-linear-gradient(
-45deg,
-#ffd000,
-#ff8c00
-);
-
-
-box-shadow:
-
-0 0 40px #ffaa00;
-
+box-shadow:0 0 30px #ffaa00;
 
 }
 
@@ -113,47 +83,28 @@ display:none;
 }
 
 
-
-
 #topo{
 
 position:fixed;
 
-top:15px;
+top:20px;
 left:50%;
 
 transform:translateX(-50%);
 
+z-index:50;
 
-background:
-
-rgba(0,0,0,.65);
-
+background:#000000aa;
 
 color:white;
 
-
-padding:
-
-15px 30px;
-
+padding:15px 30px;
 
 border-radius:40px;
 
-
-z-index:50;
-
-
 font-size:18px;
 
-
-backdrop-filter:blur(10px);
-
 }
-
-
-
-
 
 
 
@@ -161,299 +112,83 @@ backdrop-filter:blur(10px);
 
 position:fixed;
 
-right:15px;
-
+right:20px;
 top:90px;
-
-
-background:
-
-rgba(0,0,0,.7);
-
-
-border:
-
-2px solid #ffd000;
-
-
-
-border-radius:25px;
-
-
-
-padding:15px;
-
 
 z-index:50;
 
-
-
-text-align:center;
-
+background:#000000aa;
 
 color:white;
 
+border:2px solid #ffd000;
 
-font-size:30px;
+padding:15px;
 
+border-radius:25px;
 
-}
+font-size:32px;
 
-
-
-
-
-#scanner{
-
-
-position:fixed;
-
-
-inset:0;
-
-
-display:none;
-
-
-z-index:20;
-
-
-pointer-events:none;
-
+text-align:center;
 
 }
 
 
-
-
-#scanner:after{
-
-
-content:"";
-
-
-position:absolute;
-
-
-top:50%;
-
-left:50%;
-
-
-width:220px;
-
-height:220px;
-
-
-transform:
-
-translate(-50%,-50%);
-
-
-
-border:
-
-6px solid #00ff99;
-
-
-border-radius:50%;
-
-
-animation:
-
-scan 1s infinite;
-
-
-}
-
-
-
-
-@keyframes scan{
-
-
-0%{
-
-opacity:1;
-
-transform:
-
-translate(-50%,-50%)
-
-scale(.6);
-
-}
-
-
-100%{
-
-
-opacity:0;
-
-
-transform:
-
-translate(-50%,-50%)
-
-scale(1.5);
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-/* CARD */
 
 
 #card{
 
-
 position:fixed;
-
 
 bottom:40px;
 
-
 left:50%;
 
-
-transform:
-
-translateX(-50%);
-
-
+transform:translateX(-50%);
 
 width:85%;
 
-
-max-width:430px;
-
-
-background:
-
-linear-gradient(
-
-160deg,
-
-#111,
-
-#333
-
-);
-
-
+background:#000000dd;
 
 color:white;
 
-
-padding:30px;
-
-
+padding:25px;
 
 border-radius:30px;
 
+text-align:center;
 
 display:none;
 
-
-text-align:center;
-
-
 z-index:100;
 
-
-
-box-shadow:
-
-0 0 50px black;
-
-
 }
 
 
+#iconeCard{
 
-
-
-#icone{
-
-
-font-size:90px;
-
+font-size:80px;
 
 }
-
-
-
-
-
-#nome{
-
-
-font-size:26px;
-
-
-font-weight:bold;
-
-
-}
-
-
-
-
-
-#descricao{
-
-
-opacity:.8;
-
-
-}
-
-
-
 
 
 #capturar{
 
+margin-top:15px;
 
-margin-top:20px;
+padding:18px 40px;
 
+border:none;
 
-
-padding:
-
-18px 45px;
-
-
-
-border:0;
-
-
-border-radius:50px;
-
-
-font-size:22px;
-
-
-
-font-weight:bold;
-
-
+border-radius:40px;
 
 background:#00ff99;
 
+font-size:22px;
+
+font-weight:bold;
 
 }
-
-
 
 
 </style>
@@ -461,14 +196,14 @@ background:#00ff99;
 
 </head>
 
+
 <body>
 
 
-
+<!-- INTRO -->
 
 
 <div id="intro">
-
 
 <video
 
@@ -476,11 +211,11 @@ id="introVideo"
 
 src="intro.mp4"
 
-playsinline>
+playsinline
 
+webkit-playsinline>
 
 </video>
-
 
 
 <button id="btnStart">
@@ -497,6 +232,9 @@ playsinline>
 
 
 
+<!-- HUD -->
+
+
 <div id="hud">
 
 
@@ -505,11 +243,6 @@ playsinline>
 🚀 Jornada 0/5
 
 </div>
-
-
-
-<div id="scanner"></div>
-
 
 
 
@@ -527,9 +260,8 @@ playsinline>
 
 </div>
 
+
 </div>
-
-
 
 
 
@@ -537,16 +269,10 @@ playsinline>
 <div id="card">
 
 
-<div id="icone"></div>
+<div id="iconeCard"></div>
 
 
-
-<div id="nome"></div>
-
-
-<p id="descricao"></p>
-
-
+<h2 id="nomeCard"></h2>
 
 
 <button id="capturar">
@@ -559,8 +285,6 @@ PEGAR SKILL ⭐
 </div>
 
 
-
-
 </div>
 
 
@@ -570,22 +294,19 @@ PEGAR SKILL ⭐
 
 
 
+<!-- REALIDADE AUMENTADA -->
+
 
 <a-scene
-
 
 id="scene"
 
 
 mindar-image="
 imageTargetSrc: ./targets.mind;
-
 filterMinCF:0.01;
-
 filterBeta:10;
-
 warmupTolerance:5;
-
 missTolerance:5;
 "
 
@@ -593,18 +314,15 @@ missTolerance:5;
 renderer="
 antialias:false;
 precision:mediump;
-colorManagement:true
+colorManagement:true;
 "
 
 
 vr-mode-ui="enabled:false"
 
-
 device-orientation-permission-ui="enabled:false"
 
 >
-
-
 
 
 
@@ -619,15 +337,224 @@ look-controls="enabled:false">
 
 
 
-<a-entity id="item0" mindar-image-target="targetIndex:0"></a-entity>
 
-<a-entity id="item1" mindar-image-target="targetIndex:1"></a-entity>
 
-<a-entity id="item2" mindar-image-target="targetIndex:2"></a-entity>
+<!-- BÚSSOLA -->
 
-<a-entity id="item3" mindar-image-target="targetIndex:3"></a-entity>
 
-<a-entity id="item4" mindar-image-target="targetIndex:4"></a-entity>
+<a-entity id="item0" mindar-image-target="targetIndex:0">
+
+
+<a-circle
+
+color="#FFD700"
+
+radius=".45"
+
+opacity=".6"
+
+animation="
+property:scale;
+dir:alternate;
+loop:true;
+to:1.3 1.3 1.3;
+dur:700">
+
+</a-circle>
+
+
+
+<a-text
+
+value="🧭"
+
+align="center"
+
+position="0 0 .05"
+
+scale="2 2 2">
+
+</a-text>
+
+
+
+<a-text
+
+value="ESTRATEGIA"
+
+align="center"
+
+position="0 -.6 0"
+
+color="white"
+
+scale=".4 .4 .4">
+
+</a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+
+<!-- FINANCEIRO -->
+
+
+<a-entity id="item1" mindar-image-target="targetIndex:1">
+
+
+<a-circle color="#00ff99"
+radius=".45"
+opacity=".6"
+animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
+
+</a-circle>
+
+
+<a-text value="💎"
+align="center"
+position="0 0 .05"
+scale="2 2 2">
+
+</a-text>
+
+
+<a-text value="FINANCAS"
+align="center"
+position="0 -.6 0"
+color="white"
+scale=".4 .4 .4">
+
+</a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+
+<!-- VENDAS -->
+
+
+<a-entity id="item2" mindar-image-target="targetIndex:2">
+
+
+<a-circle color="#ff6600"
+radius=".45"
+opacity=".6"
+animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
+
+</a-circle>
+
+
+
+<a-text value="🚀"
+align="center"
+position="0 0 .05"
+scale="2 2 2">
+
+</a-text>
+
+
+<a-text value="VENDAS"
+align="center"
+position="0 -.6 0"
+color="white"
+scale=".4 .4 .4">
+
+</a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+
+
+<!-- INOVAÇÃO -->
+
+
+<a-entity id="item3" mindar-image-target="targetIndex:3">
+
+
+<a-circle color="#ffff00"
+radius=".45"
+opacity=".6"
+animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
+
+</a-circle>
+
+
+
+<a-text value="💡"
+align="center"
+position="0 0 .05"
+scale="2 2 2">
+
+</a-text>
+
+
+<a-text value="INOVACAO"
+align="center"
+position="0 -.6 0"
+color="white"
+scale=".4 .4 .4">
+
+</a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+
+
+<!-- LIDERANÇA -->
+
+
+<a-entity id="item4" mindar-image-target="targetIndex:4">
+
+
+<a-circle color="#cc00ff"
+radius=".45"
+opacity=".6"
+animation="property:scale;dir:alternate;loop:true;to:1.3 1.3 1.3">
+
+</a-circle>
+
+
+
+<a-text value="👑"
+align="center"
+position="0 0 .05"
+scale="2 2 2">
+
+</a-text>
+
+
+<a-text value="LIDERANCA"
+align="center"
+position="0 -.6 0"
+color="white"
+scale=".4 .4 .4">
+
+</a-text>
+
+
+</a-entity>
 
 
 
@@ -644,66 +571,24 @@ look-controls="enabled:false">
 <script>
 
 
-
 const itens=[
 
+["Bússola da Estratégia","🧭"],
 
-{
-nome:"Bússola da Estratégia",
-icone:"🧭",
-texto:"Você encontrou a visão do empreendedor."
-},
+["Cristal Financeiro","💎"],
 
+["Foguete das Vendas","🚀"],
 
-{
-nome:"Cristal Financeiro",
-icone:"💎",
-texto:"Você desbloqueou inteligência financeira."
-},
+["Lâmpada da Inovação","💡"],
 
-
-{
-nome:"Foguete das Vendas",
-icone:"🚀",
-texto:"Você conquistou crescimento."
-},
-
-
-{
-nome:"Lâmpada da Inovação",
-icone:"💡",
-texto:"Você ativou novas ideias."
-},
-
-
-{
-nome:"Coroa da Liderança",
-icone:"👑",
-texto:"Você conquistou liderança."
-}
-
+["Coroa da Liderança","👑"]
 
 ];
-
-
-
 
 
 let encontrado=null;
 
 let capturados=[];
-
-
-
-const sistema=()=>{
-
-return scene.systems[
-
-"mindar-image-system"
-
-];
-
-};
 
 
 
@@ -738,37 +623,21 @@ hud.style.display="block";
 
 
 
-
-
-
-
 for(let i=0;i<5;i++){
 
 
-
-document
-
-.querySelector("#item"+i)
-
+document.querySelector("#item"+i)
 
 .addEventListener(
 
-
 "targetFound",
-
 
 ()=>{
 
 
-
-if(
-
-capturados.includes(i)
-
-)
+if(capturados.includes(i))
 
 return;
-
 
 
 
@@ -776,36 +645,18 @@ encontrado=i;
 
 
 
-/* ECONOMIA DE PROCESSAMENTO */
+iconeCard.innerHTML=itens[i][1];
 
 
-sistema().pause();
+nomeCard.innerHTML=
 
+"✨ Encontrado<br>"+
 
+itens[i][0];
 
-
-scanner.style.display="block";
 
 
 card.style.display="block";
-
-
-
-icone.innerHTML=
-
-itens[i].icone;
-
-
-
-nome.innerHTML=
-
-itens[i].nome;
-
-
-
-descricao.innerHTML=
-
-itens[i].texto;
 
 
 
@@ -815,13 +666,11 @@ navigator.vibrate(300);
 
 
 
-
 });
 
 
+
 }
-
-
 
 
 
@@ -843,15 +692,10 @@ capturados.push(encontrado);
 
 
 
-atualizar();
-
-
-
-
-scanner.style.display="none";
-
-
 card.style.display="none";
+
+
+atualizar();
 
 
 
@@ -860,55 +704,32 @@ encontrado=null;
 
 
 
-/* VOLTA PROCURAR */
-
-
-sistema().unpause();
-
-
-
-
-
-if(
-
-capturados.length===5
-
-){
+if(capturados.length===5){
 
 
 
 setTimeout(()=>{
 
 
-
 card.style.display="block";
 
 
-icone.innerHTML="🏆";
+iconeCard.innerHTML="🏆";
 
 
-nome.innerHTML=
+nomeCard.innerHTML=
 
-"Jornada Completa";
-
-
-
-descricao.innerHTML=
-
-"Você conquistou todas as habilidades empreendedoras 🚀";
-
+"Parabéns!<br>Você completou sua Jornada Empreendedora 🚀";
 
 
 capturar.style.display="none";
 
 
 
-},800);
-
+},1000);
 
 
 }
-
 
 
 };
@@ -928,10 +749,7 @@ let html="";
 
 
 
-itens.forEach(
-
-(x,i)=>{
-
+itens.forEach((x,i)=>{
 
 
 html +=
@@ -940,12 +758,11 @@ capturados.includes(i)
 
 ?
 
-x.icone+"<br>"
+x[1]+"<br>"
 
 :
 
 "⬜<br>";
-
 
 
 });
@@ -961,11 +778,7 @@ topo.innerHTML=
 "🚀 Jornada "+capturados.length+"/5";
 
 
-
 }
-
-
-
 
 
 </script>
