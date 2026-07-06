@@ -4,167 +4,72 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Jornada Empreendedora AR</title>
 
-
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-
 <style>
-
 
 html,body{
 
 margin:0;
-padding:0;
-
 width:100%;
 height:100%;
-
 overflow:hidden;
-
 font-family:Arial;
 
-background:transparent;
-
 }
 
 
-/* =========================
-   CORREÇÃO CAMERA IPHONE
-========================= */
-
-
-video{
-
-position:fixed!important;
-
-top:0!important;
-
-left:0!important;
-
-width:100vw!important;
-
-height:100vh!important;
-
-object-fit:cover!important;
-
-z-index:0!important;
-
-}
-
-
-
-.a-canvas{
-
-position:fixed!important;
-
-top:0!important;
-
-left:0!important;
-
-width:100vw!important;
-
-height:100vh!important;
-
-background:transparent!important;
-
-z-index:5!important;
-
-}
-
-
-
-canvas{
-
-background:transparent!important;
-
-}
-
-
-
-/* =====================
-   INICIO
-===================== */
+/* MENU */
 
 
 #inicio{
 
 position:fixed;
-
 inset:0;
 
-z-index:999999;
+z-index:1000;
 
 background:
-linear-gradient(
-150deg,
-#04122d,
-#123c69,
-#ffb703
-);
-
+linear-gradient(135deg,#00172d,#004e92);
 
 display:flex;
-
 flex-direction:column;
-
+justify-content:center;
 align-items:center;
 
-justify-content:center;
-
-text-align:center;
-
 color:white;
+text-align:center;
 
 padding:30px;
 
 }
 
 
-
 #inicio h1{
 
-font-size:36px;
+font-size:35px;
 
 }
-
-
-
-#inicio p{
-
-font-size:20px;
-
-}
-
 
 
 #start{
 
+padding:20px 45px;
 
-padding:20px 50px;
-
+border-radius:40px;
 
 border:none;
 
-
-border-radius:50px;
-
+font-size:22px;
 
 background:#00ff99;
 
-
-font-size:22px;
-
-
 font-weight:bold;
-
 
 }
 
@@ -172,10 +77,7 @@ font-weight:bold;
 
 
 
-/* =====================
-   HUD
-===================== */
-
+/* HUD */
 
 
 #hud{
@@ -186,143 +88,87 @@ display:none;
 
 
 
-
-#progresso{
-
+#contador{
 
 position:fixed;
 
 top:25px;
-
 left:50%;
 
 transform:translateX(-50%);
 
-
-background:#000000aa;
-
+background:#0009;
 
 color:white;
-
 
 padding:15px 30px;
 
+border-radius:30px;
 
-border-radius:40px;
-
-
-font-size:18px;
-
-
-z-index:99999;
-
+z-index:999;
 
 }
 
 
 
-
-
-#inventario{
-
+#bag{
 
 position:fixed;
 
+right:15px;
 top:90px;
 
-right:20px;
+background:#0009;
 
-
-background:#000000aa;
-
-
-border:3px solid #ffd000;
-
+border:3px solid gold;
 
 color:white;
-
 
 padding:15px;
 
+border-radius:20px;
 
-border-radius:25px;
+font-size:30px;
 
-
-font-size:32px;
-
-
-text-align:center;
-
-
-z-index:99999;
-
+z-index:999;
 
 }
 
 
 
 
-
-
-#alerta{
-
+#msg{
 
 position:fixed;
 
-
 bottom:40px;
-
 
 left:50%;
 
-
 transform:translateX(-50%);
 
-
-
-width:85%;
-
-
-
-background:#000000dd;
-
-
+background:#000c;
 
 color:white;
 
+width:85%;
 
 padding:25px;
 
-
-border-radius:30px;
-
+border-radius:25px;
 
 text-align:center;
 
+font-size:24px;
 
 display:none;
 
-
-font-size:24px;
-
-
-z-index:99999;
-
+z-index:999;
 
 }
-
-
-
-#icone{
-
-font-size:90px;
-
-}
-
 
 
 </style>
-
 
 </head>
 
@@ -331,41 +177,23 @@ font-size:90px;
 
 
 
-
-
-<!-- TELA INICIAL -->
-
-
 <div id="inicio">
 
-
-<h1>
-
-🚀 Jornada Empreendedora
-
-</h1>
-
-
+<h1>🚀 Jornada Empreendedora</h1>
 
 <p>
-
-Encontre os 5 artefatos escondidos usando realidade aumentada
-
+Encontre os 5 artefatos escondidos
 </p>
 
 
-
 <p>
-
 🧭 💎 🚀 💡 👑
-
 </p>
-
 
 
 <button id="start">
 
-COMEÇAR MISSÃO
+COMEÇAR
 
 </button>
 
@@ -376,59 +204,34 @@ COMEÇAR MISSÃO
 
 
 
-
-
-
-
-<!-- HUD -->
-
-
 <div id="hud">
 
 
-<div id="progresso">
+<div id="contador">
 
-🚀 0/5 habilidades
+0/5 habilidades
 
 </div>
 
 
-
-<div id="inventario">
-
+<div id="bag">
 
 🎒
 
-
 <div id="slots">
 
-
 ⬜<br>
-
 ⬜<br>
-
 ⬜<br>
-
 ⬜<br>
-
 ⬜
 
+</div>
 
 </div>
 
 
-</div>
-
-
-
-
-<div id="alerta">
-
-
-<div id="icone"></div>
-
-
-<div id="texto"></div>
+<div id="msg"></div>
 
 
 </div>
@@ -436,18 +239,6 @@ COMEÇAR MISSÃO
 
 
 
-</div>
-
-
-
-
-
-
-
-
-
-
-<!-- REALIDADE AUMENTADA -->
 
 
 <a-scene
@@ -456,49 +247,23 @@ COMEÇAR MISSÃO
 id="scene"
 
 
-embedded
-
-
 mindar-image="
-
 imageTargetSrc: ./targets.mind;
-
 autoStart:false;
-
-filterMinCF:0.01;
-
-filterBeta:10;
-
 "
 
 
 renderer="
-
-alpha:true;
-
-antialias:false;
-
-colorManagement:true;
-
-sortObjects:true;
-
+colorManagement:true
 "
-
-
-background="color: transparent"
-
 
 
 vr-mode-ui="enabled:false"
 
 
-
 device-orientation-permission-ui="enabled:false"
 
-
 >
-
-
 
 
 
@@ -508,19 +273,6 @@ position="0 0 0"
 
 look-controls="enabled:false">
 
-
-
-<a-cursor
-
-raycaster="objects:.clicavel"
-
-fuse="false">
-
-
-</a-cursor>
-
-
-
 </a-camera>
 
 
@@ -528,35 +280,24 @@ fuse="false">
 
 
 
-
-<!-- FUNÇÃO DOS OBJETOS -->
+<!-- BUSSOLA -->
 
 
 <a-entity id="item0" mindar-image-target="targetIndex:0">
 
-
 <a-gltf-model
-
-class="clicavel"
 
 src="modelos/bussola.glb"
 
+position="0 0 0"
+
 scale="5 5 5"
 
-position="0 0 0.3"
-
-animation="property:rotation;to:0 360 0;loop:true;dur:5000"
-
-animation__float="property:position;to:0 .3 .3;dir:alternate;loop:true"
-
-onclick="capturar(0)">
+>
 
 </a-gltf-model>
 
-
 </a-entity>
-
-
 
 
 
@@ -564,32 +305,15 @@ onclick="capturar(0)">
 
 <a-entity id="item1" mindar-image-target="targetIndex:1">
 
-
 <a-gltf-model
-
-class="clicavel"
 
 src="modelos/cristal.glb"
 
-scale="5 5 5"
-
-position="0 0 .3"
-
-animation="property:rotation;to:0 360 0;loop:true;dur:5000"
-
-animation__float="property:position;to:0 .3 .3;dir:alternate;loop:true"
-
-onclick="capturar(1)">
-
+scale="5 5 5">
 
 </a-gltf-model>
 
-
 </a-entity>
-
-
-
-
 
 
 
@@ -597,31 +321,15 @@ onclick="capturar(1)">
 
 <a-entity id="item2" mindar-image-target="targetIndex:2">
 
-
 <a-gltf-model
-
-class="clicavel"
 
 src="modelos/foguete.glb"
 
-scale="5 5 5"
-
-position="0 0 .3"
-
-animation="property:rotation;to:0 360 0;loop:true;dur:5000"
-
-animation__float="property:position;to:0 .3 .3;dir:alternate;loop:true"
-
-onclick="capturar(2)">
-
+scale="5 5 5">
 
 </a-gltf-model>
 
-
 </a-entity>
-
-
-
 
 
 
@@ -629,31 +337,15 @@ onclick="capturar(2)">
 
 <a-entity id="item3" mindar-image-target="targetIndex:3">
 
-
 <a-gltf-model
-
-class="clicavel"
 
 src="modelos/lampada.glb"
 
-scale="5 5 5"
-
-position="0 0 .3"
-
-animation="property:rotation;to:0 360 0;loop:true;dur:5000"
-
-animation__float="property:position;to:0 .3 .3;dir:alternate;loop:true"
-
-onclick="capturar(3)">
-
+scale="5 5 5">
 
 </a-gltf-model>
 
-
 </a-entity>
-
-
-
 
 
 
@@ -661,29 +353,15 @@ onclick="capturar(3)">
 
 <a-entity id="item4" mindar-image-target="targetIndex:4">
 
-
 <a-gltf-model
-
-class="clicavel"
 
 src="modelos/coroa.glb"
 
-scale="5 5 5"
-
-position="0 0 .3"
-
-animation="property:rotation;to:0 360 0;loop:true;dur:5000"
-
-animation__float="property:position;to:0 .3 .3;dir:alternate;loop:true"
-
-onclick="capturar(4)">
-
+scale="5 5 5">
 
 </a-gltf-model>
 
-
 </a-entity>
-
 
 
 
@@ -695,29 +373,21 @@ onclick="capturar(4)">
 
 
 
-
-
-
 <script>
 
 
 const itens=[
 
-
 ["Bússola da Estratégia","🧭"],
-
 ["Cristal Financeiro","💎"],
-
 ["Foguete das Vendas","🚀"],
-
 ["Lâmpada da Inovação","💡"],
-
 ["Coroa da Liderança","👑"]
-
 
 ];
 
 
+let atual=null;
 
 let capturados=[];
 
@@ -734,44 +404,7 @@ inicio.style.display="none";
 hud.style.display="block";
 
 
-
-await scene.systems[
-
-"mindar-image-system"
-
-].start();
-
-
-
-
-/* AJUSTE CAMADA VIDEO */
-
-
-setTimeout(()=>{
-
-
-document.querySelectorAll("video")
-
-.forEach(v=>{
-
-
-v.style.zIndex="0";
-
-v.style.opacity="1";
-
-
-});
-
-
-
-document.querySelector("canvas")
-
-.style.background="transparent";
-
-
-
-},1000);
-
+await scene.systems["mindar-image-system"].start();
 
 
 };
@@ -782,96 +415,96 @@ document.querySelector("canvas")
 
 
 
-
-function capturar(id){
-
+for(let i=0;i<5;i++){
 
 
-if(
+document
 
-capturados.includes(id)
+.querySelector("#item"+i)
 
-)
+.addEventListener(
+
+"targetFound",
+
+()=>{
+
+
+if(capturados.includes(i))
 
 return;
 
 
 
-
-capturados.push(id);
-
+atual=i;
 
 
 
-icone.innerHTML=itens[id][1];
+msg.innerHTML=
+
+"✨ Encontrou<br>"+
+
+itens[i][1]+
+
+"<br>"+
+itens[i][0]+
+
+"<br><br>Toque na tela para capturar";
+
+
+msg.style.display="block";
 
 
 
-texto.innerHTML=
+}
 
-"🎉 Skill conquistada<br><b>"+
 
-itens[id][0]+
-
-"</b>";
+);
 
 
 
-alerta.style.display="block";
+}
 
 
 
-setTimeout(()=>{
 
-alerta.style.display="none";
 
-},2000);
 
+
+document.body.onclick=()=>{
+
+
+if(atual===null)
+
+return;
+
+
+
+if(capturados.includes(atual))
+
+return;
+
+
+
+capturados.push(atual);
+
+
+
+msg.innerHTML=
+
+"🎉 Capturado<br>"+
+
+itens[atual][1];
+
+
+
+atual=null;
 
 
 
 atualizar();
 
 
-
-
-
-if(
-
-capturados.length===5
-
-){
-
-
-
-setTimeout(()=>{
-
-
-icone.innerHTML="🏆";
-
-
-texto.innerHTML=
-
-"Parabéns!<br>Você completou a Jornada Empreendedora 🚀";
-
-
-
-alerta.style.display="block";
-
-
-
-},2500);
-
-
-
-}
-
-
-
-}
-
-
-
+};
 
 
 
@@ -881,17 +514,13 @@ alerta.style.display="block";
 function atualizar(){
 
 
-
 let html="";
-
 
 
 itens.forEach((x,i)=>{
 
 
-html+=
-
-capturados.includes(i)
+html += capturados.includes(i)
 
 ?
 
@@ -909,10 +538,9 @@ x[1]+"<br>"
 slots.innerHTML=html;
 
 
+contador.innerHTML=
 
-progresso.innerHTML=
-
-"🚀 "+capturados.length+"/5 habilidades";
+capturados.length+"/5 habilidades";
 
 
 }
