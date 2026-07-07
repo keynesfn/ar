@@ -5,13 +5,24 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta 
+name="viewport" 
+content="width=device-width, initial-scale=1">
 
-<title>Jornada Empreendedora AR</title>
+
+<title>
+Jornada Empreendedora AR
+</title>
 
 
-<link rel="stylesheet" href="css/style.css">
+<!-- CSS -->
 
+<link 
+rel="stylesheet" 
+href="css/style.css">
+
+
+<!-- MODEL VIEWER -->
 
 <script 
 type="module"
@@ -22,81 +33,204 @@ src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.1.0/dist/model-viewer.m
 </head>
 
 
+
 <body>
 
 
-<video 
+
+<!-- ===========================
+CAMERA
+=========================== -->
+
+
+<video
+
 id="camera"
+
 autoplay
+
 playsinline>
+
 </video>
 
 
 
+
+
+
+
+<!-- ===========================
+TELA INICIAL
+=========================== -->
+
+
 <div id="inicio">
 
-<h1>🚀 Jornada Empreendedora</h1>
+
+<h1>
+🚀 Jornada Empreendedora
+</h1>
+
 
 <p>
-Explore o ambiente e encontre habilidades escondidas
+Uma experiência de conhecimento em realidade aumentada
 </p>
 
 
 <button id="start">
-COMEÇAR MISSÃO
+
+COMEÇAR
+
 </button>
+
 
 </div>
 
 
 
+
+
+
+
+
+
+<!-- ===========================
+VIDEO INTRODUÇÃO
+=========================== -->
+
+
+<div id="introVideo">
+
+
+<video
+
+id="videoIntro"
+
+src="videos/intro.mp4"
+
+playsinline
+
+controls>
+
+</video>
+
+
+
+<button id="btnEntrar">
+
+INICIAR BUSCA 🚀
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- ===========================
+HUD DO JOGO
+=========================== -->
 
 
 <div id="hud">
 
 
+
 <div id="status">
+
 Preparando...
+
 </div>
 
 
-<div id="energia"></div>
 
 
-<div id="scanner"></div>
+<div id="energia">
 
+</div>
+
+
+
+
+
+<!-- RADAR -->
+
+
+<div id="scanner">
+
+</div>
+
+
+
+
+
+<!-- INVENTÁRIO -->
 
 
 <div id="inventario">
 
 
 <div class="tituloInv">
+
 ⚡ SKILLS
+
 </div>
+
+
 
 
 <div id="slots">
 
-<div class="slot vazio"></div>
-<div class="slot vazio"></div>
-<div class="slot vazio"></div>
-<div class="slot vazio"></div>
+
 <div class="slot vazio"></div>
 
+<div class="slot vazio"></div>
+
+<div class="slot vazio"></div>
+
+<div class="slot vazio"></div>
+
+<div class="slot vazio"></div>
+
+
 </div>
+
+
 
 
 <div id="nivel">
+
 0/5
-</div>
-
 
 </div>
 
 
+
 </div>
 
 
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- ===========================
+OBJETO 3D
+=========================== -->
 
 
 
@@ -112,18 +246,44 @@ interaction-prompt="none"
 
 disable-zoom>
 
+
 </model-viewer>
 
 
 
 
 
-<div id="mensagem"></div>
 
 
+
+
+
+<!-- ===========================
+MENSAGEM
+=========================== -->
+
+
+<div id="mensagem">
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===========================
+VIDEO DAS SKILLS
+=========================== -->
 
 
 <div id="playerVideo">
+
 
 <video
 
@@ -133,43 +293,266 @@ playsinline
 
 controls>
 
+
 </video>
+
 
 </div>
 
 
+
+
+
+
+
+
+
+
+<!-- ===========================
+FORMULÁRIO PERFIL
+=========================== -->
+
+
+
+<div id="formPerfil">
+
+
+<h2>
+
+🚀 Vamos personalizar sua jornada
+
+</h2>
+
+
+
+<p>
+
+Escolha o caminho que combina com você
+
+</p>
+
+
+
+<input
+
+id="nomeJogador"
+
+type="text"
+
+placeholder="Digite seu nome">
+
+
+
+
+
+
+<select id="perfilJogador">
+
+
+
+<option value="">
+
+Selecione sua jornada
+
+</option>
+
+
+
+<option value="empreendedor">
+
+🚀 Tenho ou quero abrir um negócio
+
+</option>
+
+
+
+
+<option value="profissional">
+
+👔 Quero crescer profissionalmente
+
+</option>
+
+
+
+
+<option value="estudante">
+
+🎓 Estou entrando no mercado
+
+</option>
+
+
+
+</select>
+
+
+
+
+
+<button id="salvarPerfil">
+
+
+CONTINUAR MISSÃO
+
+
+</button>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ===========================
+FORM FINAL WHATSAPP
+=========================== -->
+
+
+
+<div id="formWhats">
+
+
+
+<h2>
+
+🏆 Jornada concluída!
+
+</h2>
+
+
+
+<p>
+
+Receba conteúdos e oportunidades após o evento
+
+</p>
+
+
+
+
+<input
+
+id="whatsapp"
+
+type="tel"
+
+placeholder="Seu WhatsApp">
+
+
+
+
+
+<button id="enviarLead">
+
+
+QUERO RECEBER 🚀
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- ===========================
+DEBUG
+=========================== -->
 
 
 <div id="debug">
+
 DEBUG
+
 </div>
 
 
 
 
+
+
+
+
+
+<!-- ===========================
+AUDIOS
+=========================== -->
+
+
+
 <audio 
+
 id="somFound"
+
 src="audio/found.mp3">
+
 </audio>
+
+
+
 
 
 <audio 
+
 id="somCapture"
+
 src="audio/capture.mp3">
+
 </audio>
 
 
-<audio
+
+
+
+<audio 
+
 id="somComplete"
+
 src="audio/complete.mp3">
+
 </audio>
 
+
+
+
+
+
+
+
+
+<!-- ===========================
+JAVASCRIPT
+=========================== -->
 
 
 <script src="js/jornadas.js"></script>
 
+
 <script src="js/app.js"></script>
 
+
+
+
 </body>
+
 
 </html>
