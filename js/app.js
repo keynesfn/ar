@@ -1,61 +1,40 @@
-// ===============================
-// JOGADOR
-// ===============================
+/* ===============================
+   JOGADOR
+================================ */
+
 
 let jogador = {
 
-    nome:null,
-    perfil:null,
-    whatsapp:null,
-    skills:[]
+nome:null,
 
-};
+perfil:null,
 
+whatsapp:null,
 
-// ===============================
-// CONFIG
-// ===============================
-
-
-const primeiroItem = {
-
-    nome:"Entrada Jornada",
-    icone:"🚀",
-    modelo:"modelos/dotum.glb",
-    video:"videos/video1.mp4"
+skills:[]
 
 };
 
 
 
-let itens = [
-
-    primeiroItem
-
-];
 
 
+/* ===============================
+   ESTADO DO JOGO
+================================ */
 
 
-// ===============================
-// CONTROLE
-// ===============================
+let itens=[ITEM_INICIAL];
 
 
-let atual = 0;
+let atual=0;
 
 
-let capturados=[];
-
-
-let aguardandoPerfil=false;
-
-
-let jornadaCarregada=false;
+let jornadaSelecionada=false;
 
 
 
-// passos
+// sensores
 
 let passos=0;
 
@@ -67,13 +46,13 @@ let procurando=false;
 
 
 
-// sensores
-
 let movimento=0;
+
 
 let direcaoAtual=0;
 
 let direcaoItem=null;
+
 
 let itemAtivo=false;
 
@@ -86,39 +65,21 @@ let inicioBusca=0;
 
 
 
+/* ===============================
+   INICIAR JOGO
+================================ */
 
-// ===============================
-// COMEÇAR
-// ===============================
 
-
-start.onclick = async()=>{
+start.onclick=async()=>{
 
 
 inicio.style.display="none";
 
 
-introVideo.style.display="block";
-
-
-videoIntro.play();
-
-
-
-};
-
-
-
-
-
-
-btnEntrar.onclick=async()=>{
-
-
-introVideo.style.display="none";
-
-
 hud.style.display="block";
+
+
+debug.style.display="block";
 
 
 
@@ -126,7 +87,8 @@ await iniciarSensores();
 
 
 
-let stream =
+
+let stream=
 
 await navigator.mediaDevices.getUserMedia({
 
@@ -158,13 +120,18 @@ buscarItem();
 
 
 
-// ===============================
-// SENSORES
-// ===============================
+
+
+/* ===============================
+   SENSORES
+================================ */
 
 
 async function iniciarSensores(){
 
+
+
+// IOS
 
 
 if(
@@ -201,7 +168,8 @@ await DeviceOrientationEvent.requestPermission();
 
 
 
-// passos
+
+// MOVIMENTO
 
 
 window.addEventListener(
@@ -211,34 +179,47 @@ window.addEventListener(
 (e)=>{
 
 
-if(!procurando)return;
+if(!procurando)
+
+return;
 
 
 
-let a=e.accelerationIncludingGravity;
+let acc=
+
+e.accelerationIncludingGravity;
 
 
-if(!a)return;
+
+if(!acc)
+
+return;
+
 
 
 
 let forca=Math.sqrt(
 
-a.x*a.x+
+acc.x*acc.x+
 
-a.y*a.y+
+acc.y*acc.y+
 
-a.z*a.z
+acc.z*acc.z
 
 );
 
 
 
-movimento=Math.abs(forca-9.8);
+movimento=
+
+Math.abs(forca-9.8);
+
+
 
 
 
 let agora=Date.now();
+
 
 
 
@@ -257,13 +238,21 @@ agora-ultimoPasso>500
 ultimoPasso=agora;
 
 
+
 passos++;
 
 
 
 status.innerHTML=
 
-"🚶 Explorando "+passos+"/"+metaPassos;
+"🚶 Explorando "
+
++passos+
+
+"/"
+
++metaPassos;
+
 
 
 
@@ -271,10 +260,12 @@ status.innerHTML=
 if(passos>=metaPassos){
 
 
+
 procurando=false;
 
 
 ativarItem();
+
 
 
 }
@@ -292,7 +283,9 @@ ativarItem();
 
 
 
-// orientação
+
+
+// GIROSCOPIO
 
 
 window.addEventListener(
@@ -302,16 +295,18 @@ window.addEventListener(
 (e)=>{
 
 
-if(e.alpha!=null){
+
+if(e.alpha!==null){
 
 
 direcaoAtual=e.alpha;
 
 
-verificaDirecao();
+verificarDirecao();
 
 
 }
+
 
 
 });
@@ -326,9 +321,10 @@ verificaDirecao();
 
 
 
-// ===============================
-// BUSCAR
-// ===============================
+
+/* ===============================
+   BUSCAR ITEM
+================================ */
 
 
 function buscarItem(){
@@ -337,9 +333,12 @@ function buscarItem(){
 
 scanner.style.display="block";
 
+
 energia.style.display="none";
 
+
 objeto.style.display="none";
+
 
 mensagem.style.display="none";
 
@@ -348,16 +347,22 @@ mensagem.style.display="none";
 itemAtivo=false;
 
 
-inicioBusca=Date.now();
-
-
 
 passos=0;
 
 
+
+inicioBusca=Date.now();
+
+
+
 metaPassos=
 
-Math.floor(Math.random()*8)+8;
+Math.floor(
+
+Math.random()*8
+
+)+8;
 
 
 
@@ -365,10 +370,10 @@ procurando=true;
 
 
 
+
 status.innerHTML=
 
 "🟢 Procurando habilidade";
-
 
 
 }
@@ -381,9 +386,11 @@ status.innerHTML=
 
 
 
-// ===============================
-// ENCONTRO
-// ===============================
+
+
+/* ===============================
+   ITEM ACHADO
+================================ */
 
 
 function ativarItem(){
@@ -405,11 +412,9 @@ objeto.src=item.modelo;
 direcaoItem=direcaoAtual;
 
 
+
 itemAtivo=true;
 
-
-
-somFound.play();
 
 
 
@@ -420,10 +425,13 @@ mensagem.style.display="block";
 
 
 
+somFound.play();
+
+
+
 mensagem.innerHTML=
 
 "🛰️ Sinal detectado";
-
 
 
 }
@@ -435,31 +443,42 @@ mensagem.innerHTML=
 
 
 
-// ===============================
-// FIXAR NO AMBIENTE
-// ===============================
+
+/* ===============================
+   ANCORAGEM AR
+================================ */
+
+
+function verificarDirecao(){
 
 
 
-function verificaDirecao(){
+if(!itemAtivo)
+
+return;
 
 
 
-if(!itemAtivo)return;
 
+let diferenca=
 
+Math.abs(
 
-let dif=Math.abs(
+direcaoAtual-
 
-direcaoAtual-direcaoItem
+direcaoItem
 
 );
 
 
 
-if(dif>180)
+if(diferenca>180)
 
-dif=360-dif;
+diferenca=
+
+360-diferenca;
+
+
 
 
 
@@ -469,23 +488,39 @@ Math.max(
 
 0,
 
-100-Math.round(dif*4)
+100-
+
+Math.round(
+
+diferenca*4
+
+)
 
 );
 
 
 
+
+
 energia.innerHTML=
 
-"🛰️ Sinal "+sinal+"%";
+"🛰️ Sinal "
+
++sinal+
+
+"%";
 
 
 
 
-if(dif<15){
+
+
+if(diferenca<15){
+
 
 
 objeto.style.display="block";
+
 
 
 mensagem.innerHTML=
@@ -493,7 +528,12 @@ mensagem.innerHTML=
 "✨ Artefato encontrado<br>Toque para capturar";
 
 
-}else{
+}
+
+
+
+else{
+
 
 
 objeto.style.display="none";
@@ -507,6 +547,7 @@ mensagem.innerHTML=
 }
 
 
+
 }
 
 
@@ -517,16 +558,19 @@ mensagem.innerHTML=
 
 
 
-// ===============================
-// CAPTURA
-// ===============================
+/* ===============================
+   CAPTURAR
+================================ */
 
 
 objeto.onclick=()=>{
 
 
 
-let item=itens[atual];
+let item=
+
+itens[atual];
+
 
 
 
@@ -540,15 +584,19 @@ itemAtivo=false;
 objeto.style.display="none";
 
 
+energia.style.display="none";
+
+
 mensagem.style.display="none";
 
 
 
-capturados.push(item);
 
+jogador.skills.push(
 
+item.nome
 
-jogador.skills.push(item.nome);
+);
 
 
 
@@ -556,7 +604,11 @@ atualizarInventario();
 
 
 
-abrirVideo(item.video);
+abrirVideo(
+
+item.video
+
+);
 
 
 
@@ -571,29 +623,35 @@ abrirVideo(item.video);
 
 
 
-// ===============================
-// VIDEO
-// ===============================
+/* ===============================
+   VIDEO
+================================ */
 
 
-function abrirVideo(v){
+function abrirVideo(video){
 
 
 
 playerVideo.style.display="block";
 
 
-videoSkill.src=v;
+
+videoSkill.src=video;
+
 
 
 videoSkill.play();
 
 
 
+
+
 videoSkill.onended=()=>{
 
 
+
 playerVideo.style.display="none";
+
 
 videoSkill.src="";
 
@@ -618,12 +676,14 @@ aposVideo();
 
 
 
-// ===============================
-// DECISÃO APÓS VIDEO
-// ===============================
+/* ===============================
+   APÓS VIDEO
+================================ */
 
 
 function aposVideo(){
+
+
 
 
 
@@ -632,12 +692,12 @@ function aposVideo(){
 
 if(
 
-!jornadaCarregada
+!jornadaSelecionada
 
 ){
 
 
-abrirPerfil();
+abrirFormularioPerfil();
 
 
 return;
@@ -648,17 +708,27 @@ return;
 
 
 
+
 atual++;
 
 
 
-if(atual>=itens.length){
+
+if(
+
+atual>=itens.length
+
+){
 
 
 abrirWhatsapp();
 
 
-}else{
+}
+
+
+
+else{
 
 
 buscarItem();
@@ -678,18 +748,19 @@ buscarItem();
 
 
 
-// ===============================
-// FORM PERFIL
-// ===============================
+/* ===============================
+   FORM PERFIL
+================================ */
 
 
-function abrirPerfil(){
+function abrirFormularioPerfil(){
+
 
 
 hud.style.display="none";
 
 
-formPerfil.style.display="block";
+formPerfil.style.display="flex";
 
 
 }
@@ -706,17 +777,27 @@ salvarPerfil.onclick=()=>{
 
 if(
 
-!nomeJogador.value ||
+!nomeJogador.value
+
+||
 
 !perfilJogador.value
 
 ){
 
-alert("Preencha seus dados");
+
+alert(
+
+"Informe seu nome e escolha a jornada"
+
+);
+
 
 return;
 
+
 }
+
 
 
 
@@ -726,26 +807,31 @@ nomeJogador.value;
 
 
 
+
 jogador.perfil=
 
 perfilJogador.value;
 
 
 
-itens =
+
+
+itens=
 
 JORNADAS[jogador.perfil];
+
+
+
+jogador.skills=[];
 
 
 
 atual=0;
 
 
-capturados=[];
 
+jornadaSelecionada=true;
 
-
-jornadaCarregada=true;
 
 
 
@@ -753,6 +839,7 @@ formPerfil.style.display="none";
 
 
 hud.style.display="block";
+
 
 
 
@@ -774,10 +861,9 @@ buscarItem();
 
 
 
-// ===============================
-// WHATSAPP FINAL
-// ===============================
-
+/* ===============================
+   WHATSAPP FINAL
+================================ */
 
 
 function abrirWhatsapp(){
@@ -787,7 +873,8 @@ function abrirWhatsapp(){
 hud.style.display="none";
 
 
-formWhats.style.display="block";
+
+formWhats.style.display="flex";
 
 
 
@@ -806,15 +893,18 @@ somComplete.play();
 enviarLead.onclick=()=>{
 
 
+
 jogador.whatsapp=
 
 whatsapp.value;
 
 
 
+
+
 console.log(
 
-"LEAD GERADO",
+"LEAD",
 
 jogador
 
@@ -822,14 +912,23 @@ jogador
 
 
 
+
+
 formWhats.innerHTML=
 
 `
 
-<h2>🚀 Obrigado ${jogador.nome}</h2>
+<h2>
+
+🚀 Obrigado ${jogador.nome}
+
+</h2>
+
 
 <p>
-Sua jornada continua!
+
+Continue sua jornada empreendedora!
+
 </p>
 
 `;
@@ -846,10 +945,9 @@ Sua jornada continua!
 
 
 
-// ===============================
-// INVENTÁRIO
-// ===============================
-
+/* ===============================
+   INVENTÁRIO
+================================ */
 
 
 function atualizarInventario(){
@@ -860,7 +958,10 @@ let html="";
 
 
 
-itens.forEach(i=>{
+itens.forEach(
+
+i=>{
+
 
 
 html+=
@@ -889,7 +990,11 @@ ${i.icone}
 
 
 
-});
+}
+
+);
+
+
 
 
 
@@ -917,18 +1022,20 @@ itens.length;
 
 
 
-// ===============================
-// DEBUG
-// ===============================
 
+/* ===============================
+   DEBUG
+================================ */
 
 
 setInterval(()=>{
 
 
+
 debug.innerHTML=
 
 `
+
 DEBUG<br>
 
 👣 ${passos}/${metaPassos}<br>
@@ -939,11 +1046,13 @@ DEBUG<br>
 
 🎯 ${
 direcaoItem?
-Math.round(direcaoItem)+"°":
+Math.round(direcaoItem)+"°"
+:
 "-"
 }
 
 `;
+
 
 
 },500);
