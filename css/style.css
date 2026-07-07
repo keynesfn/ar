@@ -1,6 +1,157 @@
-/* ===========================
-VIDEO INTRODUÇÃO
-=========================== */
+/* ===============================
+BASE
+================================ */
+
+html,body{
+
+margin:0;
+
+width:100%;
+
+height:100%;
+
+overflow:hidden;
+
+background:#000;
+
+font-family:Arial, Helvetica, sans-serif;
+
+}
+
+
+
+/* ===============================
+CAMERA
+================================ */
+
+
+#camera{
+
+position:fixed;
+
+inset:0;
+
+width:100vw;
+
+height:100vh;
+
+object-fit:cover;
+
+background:#000;
+
+z-index:1;
+
+}
+
+
+
+
+
+
+/* ===============================
+TELA INICIAL
+================================ */
+
+
+#inicio{
+
+position:fixed;
+
+inset:0;
+
+background:
+
+linear-gradient(
+140deg,
+#06142e,
+#005f73,
+#ffb703
+);
+
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+
+text-align:center;
+
+padding:30px;
+
+color:white;
+
+z-index:1000;
+
+}
+
+
+
+#inicio h1{
+
+font-size:38px;
+
+}
+
+
+#inicio p{
+
+font-size:18px;
+
+}
+
+
+
+button{
+
+cursor:pointer;
+
+}
+
+
+
+#start{
+
+padding:20px 50px;
+
+border:0;
+
+border-radius:50px;
+
+
+background:
+
+linear-gradient(
+90deg,
+#00ff99,
+#00ccff
+);
+
+
+font-size:22px;
+
+font-weight:bold;
+
+
+box-shadow:
+
+0 0 30px #00ff99;
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+VIDEO INTRO
+================================ */
 
 
 #introVideo{
@@ -13,13 +164,13 @@ width:100vw;
 
 height:100vh;
 
-background:#000;
+background:black;
 
 display:none;
 
-z-index:2000;
-
 overflow:hidden;
+
+z-index:3000;
 
 }
 
@@ -27,29 +178,506 @@ overflow:hidden;
 
 #videoIntro{
 
-position:absolute;
-
-top:0;
-
-left:0;
-
 width:100%;
 
 height:100%;
 
-
-/* preenche celular mantendo proporção */
-
 object-fit:cover;
-
 
 }
 
 
 
-#btnEntrar{
+
+
+
+
+
+/* ===============================
+HUD
+================================ */
+
+
+#hud{
+
+display:none;
+
+}
+
+
+
+#status{
+
+position:fixed;
+
+top:20px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+
+background:
+
+rgba(0,0,0,.75);
+
+
+color:white;
+
+
+padding:15px 25px;
+
+
+border-radius:40px;
+
+
+font-size:16px;
+
+
+text-align:center;
+
+
+backdrop-filter:
+
+blur(8px);
+
+
+z-index:50;
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+SINAL
+================================ */
+
+
+#energia{
+
+position:fixed;
+
+top:90px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+
+font-size:26px;
+
+font-weight:bold;
+
+
+color:#00ffcc;
+
+
+text-shadow:
+
+0 0 25px #00ffcc;
+
+
+display:none;
+
+
+z-index:50;
+
+}
+
+
+
+
+
+
+
+
+
+/* ===============================
+RADAR
+================================ */
+
+
+#scanner{
+
+position:fixed;
+
+top:50%;
+
+left:50%;
+
+
+width:260px;
+
+height:260px;
+
+
+margin-left:-130px;
+
+margin-top:-130px;
+
+
+border-radius:50%;
+
+
+border:
+
+3px solid #00ff99;
+
+
+
+background:
+
+radial-gradient(
+circle,
+rgba(0,255,150,.25),
+transparent 70%
+);
+
+
+
+box-shadow:
+
+0 0 50px #00ff99;
+
+
+
+overflow:hidden;
+
+
+display:none;
+
+
+z-index:20;
+
+}
+
+
+
+#scanner:after{
+
+content:"";
 
 position:absolute;
+
+
+width:50%;
+
+height:50%;
+
+
+left:50%;
+
+top:0;
+
+
+background:
+
+linear-gradient(
+90deg,
+rgba(0,255,150,.9),
+transparent
+);
+
+
+transform-origin:
+
+0% 100%;
+
+
+animation:
+
+radar 2s linear infinite;
+
+}
+
+
+
+
+@keyframes radar{
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+/* ===============================
+INVENTARIO
+================================ */
+
+
+#inventario{
+
+position:fixed;
+
+right:15px;
+
+top:90px;
+
+
+width:95px;
+
+
+background:
+
+linear-gradient(
+160deg,
+rgba(0,30,60,.9),
+rgba(0,255,180,.15)
+);
+
+
+
+border:
+
+1px solid #00ffcc;
+
+
+
+box-shadow:
+
+0 0 25px #00ff99,
+inset 0 0 20px #00ff9955;
+
+
+
+backdrop-filter:
+
+blur(10px);
+
+
+
+border-radius:25px;
+
+
+padding:12px;
+
+
+text-align:center;
+
+
+z-index:60;
+
+}
+
+
+
+.tituloInv{
+
+font-size:12px;
+
+color:#00ffcc;
+
+
+letter-spacing:2px;
+
+
+margin-bottom:12px;
+
+}
+
+
+
+#slots{
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
+align-items:center;
+
+}
+
+
+
+.slot{
+
+width:45px;
+
+height:45px;
+
+
+border-radius:50%;
+
+
+border:
+
+2px solid #00ffcc;
+
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+font-size:25px;
+
+
+background:
+
+radial-gradient(
+circle,
+rgba(0,255,200,.25),
+rgba(0,0,0,.5)
+);
+
+}
+
+
+
+.slot.ativo{
+
+background:
+
+radial-gradient(
+circle,
+#fff,
+#00ffcc
+);
+
+
+box-shadow:
+
+0 0 35px #00ffcc;
+
+
+animation:
+
+skill .8s;
+
+}
+
+
+
+@keyframes skill{
+
+50%{
+
+transform:scale(1.3);
+
+}
+
+}
+
+
+
+#nivel{
+
+margin-top:10px;
+
+color:white;
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+OBJETO 3D
+================================ */
+
+
+#objeto{
+
+position:fixed;
+
+left:50%;
+
+top:45%;
+
+
+transform:
+
+translate(-50%,-50%);
+
+
+
+width:300px;
+
+height:300px;
+
+
+display:none;
+
+
+z-index:80;
+
+
+
+filter:
+
+drop-shadow(0 0 45px #00ff99);
+
+}
+
+
+
+.captura{
+
+animation:
+
+capturar .8s;
+
+}
+
+
+
+@keyframes capturar{
+
+to{
+
+transform:
+
+translate(-50%,-50%)
+
+scale(0);
+
+
+opacity:0;
+
+}
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+MENSAGEM
+================================ */
+
+
+#mensagem{
+
+position:fixed;
 
 bottom:40px;
 
@@ -58,8 +686,159 @@ left:50%;
 transform:translateX(-50%);
 
 
-padding:18px 45px;
+width:85%;
 
+
+background:
+
+rgba(0,0,0,.8);
+
+
+color:white;
+
+
+padding:25px;
+
+
+border-radius:30px;
+
+
+font-size:22px;
+
+
+text-align:center;
+
+
+display:none;
+
+
+z-index:90;
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+VIDEOS SKILLS
+================================ */
+
+
+#playerVideo{
+
+position:fixed;
+
+inset:0;
+
+background:black;
+
+display:none;
+
+z-index:2000;
+
+}
+
+
+
+#videoSkill{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+FORMULARIOS
+================================ */
+
+
+#formPerfil,
+#formWhats{
+
+position:fixed;
+
+inset:0;
+
+
+background:
+
+linear-gradient(
+150deg,
+#00111f,
+#003049
+);
+
+
+display:none;
+
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+
+text-align:center;
+
+
+color:white;
+
+
+padding:30px;
+
+
+z-index:3000;
+
+}
+
+
+
+#formPerfil input,
+#formPerfil select,
+#formWhats input{
+
+width:85%;
+
+max-width:400px;
+
+
+padding:18px;
+
+
+margin:10px;
+
+
+border-radius:30px;
+
+
+border:0;
+
+
+font-size:18px;
+
+}
+
+
+
+#formPerfil button,
+#formWhats button{
+
+padding:18px 45px;
 
 border:0;
 
@@ -67,30 +846,63 @@ border:0;
 border-radius:40px;
 
 
-background:
-
-linear-gradient(
-90deg,
-#00ff99,
-#00ccff
-);
+background:#00ff99;
 
 
-font-size:20px;
+font-size:18px;
 
 font-weight:bold;
 
 
-color:#001;
+margin-top:20px;
+
+}
 
 
-z-index:5;
 
 
 
-box-shadow:
 
-0 0 25px #00ff99;
 
+
+/* ===============================
+DEBUG
+================================ */
+
+
+#debug{
+
+display:none;
+
+
+position:fixed;
+
+
+left:10px;
+
+bottom:10px;
+
+
+background:
+
+rgba(0,0,0,.75);
+
+
+color:#00ff99;
+
+
+font-family:monospace;
+
+
+font-size:12px;
+
+
+padding:10px;
+
+
+border-radius:10px;
+
+
+z-index:9999;
 
 }
