@@ -1,128 +1,321 @@
+/* ===================================
+   CONFIGURAÇÃO DAS JORNADAS
+=================================== */
+
+
 const JORNADAS = {
+
+
+/* ===================================
+   PERFIL 1 - EMPREENDEDOR
+=================================== */
 
 
 empreendedor:[
 
+
 {
+
 nome:"Gestão Financeira",
+
 icone:"💰",
-video:"videos/empreendedor/1.mp4",
-modelo:"modelos/dotum.glb"
+
+descricao:"Organize seu dinheiro e acompanhe seus resultados",
+
+modelo:"modelos/dotum.glb",
+
+video:"videos/empreendedor/1.mp4"
+
 },
 
+
+
 {
+
 nome:"Clientes e Mercado",
+
 icone:"🎯",
-video:"videos/empreendedor/2.mp4",
-modelo:"modelos/sicoob.glb"
+
+descricao:"Conheça seu público e encontre oportunidades",
+
+modelo:"modelos/sicoob.glb",
+
+video:"videos/empreendedor/2.mp4"
+
 },
 
+
+
 {
+
 nome:"Vendas",
+
 icone:"🚀",
-video:"videos/empreendedor/3.mp4",
-modelo:"modelos/sebrae.glb"
+
+descricao:"Aprenda estratégias para vender melhor",
+
+modelo:"modelos/sebrae.glb",
+
+video:"videos/empreendedor/3.mp4"
+
 },
 
+
+
 {
+
 nome:"Inovação",
+
 icone:"💡",
-video:"videos/empreendedor/4.mp4",
-modelo:"modelos/dotum.glb"
+
+descricao:"Use tecnologia e criatividade para evoluir",
+
+modelo:"modelos/dotum.glb",
+
+video:"videos/empreendedor/4.mp4"
+
 },
 
+
+
 {
+
 nome:"Crescimento",
+
 icone:"👑",
-video:"videos/empreendedor/5.mp4",
-modelo:"modelos/sicoob.glb"
+
+descricao:"Planeje os próximos passos da empresa",
+
+modelo:"modelos/sicoob.glb",
+
+video:"videos/empreendedor/5.mp4"
+
 }
+
 
 ],
 
 
+
+
+
+
+
+
+
+/* ===================================
+   PERFIL 2 - PROFISSIONAL
+=================================== */
 
 
 profissional:[
 
+
+
 {
+
 nome:"Atitude de Dono",
+
 icone:"🧭",
-video:"videos/profissional/1.mp4",
-modelo:"modelos/dotum.glb"
+
+descricao:"Assuma responsabilidade e gere resultados",
+
+modelo:"modelos/dotum.glb",
+
+video:"videos/profissional/1.mp4"
+
 },
 
+
+
 {
+
 nome:"Comunicação",
+
 icone:"🗣️",
-video:"videos/profissional/2.mp4",
-modelo:"modelos/sicoob.glb"
+
+descricao:"Aprenda a transmitir ideias com clareza",
+
+modelo:"modelos/sicoob.glb",
+
+video:"videos/profissional/2.mp4"
+
 },
 
+
+
 {
-nome:"Aprendizado",
+
+nome:"Aprendizado Contínuo",
+
 icone:"🧠",
-video:"videos/profissional/3.mp4",
-modelo:"modelos/sebrae.glb"
+
+descricao:"Evolua constantemente suas habilidades",
+
+modelo:"modelos/sebrae.glb",
+
+video:"videos/profissional/3.mp4"
+
 },
 
+
+
 {
+
 nome:"Resolver Problemas",
+
 icone:"⚙️",
-video:"videos/profissional/4.mp4",
-modelo:"modelos/dotum.glb"
+
+descricao:"Transforme desafios em oportunidades",
+
+modelo:"modelos/dotum.glb",
+
+video:"videos/profissional/4.mp4"
+
 },
 
+
+
 {
+
 nome:"Marca Profissional",
+
 icone:"⭐",
-video:"videos/profissional/5.mp4",
-modelo:"modelos/sicoob.glb"
+
+descricao:"Construa sua reputação e carreira",
+
+modelo:"modelos/sicoob.glb",
+
+video:"videos/profissional/5.mp4"
+
 }
+
 
 ],
 
 
 
 
+
+
+
+
+
+/* ===================================
+   PERFIL 3 - ESTUDANTE
+=================================== */
+
+
 estudante:[
 
+
+
 {
-nome:"Talentos",
+
+nome:"Descubra seus Talentos",
+
 icone:"🔎",
-video:"videos/estudante/1.mp4",
-modelo:"modelos/dotum.glb"
+
+descricao:"Conheça seus pontos fortes",
+
+modelo:"modelos/dotum.glb",
+
+video:"videos/estudante/1.mp4"
+
 },
 
+
+
 {
+
 nome:"Disciplina",
+
 icone:"⏰",
-video:"videos/estudante/2.mp4",
-modelo:"modelos/sicoob.glb"
+
+descricao:"Organize sua rotina e seus objetivos",
+
+modelo:"modelos/sicoob.glb",
+
+video:"videos/estudante/2.mp4"
+
 },
 
+
+
 {
-nome:"Equipe",
+
+nome:"Trabalho em Equipe",
+
 icone:"🤝",
-video:"videos/estudante/3.mp4",
-modelo:"modelos/sebrae.glb"
+
+descricao:"Aprenda a colaborar e crescer junto",
+
+modelo:"modelos/sebrae.glb",
+
+video:"videos/estudante/3.mp4"
+
 },
 
+
+
 {
-nome:"Mundo Trabalho",
+
+nome:"Mundo do Trabalho",
+
 icone:"🌎",
-video:"videos/estudante/4.mp4",
-modelo:"modelos/dotum.glb"
+
+descricao:"Prepare-se para novas oportunidades",
+
+modelo:"modelos/dotum.glb",
+
+video:"videos/estudante/4.mp4"
+
 },
 
+
+
 {
+
 nome:"Atitude Empreendedora",
+
 icone:"🚀",
-video:"videos/estudante/5.mp4",
-modelo:"modelos/sicoob.glb"
+
+descricao:"Crie soluções e transforme ideias em ação",
+
+modelo:"modelos/sicoob.glb",
+
+video:"videos/estudante/5.mp4"
+
 }
 
+
 ]
+
+
+};
+
+
+
+
+
+/* ===================================
+   PRIMEIRO ITEM GLOBAL
+   antes da escolha do perfil
+=================================== */
+
+
+const ITEM_INICIAL = {
+
+
+nome:"Início da Jornada",
+
+icone:"🚀",
+
+descricao:"A primeira habilidade de todo explorador",
+
+modelo:"modelos/dotum.glb",
+
+video:"videos/video1.mp4"
 
 
 };
