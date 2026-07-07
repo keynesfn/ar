@@ -5,6 +5,9 @@ let itens=[];
 let atual=0;
 let etapaInicial=true;
 let timer=null;
+let anguloAtual=0;
+let anguloObjeto=null;
+let objetoEncontrado=false;
 document.addEventListener("DOMContentLoaded",()=>{
 el={
 camera:$("camera"),
@@ -34,6 +37,12 @@ el.start.onclick=iniciar;
 el.objeto.onclick=capturar;
 el.btnPerfil.onclick=salvarPerfil;
 el.btnLead.onclick=salvarLead;
+window.addEventListener("deviceorientation",e=>{
+if(e.alpha!==null){
+anguloAtual=e.alpha;
+verificarPosicao();
+}
+});
 });
 async function iniciar(){
 try{
@@ -42,21 +51,28 @@ el.jogo.style.display="block";
 await abrirCamera();
 buscar();
 }catch(e){
-alert("Erro câmera: "+e.message);
+alert("Erro ao iniciar câmera: "+e.message);
 }
 }
 async function abrirCamera(){
 const stream=await navigator.mediaDevices.getUserMedia({
-video:{facingMode:{ideal:"environment"}},
+video:{
+facingMode:{
+ideal:"environment"
+}
+},
 audio:false
 });
 el.camera.srcObject=stream;
 }
 function buscar(){
+objetoEncontrado=false;
+anguloObjeto=null;
 el.status.innerHTML="🛰️ Procurando artefato...";
 el.radar.style.display="block";
 el.objeto.style.display="none";
 el.msg.style.display="none";
+el.sinal.innerHTML="";
 let tempo=Math.floor(Math.random()*7000)+8000;
 clearTimeout(timer);
 timer=setTimeout(()=>{
@@ -67,15 +83,36 @@ function mostrarItem(){
 let item=itens[atual];
 el.radar.style.display="none";
 el.objeto.src=item.modelo;
-el.objeto.style.display="block";
+anguloObjeto=anguloAtual;
+objetoEncontrado=true;
 el.msg.style.display="block";
-el.msg.innerHTML="✨ Artefato encontrado<br>Toque para capturar";
+el.msg.innerHTML="🛰️ Artefato detectado<br>Procure o sinal";
 try{
 el.found.play();
 }catch(e){}
+verificarPosicao();
+}
+function verificarPosicao(){
+if(!objetoEncontrado)return;
+let diferenca=Math.abs(anguloAtual-anguloObjeto);
+if(diferenca>180){
+diferenca=360-diferenca;
+}
+let porcentagem=Math.max(0,100-Math.round(diferenca*4));
+el.sinal.innerHTML="🛰️ Sinal "+porcentagem+"%";
+if(diferenca<15){
+el.objeto.style.display="block";
+el.msg.innerHTML="✨ Artefato encontrado<br>Toque para capturar";
+}else{
+el.objeto.style.display="none";
+el.msg.innerHTML="🧭 Continue procurando...";
+}
 }
 function capturar(){
+if(!objetoEncontrado)return;
 let item=itens[atual];
+objetoEncontrado=false;
+anguloObjeto=null;
 try{
 el.capture.play();
 }catch(e){}
@@ -83,6 +120,7 @@ jogador.skills.push(item.nome);
 inventario();
 el.objeto.style.display="none";
 el.msg.style.display="none";
+el.sinal.innerHTML="";
 abrirVideo(item.video);
 }
 function abrirVideo(src){
@@ -132,7 +170,10 @@ el.lead.style.display="flex";
 function salvarLead(){
 jogador.fone=el.fone.value;
 console.log("LEAD:",jogador);
-el.lead.innerHTML=`<h2>Obrigado ${jogador.nome} 🚀</h2><p>Jornada concluída!</p>`;
+el.lead.innerHTML=`
+<h2>Obrigado ${jogador.nome} 🚀</h2>
+<p>Você concluiu sua jornada!</p>
+`;
 }
 function inventario(){
 let html="";
