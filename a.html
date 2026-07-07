@@ -4,117 +4,83 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Jornada Empreendedora</title>
+<title>Jornada Empreendedora AR</title>
 
 
 <script type="module"
-src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.1.0/dist/model-viewer.min.js">
 </script>
 
 
 <style>
 
-
 html,body{
-
 margin:0;
-height:100%;
 width:100%;
+height:100%;
 overflow:hidden;
 font-family:Arial;
 background:black;
-
 }
-
 
 
 /* CAMERA */
 
-
 #camera{
-
 position:fixed;
 inset:0;
-
 width:100%;
 height:100%;
-
 object-fit:cover;
-
 z-index:1;
-
 }
-
 
 
 /* INICIO */
 
-
 #inicio{
 
 position:fixed;
-
 inset:0;
 
-z-index:100;
-
-background:
-
-linear-gradient(
+background:linear-gradient(
 140deg,
 #06142e,
 #005f73,
 #ffb703
 );
 
-
 display:flex;
-
 flex-direction:column;
-
 justify-content:center;
-
 align-items:center;
 
 text-align:center;
 
 color:white;
 
+z-index:100;
+
 padding:30px;
 
 }
 
 
-
-#inicio h1{
-
-font-size:36px;
-
-}
-
-
-
 #start{
 
 padding:20px 50px;
-
 border:0;
-
 border-radius:50px;
+
+background:#00ff99;
 
 font-size:22px;
 
 font-weight:bold;
 
-background:#00ff99;
-
 }
-
-
-
 
 
 
@@ -134,7 +100,6 @@ display:none;
 position:fixed;
 
 top:25px;
-
 left:50%;
 
 transform:translateX(-50%);
@@ -156,12 +121,12 @@ text-align:center;
 
 
 
+
 #inventario{
 
 position:fixed;
 
 right:15px;
-
 top:90px;
 
 background:#000a;
@@ -170,15 +135,13 @@ border:3px solid gold;
 
 color:white;
 
-font-size:32px;
+font-size:30px;
 
 padding:15px;
 
 border-radius:25px;
 
 z-index:20;
-
-text-align:center;
 
 }
 
@@ -208,6 +171,7 @@ border-radius:50%;
 
 border:3px solid #00ff99;
 
+
 background:
 
 radial-gradient(
@@ -216,19 +180,17 @@ rgba(0,255,150,.25),
 transparent 70%
 );
 
-box-shadow:
 
-0 0 40px #00ff99;
+box-shadow:0 0 40px #00ff99;
 
-
-display:none;
 
 overflow:hidden;
+
+display:none;
 
 z-index:15;
 
 }
-
 
 
 
@@ -242,7 +204,6 @@ width:50%;
 height:50%;
 
 left:50%;
-
 top:0;
 
 
@@ -255,36 +216,25 @@ transparent
 );
 
 
-transform-origin:
-
-0% 100%;
+transform-origin:0% 100%;
 
 
-animation:
-
-radar 2s linear infinite;
+animation:girar 2s linear infinite;
 
 }
 
 
-
-
-@keyframes radar{
+@keyframes girar{
 
 from{
-
 transform:rotate(0deg);
-
 }
 
 to{
-
 transform:rotate(360deg);
-
 }
 
 }
-
 
 
 
@@ -307,7 +257,6 @@ display:none;
 z-index:30;
 
 filter:
-
 drop-shadow(0 0 30px #00ff99);
 
 }
@@ -316,9 +265,6 @@ drop-shadow(0 0 30px #00ff99);
 
 
 
-
-
-/* MENSAGEM */
 
 
 #mensagem{
@@ -331,11 +277,11 @@ left:50%;
 
 transform:translateX(-50%);
 
+width:85%;
+
 background:#000c;
 
 color:white;
-
-width:85%;
 
 padding:25px;
 
@@ -350,8 +296,6 @@ display:none;
 z-index:40;
 
 }
-
-
 
 
 
@@ -375,14 +319,47 @@ z-index:999;
 }
 
 
-
 #videoSkill{
 
 width:100%;
-
 height:100%;
 
 object-fit:cover;
+
+}
+
+
+
+
+
+/* DEBUG */
+
+
+#debug{
+
+position:fixed;
+
+left:10px;
+
+bottom:10px;
+
+background:#000c;
+
+color:#00ff99;
+
+font-family:monospace;
+
+font-size:14px;
+
+padding:12px;
+
+border-radius:10px;
+
+z-index:99999;
+
+line-height:22px;
+
+border:1px solid #00ff99;
 
 }
 
@@ -393,38 +370,25 @@ object-fit:cover;
 </head>
 
 
-
 <body>
 
 
-
-
-
-<video id="camera" autoplay playsinline></video>
-
-
-
+<video 
+id="camera"
+autoplay
+playsinline>
+</video>
 
 
 
 
 <div id="inicio">
 
-
-<h1>
-
-🚀 Jornada Empreendedora
-
-</h1>
-
+<h1>🚀 Jornada Empreendedora</h1>
 
 <p>
-
-Explore o ambiente e encontre novas habilidades
-
+Explore o ambiente e encontre habilidades
 </p>
-
-
 
 <button id="start">
 
@@ -434,8 +398,6 @@ COMEÇAR MISSÃO
 
 
 </div>
-
-
 
 
 
@@ -466,9 +428,7 @@ Preparando...
 
 </div>
 
-
 </div>
-
 
 
 <div id="scanner"></div>
@@ -481,18 +441,31 @@ Preparando...
 
 
 
+<div id="debug">
+
+DEBUG
+
+</div>
+
+
+
+
+
 
 
 <model-viewer
 
 id="objeto"
 
-auto-rotate>
+auto-rotate
 
+rotation-per-second="25deg"
+
+interaction-prompt="none"
+
+disable-zoom>
 
 </model-viewer>
-
-
 
 
 
@@ -505,10 +478,7 @@ auto-rotate>
 
 
 
-
-
 <div id="playerVideo">
-
 
 <video
 
@@ -518,12 +488,9 @@ playsinline
 
 controls>
 
-
 </video>
 
-
 </div>
-
 
 
 
@@ -537,14 +504,12 @@ controls>
 
 const itens=[
 
-
 {
 nome:"Gestão Financeira",
 icone:"💰",
 modelo:"modelos/dotum.glb",
 video:"video1.mp4"
 },
-
 
 {
 nome:"Clientes e Mercado",
@@ -553,14 +518,12 @@ modelo:"modelos/sicoob.glb",
 video:"video2.mp4"
 },
 
-
 {
 nome:"Vendas",
 icone:"🚀",
 modelo:"modelos/sebrae.glb",
 video:"video3.mp4"
 },
-
 
 {
 nome:"Inovação",
@@ -569,7 +532,6 @@ modelo:"modelos/dotum.glb",
 video:"video4.mp4"
 },
 
-
 {
 nome:"Crescimento",
 icone:"👑",
@@ -577,26 +539,25 @@ modelo:"modelos/sicoob.glb",
 video:"video5.mp4"
 }
 
-
 ];
 
 
 
-let atual=0;
 
+let atual=0;
 let capturados=[];
 
 
 let passos=0;
-
 let metaPassos=0;
 
 let ultimoPasso=0;
 
-let aguardandoPassos=false;
+let aguardando=false;
 
+let ultimaForca=0;
 
-
+let inicioBusca=0;
 
 
 
@@ -607,12 +568,11 @@ start.onclick=async()=>{
 
 inicio.style.display="none";
 
-
 hud.style.display="block";
 
 
 
-await liberarSensores();
+await liberarSensor();
 
 
 
@@ -627,9 +587,7 @@ audio:false
 });
 
 
-
 camera.srcObject=stream;
-
 
 
 buscar();
@@ -644,27 +602,18 @@ buscar();
 
 
 
-
-
-async function liberarSensores(){
+async function liberarSensor(){
 
 
 
 if(
-
-typeof DeviceMotionEvent!="undefined"
-
-&&
-
+typeof DeviceMotionEvent!="undefined" &&
 typeof DeviceMotionEvent.requestPermission=="function"
-
 ){
 
 await DeviceMotionEvent.requestPermission();
 
 }
-
-
 
 
 
@@ -675,22 +624,18 @@ window.addEventListener(
 (e)=>{
 
 
-
-if(!aguardandoPassos)
+if(!aguardando)
 
 return;
 
 
 
-let acc=
-
-e.accelerationIncludingGravity;
+let acc=e.accelerationIncludingGravity;
 
 
+if(!acc)
 
-if(!acc)return;
-
-
+return;
 
 
 
@@ -708,11 +653,13 @@ acc.z*acc.z
 
 
 
-
-
 let impacto=
 
 Math.abs(forca-9.8);
+
+
+
+ultimaForca=impacto;
 
 
 
@@ -734,43 +681,17 @@ agora-ultimoPasso>500
 ultimoPasso=agora;
 
 
-
 passos++;
-
-
-
-
-status.innerHTML=
-
-"🚶 Explorando...<br>"+
-
-passos+
-
-"/"+
-
-metaPassos+
-
-" passos";
-
 
 
 
 if(passos>=metaPassos){
 
 
-
-aguardandoPassos=false;
-
-
-
-setTimeout(()=>{
+aguardando=false;
 
 
 mostrarObjeto();
-
-
-},1000);
-
 
 
 }
@@ -797,8 +718,10 @@ mostrarObjeto();
 function buscar(){
 
 
-
 scanner.style.display="block";
+
+
+inicioBusca=Date.now();
 
 
 
@@ -808,23 +731,17 @@ passos=0;
 
 metaPassos=
 
-Math.floor(
-
-Math.random()*8
-
-)+8;
+Math.floor(Math.random()*8)+8;
 
 
 
-
-aguardandoPassos=true;
-
+aguardando=true;
 
 
 
 status.innerHTML=
 
-"🚶 Caminhe para encontrar habilidades";
+"🚶 Caminhe para procurar";
 
 
 }
@@ -841,17 +758,13 @@ status.innerHTML=
 function mostrarObjeto(){
 
 
-
 scanner.style.display="none";
-
 
 
 let item=itens[atual];
 
 
-
 objeto.src=item.modelo;
-
 
 
 objeto.style.display="block";
@@ -861,6 +774,7 @@ objeto.style.display="block";
 objeto.style.left=
 
 Math.random()*50+20+"%";
+
 
 
 objeto.style.top=
@@ -874,13 +788,14 @@ status.innerHTML=
 "✨ Encontrado!";
 
 
-
 mensagem.innerHTML=
 
 "Toque para capturar";
 
 
+
 mensagem.style.display="block";
+
 
 
 navigator.vibrate?.(300);
@@ -896,19 +811,17 @@ navigator.vibrate?.(300);
 
 
 
+
 objeto.onclick=()=>{
 
 
 let item=itens[atual];
 
 
-
 capturados.push(item);
 
 
-
 objeto.style.display="none";
-
 
 mensagem.style.display="none";
 
@@ -921,7 +834,6 @@ atualizar();
 abrirVideo(item.video);
 
 
-
 };
 
 
@@ -931,17 +843,13 @@ abrirVideo(item.video);
 
 
 
-
-
-function abrirVideo(video){
-
+function abrirVideo(v){
 
 
 playerVideo.style.display="block";
 
 
-videoSkill.src=video;
-
+videoSkill.src=v;
 
 
 videoSkill.play();
@@ -949,16 +857,13 @@ videoSkill.play();
 
 
 
-
 videoSkill.onended=()=>{
-
 
 
 playerVideo.style.display="none";
 
 
 videoSkill.src="";
-
 
 
 atual++;
@@ -979,7 +884,6 @@ buscar();
 };
 
 
-
 }
 
 
@@ -993,13 +897,15 @@ buscar();
 function atualizar(){
 
 
+
 let html="";
+
 
 
 itens.forEach(i=>{
 
 
-html +=
+html+=
 
 capturados.includes(i)
 
@@ -1031,12 +937,9 @@ slots.innerHTML=html;
 function fim(){
 
 
-scanner.style.display="none";
-
-
 status.innerHTML=
 
-"🏆 Jornada concluída";
+"🏆 Finalizado";
 
 
 
@@ -1045,10 +948,61 @@ mensagem.innerHTML=
 "Parabéns! Você conquistou todas as habilidades 🚀";
 
 
+
 mensagem.style.display="block";
 
 
 }
+
+
+
+
+
+
+
+
+
+
+/* DEBUG */
+
+
+setInterval(()=>{
+
+
+let tempo=
+
+inicioBusca
+
+?
+
+Math.floor(
+
+(Date.now()-inicioBusca)/1000
+
+)
+
+:
+
+0;
+
+
+
+
+debug.innerHTML=
+
+"DEBUG<br>"+
+
+"⏱ Tempo: "+tempo+"s<br>"+
+
+"👣 Passos: "+passos+"/"+metaPassos+"<br>"+
+
+"📳 Movimento: "+ultimaForca.toFixed(2)+"<br>"+
+
+"🎁 Item: "+(atual+1)+"/5";
+
+
+},500);
+
 
 
 </script>
