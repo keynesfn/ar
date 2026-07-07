@@ -5,25 +5,18 @@ BASE
 html,body{
 
 margin:0;
-
 width:100%;
-
 height:100%;
-
 overflow:hidden;
-
 background:#000;
-
 font-family:Arial, Helvetica, sans-serif;
 
 }
 
 
-
 /* ===============================
 CAMERA
 ================================ */
-
 
 #camera{
 
@@ -42,9 +35,6 @@ background:#000;
 z-index:1;
 
 }
-
-
-
 
 
 
@@ -68,7 +58,6 @@ linear-gradient(
 #ffb703
 );
 
-
 display:flex;
 
 flex-direction:column;
@@ -76,7 +65,6 @@ flex-direction:column;
 justify-content:center;
 
 align-items:center;
-
 
 text-align:center;
 
@@ -87,7 +75,6 @@ color:white;
 z-index:1000;
 
 }
-
 
 
 #inicio h1{
@@ -101,8 +88,9 @@ font-size:38px;
 
 font-size:18px;
 
-}
+max-width:350px;
 
+}
 
 
 button{
@@ -110,7 +98,6 @@ button{
 cursor:pointer;
 
 }
-
 
 
 #start{
@@ -121,7 +108,6 @@ border:0;
 
 border-radius:50px;
 
-
 background:
 
 linear-gradient(
@@ -130,64 +116,15 @@ linear-gradient(
 #00ccff
 );
 
-
 font-size:22px;
 
 font-weight:bold;
-
 
 box-shadow:
 
 0 0 30px #00ff99;
 
 }
-
-
-
-
-
-
-
-
-/* ===============================
-VIDEO INTRO
-================================ */
-
-
-#introVideo{
-
-position:fixed;
-
-inset:0;
-
-width:100vw;
-
-height:100vh;
-
-background:black;
-
-display:none;
-
-overflow:hidden;
-
-z-index:3000;
-
-}
-
-
-
-#videoIntro{
-
-width:100%;
-
-height:100%;
-
-object-fit:cover;
-
-}
-
-
-
 
 
 
@@ -216,39 +153,25 @@ left:50%;
 
 transform:translateX(-50%);
 
-
 background:
 
 rgba(0,0,0,.75);
 
-
 color:white;
-
 
 padding:15px 25px;
 
-
 border-radius:40px;
-
 
 font-size:16px;
 
-
 text-align:center;
 
-
-backdrop-filter:
-
-blur(8px);
-
+backdrop-filter:blur(8px);
 
 z-index:50;
 
 }
-
-
-
-
 
 
 
@@ -268,31 +191,21 @@ left:50%;
 
 transform:translateX(-50%);
 
-
 font-size:26px;
 
 font-weight:bold;
 
-
 color:#00ffcc;
-
 
 text-shadow:
 
 0 0 25px #00ffcc;
 
-
 display:none;
-
 
 z-index:50;
 
 }
-
-
-
-
-
 
 
 
@@ -310,25 +223,17 @@ top:50%;
 
 left:50%;
 
-
 width:260px;
 
 height:260px;
-
 
 margin-left:-130px;
 
 margin-top:-130px;
 
-
 border-radius:50%;
 
-
-border:
-
-3px solid #00ff99;
-
-
+border:3px solid #00ff99;
 
 background:
 
@@ -338,24 +243,17 @@ rgba(0,255,150,.25),
 transparent 70%
 );
 
-
-
 box-shadow:
 
 0 0 50px #00ff99;
 
-
-
 overflow:hidden;
 
-
 display:none;
-
 
 z-index:20;
 
 }
-
 
 
 #scanner:after{
@@ -364,16 +262,13 @@ content:"";
 
 position:absolute;
 
-
 width:50%;
 
 height:50%;
 
-
 left:50%;
 
 top:0;
-
 
 background:
 
@@ -396,8 +291,6 @@ radar 2s linear infinite;
 }
 
 
-
-
 @keyframes radar{
 
 to{
@@ -407,10 +300,6 @@ transform:rotate(360deg);
 }
 
 }
-
-
-
-
 
 
 
@@ -429,9 +318,7 @@ right:15px;
 
 top:90px;
 
-
 width:95px;
-
 
 background:
 
@@ -442,11 +329,9 @@ rgba(0,255,180,.15)
 );
 
 
-
 border:
 
 1px solid #00ffcc;
-
 
 
 box-shadow:
@@ -455,21 +340,16 @@ box-shadow:
 inset 0 0 20px #00ff9955;
 
 
-
 backdrop-filter:
 
 blur(10px);
 
 
-
 border-radius:25px;
-
 
 padding:12px;
 
-
 text-align:center;
-
 
 z-index:60;
 
@@ -483,9 +363,7 @@ font-size:12px;
 
 color:#00ffcc;
 
-
 letter-spacing:2px;
-
 
 margin-bottom:12px;
 
@@ -513,14 +391,9 @@ width:45px;
 
 height:45px;
 
-
 border-radius:50%;
 
-
-border:
-
-2px solid #00ffcc;
-
+border:2px solid #00ffcc;
 
 
 display:flex;
@@ -528,7 +401,6 @@ display:flex;
 align-items:center;
 
 justify-content:center;
-
 
 font-size:25px;
 
@@ -559,7 +431,6 @@ circle,
 box-shadow:
 
 0 0 35px #00ffcc;
-
 
 animation:
 
@@ -594,8 +465,6 @@ color:white;
 
 
 
-
-
 /* ===============================
 OBJETO 3D
 ================================ */
@@ -609,23 +478,18 @@ left:50%;
 
 top:45%;
 
-
 transform:
 
 translate(-50%,-50%);
-
 
 
 width:300px;
 
 height:300px;
 
-
 display:none;
 
-
 z-index:80;
-
 
 
 filter:
@@ -648,6 +512,7 @@ capturar .8s;
 
 @keyframes capturar{
 
+
 to{
 
 transform:
@@ -661,10 +526,8 @@ opacity:0;
 
 }
 
+
 }
-
-
-
 
 
 
@@ -685,32 +548,23 @@ left:50%;
 
 transform:translateX(-50%);
 
-
 width:85%;
-
 
 background:
 
 rgba(0,0,0,.8);
 
-
 color:white;
-
 
 padding:25px;
 
-
 border-radius:30px;
-
 
 font-size:22px;
 
-
 text-align:center;
 
-
 display:none;
-
 
 z-index:90;
 
@@ -721,10 +575,8 @@ z-index:90;
 
 
 
-
-
 /* ===============================
-VIDEOS SKILLS
+VIDEOS
 ================================ */
 
 
@@ -760,7 +612,6 @@ object-fit:cover;
 
 
 
-
 /* ===============================
 FORMULARIOS
 ================================ */
@@ -773,7 +624,6 @@ position:fixed;
 
 inset:0;
 
-
 background:
 
 linear-gradient(
@@ -785,22 +635,17 @@ linear-gradient(
 
 display:none;
 
-
 flex-direction:column;
 
 justify-content:center;
 
 align-items:center;
 
-
 text-align:center;
-
-
-color:white;
-
 
 padding:30px;
 
+color:white;
 
 z-index:3000;
 
@@ -816,18 +661,13 @@ width:85%;
 
 max-width:400px;
 
-
 padding:18px;
-
 
 margin:10px;
 
-
 border-radius:30px;
 
-
 border:0;
-
 
 font-size:18px;
 
@@ -842,24 +682,17 @@ padding:18px 45px;
 
 border:0;
 
-
 border-radius:40px;
 
-
 background:#00ff99;
-
 
 font-size:18px;
 
 font-weight:bold;
 
-
 margin-top:20px;
 
 }
-
-
-
 
 
 
@@ -874,34 +707,25 @@ DEBUG
 
 display:none;
 
-
 position:fixed;
-
 
 left:10px;
 
 bottom:10px;
 
-
 background:
 
 rgba(0,0,0,.75);
 
-
 color:#00ff99;
-
 
 font-family:monospace;
 
-
 font-size:12px;
-
 
 padding:10px;
 
-
 border-radius:10px;
-
 
 z-index:9999;
 
