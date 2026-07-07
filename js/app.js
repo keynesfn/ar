@@ -1,1058 +1,196 @@
-/* ===============================
-   JOGADOR
-================================ */
-
-
-let jogador = {
-
-nome:null,
-
-perfil:null,
-
-whatsapp:null,
-
+const $=id=>document.getElementById(id);
+const el={
+camera:$("camera"),
+inicio:$("inicio"),
+start:$("btnStart"),
+jogo:$("jogo"),
+status:$("status"),
+radar:$("radar"),
+sinal:$("sinal"),
+objeto:$("objeto"),
+msg:$("msg"),
+videoBox:$("videoBox"),
+video:$("videoSkill"),
+perfil:$("perfil"),
+nome:$("nome"),
+tipo:$("tipo"),
+btnPerfil:$("btnPerfil"),
+lead:$("lead"),
+fone:$("fone"),
+btnLead:$("btnLead"),
+slots:$("slots"),
+debug:$("debug"),
+found:$("sndFound"),
+capture:$("sndCapture")
+};
+let jogador={
+nome:"",
+tipo:"",
+fone:"",
 skills:[]
-
 };
-
-
-
-
-
-/* ===============================
-   ESTADO DO JOGO
-================================ */
-
-
 let itens=[ITEM_INICIAL];
-
-
 let atual=0;
-
-
-let jornadaSelecionada=false;
-
-
-
-// sensores
-
+let escolheu=false;
 let passos=0;
-
-let metaPassos=0;
-
-let ultimoPasso=0;
-
+let meta=0;
 let procurando=false;
-
-
-
+let ultimo=0;
 let movimento=0;
-
-
-let direcaoAtual=0;
-
-let direcaoItem=null;
-
-
-let itemAtivo=false;
-
-
-
-let inicioBusca=0;
-
-
-
-
-
-
-/* ===============================
-   INICIAR JOGO
-================================ */
-
-
-start.onclick=async()=>{
-
-
-inicio.style.display="none";
-
-
-hud.style.display="block";
-
-
-debug.style.display="block";
-
-
-
-await iniciarSensores();
-
-
-
-
-let stream=
-
-await navigator.mediaDevices.getUserMedia({
-
-video:{
-
-facingMode:"environment"
-
-},
-
+let angulo=0;
+let alvo=0;
+let ativo=false;
+el.start.onclick=async()=>{
+el.inicio.style.display="none";
+el.jogo.style.display="block";
+el.debug.style.display="block";
+await sensores();
+const stream=await navigator.mediaDevices.getUserMedia({
+video:{facingMode:"environment"},
 audio:false
-
 });
-
-
-
-camera.srcObject=stream;
-
-
-
-buscarItem();
-
-
+el.camera.srcObject=stream;
+buscar();
 };
-
-
-
-
-
-
-
-
-
-
-/* ===============================
-   SENSORES
-================================ */
-
-
-async function iniciarSensores(){
-
-
-
-// IOS
-
-
-if(
-
-typeof DeviceMotionEvent!="undefined"
-
-&&
-
-DeviceMotionEvent.requestPermission
-
-){
-
+async function sensores(){
+if(typeof DeviceMotionEvent!="undefined"&&DeviceMotionEvent.requestPermission){
 await DeviceMotionEvent.requestPermission();
-
 }
-
-
-
-if(
-
-typeof DeviceOrientationEvent!="undefined"
-
-&&
-
-DeviceOrientationEvent.requestPermission
-
-){
-
+if(typeof DeviceOrientationEvent!="undefined"&&DeviceOrientationEvent.requestPermission){
 await DeviceOrientationEvent.requestPermission();
-
 }
-
-
-
-
-
-
-// MOVIMENTO
-
-
-window.addEventListener(
-
-"devicemotion",
-
-(e)=>{
-
-
-if(!procurando)
-
-return;
-
-
-
-let acc=
-
-e.accelerationIncludingGravity;
-
-
-
-if(!acc)
-
-return;
-
-
-
-
-let forca=Math.sqrt(
-
-acc.x*acc.x+
-
-acc.y*acc.y+
-
-acc.z*acc.z
-
-);
-
-
-
-movimento=
-
-Math.abs(forca-9.8);
-
-
-
-
-
-let agora=Date.now();
-
-
-
-
-if(
-
-movimento>1.8
-
-&&
-
-agora-ultimoPasso>500
-
-){
-
-
-
-ultimoPasso=agora;
-
-
-
+window.addEventListener("devicemotion",e=>{
+if(!procurando)return;
+const a=e.accelerationIncludingGravity;
+if(!a)return;
+const forca=Math.sqrt(a.x*a.x+a.y*a.y+a.z*a.z);
+movimento=Math.abs(forca-9.8);
+if(movimento>1.8&&Date.now()-ultimo>500){
+ultimo=Date.now();
 passos++;
-
-
-
-status.innerHTML=
-
-"🚶 Explorando "
-
-+passos+
-
-"/"
-
-+metaPassos;
-
-
-
-
-
-if(passos>=metaPassos){
-
-
-
+el.status.innerHTML=`🚶 ${passos}/${meta}`;
+if(passos>=meta){
 procurando=false;
-
-
-ativarItem();
-
-
-
+mostrarItem();
 }
-
-
-
 }
-
-
-
 });
-
-
-
-
-
-
-
-
-// GIROSCOPIO
-
-
-window.addEventListener(
-
-"deviceorientation",
-
-(e)=>{
-
-
-
-if(e.alpha!==null){
-
-
-direcaoAtual=e.alpha;
-
-
-verificarDirecao();
-
-
-}
-
-
-
+window.addEventListener("deviceorientation",e=>{
+angulo=e.alpha||0;
+rastrear();
 });
-
-
 }
-
-
-
-
-
-
-
-
-
-/* ===============================
-   BUSCAR ITEM
-================================ */
-
-
-function buscarItem(){
-
-
-
-scanner.style.display="block";
-
-
-energia.style.display="none";
-
-
-objeto.style.display="none";
-
-
-mensagem.style.display="none";
-
-
-
-itemAtivo=false;
-
-
-
+function buscar(){
+el.radar.style.display="block";
+el.objeto.style.display="none";
+el.msg.style.display="none";
+el.sinal.innerHTML="";
 passos=0;
-
-
-
-inicioBusca=Date.now();
-
-
-
-metaPassos=
-
-Math.floor(
-
-Math.random()*8
-
-)+8;
-
-
-
+meta=Math.floor(Math.random()*8)+8;
 procurando=true;
-
-
-
-
-status.innerHTML=
-
-"🟢 Procurando habilidade";
-
-
+ativo=false;
+el.status.innerHTML="🟢 Procurando habilidade";
 }
-
-
-
-
-
-
-
-
-
-
-
-/* ===============================
-   ITEM ACHADO
-================================ */
-
-
-function ativarItem(){
-
-
-
-scanner.style.display="none";
-
-
-
-let item=itens[atual];
-
-
-
-objeto.src=item.modelo;
-
-
-
-direcaoItem=direcaoAtual;
-
-
-
-itemAtivo=true;
-
-
-
-
-energia.style.display="block";
-
-
-mensagem.style.display="block";
-
-
-
-somFound.play();
-
-
-
-mensagem.innerHTML=
-
-"🛰️ Sinal detectado";
-
-
+function mostrarItem(){
+const item=itens[atual];
+el.radar.style.display="none";
+el.objeto.src=item.modelo;
+alvo=angulo;
+ativo=true;
+el.msg.style.display="block";
+el.msg.innerHTML="🛰️ Sinal encontrado";
+el.found.play();
 }
-
-
-
-
-
-
-
-
-
-/* ===============================
-   ANCORAGEM AR
-================================ */
-
-
-function verificarDirecao(){
-
-
-
-if(!itemAtivo)
-
-return;
-
-
-
-
-let diferenca=
-
-Math.abs(
-
-direcaoAtual-
-
-direcaoItem
-
-);
-
-
-
-if(diferenca>180)
-
-diferenca=
-
-360-diferenca;
-
-
-
-
-
-let sinal=
-
-Math.max(
-
-0,
-
-100-
-
-Math.round(
-
-diferenca*4
-
-)
-
-);
-
-
-
-
-
-energia.innerHTML=
-
-"🛰️ Sinal "
-
-+sinal+
-
-"%";
-
-
-
-
-
-
-if(diferenca<15){
-
-
-
-objeto.style.display="block";
-
-
-
-mensagem.innerHTML=
-
-"✨ Artefato encontrado<br>Toque para capturar";
-
-
+function rastrear(){
+if(!ativo)return;
+let dif=Math.abs(angulo-alvo);
+if(dif>180)dif=360-dif;
+let sinal=Math.max(0,100-Math.round(dif*4));
+el.sinal.innerHTML=`🛰️ Sinal ${sinal}%`;
+if(dif<15){
+el.objeto.style.display="block";
+el.msg.innerHTML="✨ Toque para capturar";
+}else{
+el.objeto.style.display="none";
+el.msg.innerHTML="🧭 Continue procurando";
 }
-
-
-
-else{
-
-
-
-objeto.style.display="none";
-
-
-mensagem.innerHTML=
-
-"🧭 Continue procurando";
-
-
 }
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ===============================
-   CAPTURAR
-================================ */
-
-
-objeto.onclick=()=>{
-
-
-
-let item=
-
-itens[atual];
-
-
-
-
-somCapture.play();
-
-
-
-itemAtivo=false;
-
-
-objeto.style.display="none";
-
-
-energia.style.display="none";
-
-
-mensagem.style.display="none";
-
-
-
-
-jogador.skills.push(
-
-item.nome
-
-);
-
-
-
-atualizarInventario();
-
-
-
-abrirVideo(
-
-item.video
-
-);
-
-
-
+el.objeto.onclick=()=>{
+const item=itens[atual];
+ativo=false;
+el.capture.play();
+el.objeto.style.display="none";
+el.msg.style.display="none";
+jogador.skills.push(item.nome);
+inventario();
+abrirVideo(item.video);
 };
-
-
-
-
-
-
-
-
-
-
-/* ===============================
-   VIDEO
-================================ */
-
-
-function abrirVideo(video){
-
-
-
-playerVideo.style.display="block";
-
-
-
-videoSkill.src=video;
-
-
-
-videoSkill.play();
-
-
-
-
-
-videoSkill.onended=()=>{
-
-
-
-playerVideo.style.display="none";
-
-
-videoSkill.src="";
-
-
-
-aposVideo();
-
-
-
+function abrirVideo(src){
+el.videoBox.style.display="block";
+el.video.src=src;
+el.video.play();
+el.video.onended=()=>{
+el.videoBox.style.display="none";
+el.video.src="";
+proximo();
 };
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-/* ===============================
-   APÓS VIDEO
-================================ */
-
-
-function aposVideo(){
-
-
-
-
-
-// terminou primeiro item
-
-
-if(
-
-!jornadaSelecionada
-
-){
-
-
-abrirFormularioPerfil();
-
-
+function proximo(){
+if(!escolheu){
+el.jogo.style.display="none";
+el.perfil.style.display="flex";
 return;
-
-
 }
-
-
-
-
-
 atual++;
-
-
-
-
-if(
-
-atual>=itens.length
-
-){
-
-
-abrirWhatsapp();
-
-
+if(atual>=itens.length){
+fim();
+}else{
+buscar();
 }
-
-
-
-else{
-
-
-buscarItem();
-
-
 }
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ===============================
-   FORM PERFIL
-================================ */
-
-
-function abrirFormularioPerfil(){
-
-
-
-hud.style.display="none";
-
-
-formPerfil.style.display="flex";
-
-
-}
-
-
-
-
-
-
-
-salvarPerfil.onclick=()=>{
-
-
-
-if(
-
-!nomeJogador.value
-
-||
-
-!perfilJogador.value
-
-){
-
-
-alert(
-
-"Informe seu nome e escolha a jornada"
-
-);
-
-
+el.btnPerfil.onclick=()=>{
+if(!el.nome.value||!el.tipo.value){
+alert("Preencha os dados");
 return;
-
-
 }
-
-
-
-
-jogador.nome=
-
-nomeJogador.value;
-
-
-
-
-jogador.perfil=
-
-perfilJogador.value;
-
-
-
-
-
-itens=
-
-JORNADAS[jogador.perfil];
-
-
-
+jogador.nome=el.nome.value;
+jogador.tipo=el.tipo.value;
+itens=JORNADAS[jogador.tipo];
 jogador.skills=[];
-
-
-
 atual=0;
-
-
-
-jornadaSelecionada=true;
-
-
-
-
-formPerfil.style.display="none";
-
-
-hud.style.display="block";
-
-
-
-
-atualizarInventario();
-
-
-
-buscarItem();
-
-
-
+escolheu=true;
+el.perfil.style.display="none";
+el.jogo.style.display="block";
+inventario();
+buscar();
 };
-
-
-
-
-
-
-
-
-
-/* ===============================
-   WHATSAPP FINAL
-================================ */
-
-
-function abrirWhatsapp(){
-
-
-
-hud.style.display="none";
-
-
-
-formWhats.style.display="flex";
-
-
-
-somComplete.play();
-
-
-
+function fim(){
+el.jogo.style.display="none";
+el.lead.style.display="flex";
 }
-
-
-
-
-
-
-
-enviarLead.onclick=()=>{
-
-
-
-jogador.whatsapp=
-
-whatsapp.value;
-
-
-
-
-
-console.log(
-
-"LEAD",
-
-jogador
-
-);
-
-
-
-
-
-formWhats.innerHTML=
-
-`
-
-<h2>
-
-🚀 Obrigado ${jogador.nome}
-
-</h2>
-
-
-<p>
-
-Continue sua jornada empreendedora!
-
-</p>
-
+el.btnLead.onclick=()=>{
+jogador.fone=el.fone.value;
+console.log(jogador);
+el.lead.innerHTML=`
+<h2>🚀 Obrigado ${jogador.nome}</h2>
+<p>Continue sua jornada empreendedora!</p>
 `;
-
-
 };
-
-
-
-
-
-
-
-
-
-
-/* ===============================
-   INVENTÁRIO
-================================ */
-
-
-function atualizarInventario(){
-
-
-
+function inventario(){
 let html="";
-
-
-
-itens.forEach(
-
-i=>{
-
-
-
-html+=
-
-jogador.skills.includes(i.nome)
-
-?
-
-`
-
-<div class="slot ativo">
-
-${i.icone}
-
-</div>
-
-`
-
-:
-
-`
-
-<div class="slot vazio"></div>
-
-`;
-
-
-
+itens.forEach(i=>{
+html+=jogador.skills.includes(i.nome)
+?`<div class="slot ok">${i.icone}</div>`
+:`<div class="slot"></div>`;
+});
+el.slots.innerHTML=html;
 }
-
-);
-
-
-
-
-
-slots.innerHTML=html;
-
-
-
-nivel.innerHTML=
-
-jogador.skills.length+
-
-"/"+
-
-itens.length;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-/* ===============================
-   DEBUG
-================================ */
-
-
 setInterval(()=>{
-
-
-
-debug.innerHTML=
-
-`
-
+el.debug.innerHTML=`
 DEBUG<br>
-
-👣 ${passos}/${metaPassos}<br>
-
+👣 ${passos}/${meta}<br>
 📳 ${movimento.toFixed(2)}<br>
-
-🧭 ${Math.round(direcaoAtual)}°<br>
-
-🎯 ${
-direcaoItem?
-Math.round(direcaoItem)+"°"
-:
-"-"
-}
-
+🧭 ${Math.round(angulo)}°<br>
+🎯 ${Math.round(alvo)}°
 `;
-
-
-
 },500);
