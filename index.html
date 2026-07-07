@@ -4,14 +4,20 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Jornada Empreendedora AR</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1">
+
+
+<title>
+Jornada Empreendedora AR
+</title>
 
 
 <script type="module"
 src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
 </script>
+
 
 
 <style>
@@ -23,9 +29,7 @@ margin:0;
 width:100%;
 height:100%;
 overflow:hidden;
-
 font-family:Arial;
-
 background:black;
 
 }
@@ -34,11 +38,9 @@ background:black;
 
 /* CAMERA */
 
-
 #camera{
 
 position:fixed;
-
 inset:0;
 
 width:100%;
@@ -52,20 +54,22 @@ z-index:1;
 
 
 
-/* INICIO */
+/* TELA INICIAL */
 
 
 #inicio{
 
 position:fixed;
-
 inset:0;
-
-z-index:100;
 
 background:
 
-linear-gradient(140deg,#06142e,#005f73,#ffb703);
+linear-gradient(
+140deg,
+#06142e,
+#005f73,
+#ffb703
+);
 
 
 display:flex;
@@ -81,6 +85,8 @@ text-align:center;
 color:white;
 
 padding:30px;
+
+z-index:100;
 
 }
 
@@ -102,15 +108,13 @@ border:0;
 
 border-radius:50px;
 
+background:#00ff99;
+
 font-size:22px;
 
 font-weight:bold;
 
-background:#00ff99;
-
 }
-
-
 
 
 
@@ -125,25 +129,31 @@ display:none;
 
 
 
-#contador{
+#status{
 
 position:fixed;
 
-top:20px;
+top:25px;
 
 left:50%;
 
 transform:translateX(-50%);
 
+
 background:#000a;
+
 
 color:white;
 
+
 padding:15px 30px;
 
-border-radius:40px;
+
+border-radius:30px;
+
 
 z-index:20;
+
 
 }
 
@@ -155,9 +165,10 @@ z-index:20;
 
 position:fixed;
 
+right:15px;
+
 top:90px;
 
-right:15px;
 
 background:#000a;
 
@@ -165,15 +176,21 @@ border:3px solid gold;
 
 color:white;
 
+
 font-size:32px;
+
 
 padding:15px;
 
+
 border-radius:25px;
+
+
+text-align:center;
+
 
 z-index:20;
 
-text-align:center;
 
 }
 
@@ -182,29 +199,60 @@ text-align:center;
 
 
 
-/* SCANNER */
+/* RADAR SUBMARINO */
 
 
 #scanner{
 
+
 position:fixed;
+
 
 top:50%;
 
 left:50%;
 
-width:220px;
 
-height:220px;
+width:260px;
 
-margin-left:-110px;
-
-margin-top:-110px;
+height:260px;
 
 
-border:5px solid #00ff99;
+margin-left:-130px;
+
+margin-top:-130px;
+
+
 
 border-radius:50%;
+
+
+border:3px solid #00ff99;
+
+
+
+background:
+
+radial-gradient(
+
+circle,
+
+rgba(0,255,150,.25) 0%,
+
+rgba(0,255,150,.08) 50%,
+
+transparent 70%
+
+);
+
+
+
+box-shadow:
+
+0 0 45px #00ff99;
+
+
+overflow:hidden;
 
 
 display:none;
@@ -213,41 +261,115 @@ display:none;
 z-index:15;
 
 
-animation:pulse 1s infinite;
-
-}
-
-
-@keyframes pulse{
-
-
-0%{
-
-transform:scale(.5);
-
-opacity:1;
-
-}
-
-
-100%{
-
-transform:scale(1.5);
-
-opacity:0;
-
-}
-
-
 }
 
 
 
+#scanner::after{
+
+
+content:"";
+
+
+position:absolute;
+
+
+width:50%;
+
+height:50%;
+
+
+
+left:50%;
+
+top:0;
+
+
+
+background:
+
+
+linear-gradient(
+
+90deg,
+
+rgba(0,255,150,.8),
+
+transparent
+
+);
+
+
+
+transform-origin:
+
+0% 100%;
+
+
+animation:
+
+radar 2s linear infinite;
+
+
+}
 
 
 
 
-/* OBJETO */
+#scanner::before{
+
+
+content:"";
+
+
+position:absolute;
+
+
+inset:40px;
+
+
+border-radius:50%;
+
+
+border:
+
+1px solid rgba(0,255,150,.5);
+
+
+}
+
+
+
+
+
+@keyframes radar{
+
+
+from{
+
+transform:rotate(0deg);
+
+}
+
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+/* OBJETO 3D */
 
 
 #objeto{
@@ -269,11 +391,13 @@ z-index:30;
 
 filter:
 
-drop-shadow(0 0 25px #00ff99);
-
+drop-shadow(0 0 30px #00ff99);
 
 
 }
+
+
+
 
 
 
@@ -284,11 +408,15 @@ drop-shadow(0 0 25px #00ff99);
 
 #mensagem{
 
+
 position:fixed;
+
 
 bottom:40px;
 
+
 left:50%;
+
 
 transform:translateX(-50%);
 
@@ -299,13 +427,13 @@ background:#000c;
 color:white;
 
 
-width:85%;
-
-
 padding:25px;
 
 
 border-radius:30px;
+
+
+width:85%;
 
 
 font-size:22px;
@@ -319,7 +447,9 @@ display:none;
 
 z-index:40;
 
+
 }
+
 
 
 
@@ -330,29 +460,41 @@ z-index:40;
 
 #playerVideo{
 
+
 position:fixed;
+
 
 inset:0;
 
+
 background:black;
+
 
 display:none;
 
+
 z-index:999;
 
+
 }
+
 
 
 
 #videoSkill{
 
+
 width:100%;
+
 
 height:100%;
 
+
 object-fit:cover;
 
+
 }
+
 
 
 </style>
@@ -360,7 +502,13 @@ object-fit:cover;
 </head>
 
 
+
+
+
 <body>
+
+
+
 
 
 
@@ -378,6 +526,9 @@ playsinline>
 
 
 
+
+
+
 <div id="inicio">
 
 
@@ -390,15 +541,14 @@ playsinline>
 
 <p>
 
-Caminhe pelo ambiente e encontre as habilidades escondidas
+Capture conhecimentos escondidos pelo ambiente
 
 </p>
 
 
-
 <h2>
 
-🧭 💎 🚀 💡 👑
+🧭 💰 🚀 💡 👑
 
 </h2>
 
@@ -418,40 +568,55 @@ COMEÇAR MISSÃO
 
 
 
+
+
 <div id="hud">
 
 
-<div id="contador">
+<div id="status">
 
-Preparando...
+🟢 Buscando habilidades...
 
 </div>
 
 
 
+
 <div id="inventario">
+
 
 🎒
 
 
 <div id="slots">
 
+
 ⬜<br>
+
 ⬜<br>
+
 ⬜<br>
+
 ⬜<br>
+
 ⬜
 
+
 </div>
 
 
 </div>
+
+
 
 
 <div id="scanner"></div>
 
 
+
 </div>
+
+
 
 
 
@@ -466,7 +631,6 @@ auto-rotate
 
 camera-controls>
 
-
 </model-viewer>
 
 
@@ -474,7 +638,9 @@ camera-controls>
 
 
 
+
 <div id="mensagem"></div>
+
 
 
 
@@ -505,56 +671,61 @@ controls>
 
 
 
+
 <script>
 
 
 const itens=[
 
+
 {
-nome:"Bússola da Estratégia",
-icone:"🧭",
-modelo:"modelos/bussola.glb",
+nome:"Gestão Financeira",
+icone:"💰",
+modelo:"modelos/dotum.glb",
 video:"video1.mp4"
 },
 
+
 {
-nome:"Cristal Financeiro",
-icone:"💎",
-modelo:"modelos/cristal.glb",
+nome:"Clientes e Mercado",
+icone:"🎯",
+modelo:"modelos/sicoob.glb",
 video:"video2.mp4"
 },
 
+
 {
-nome:"Foguete das Vendas",
+nome:"Vendas",
 icone:"🚀",
-modelo:"modelos/foguete.glb",
+modelo:"modelos/sebrae.glb",
 video:"video3.mp4"
 },
 
+
 {
-nome:"Lâmpada da Inovação",
+nome:"Inovação",
 icone:"💡",
-modelo:"modelos/lampada.glb",
+modelo:"modelos/dotum.glb",
 video:"video4.mp4"
 },
 
+
 {
-nome:"Coroa da Liderança",
+nome:"Crescimento",
 icone:"👑",
-modelo:"modelos/coroa.glb",
+modelo:"modelos/sicoob.glb",
 video:"video5.mp4"
 }
 
+
 ];
+
+
 
 
 let atual=0;
 
 let capturados=[];
-
-let segundos=0;
-
-let timer;
 
 
 
@@ -575,7 +746,16 @@ let stream=
 
 await navigator.mediaDevices.getUserMedia({
 
-video:{facingMode:"environment"}
+video:{
+
+
+facingMode:"environment"
+
+
+},
+
+audio:false
+
 
 });
 
@@ -596,50 +776,45 @@ buscar();
 
 
 
+
+
+
 function buscar(){
+
 
 
 scanner.style.display="block";
 
 
-segundos=0;
+status.innerHTML=
 
-
-
-let sorteio=
-
-Math.floor(Math.random()*11)+15;
+"🟢 Buscando habilidades...";
 
 
 
 
-timer=setInterval(()=>{
+let tempo=
 
 
-segundos++;
+Math.floor(
 
+Math.random()*6
 
-
-contador.innerHTML=
-
-"🔍 Procurando... "+segundos+"s";
-
-
-
-if(segundos>=sorteio){
-
-
-clearInterval(timer);
-
-
-aparecer();
-
-
-}
+)+5;
 
 
 
-},1000);
+
+
+setTimeout(()=>{
+
+
+mostrarObjeto();
+
+
+
+},tempo*1000);
+
 
 
 }
@@ -650,7 +825,9 @@ aparecer();
 
 
 
-function aparecer(){
+
+
+function mostrarObjeto(){
 
 
 
@@ -678,13 +855,20 @@ Math.random()*50+20+"%";
 
 objeto.style.top=
 
-Math.random()*40+20+"%";
+Math.random()*35+20+"%";
+
+
+
+
+status.innerHTML=
+
+"✨ Habilidade encontrada!";
 
 
 
 mensagem.innerHTML=
 
-"✨ Habilidade encontrada!<br>Toque para capturar";
+"Toque no artefato para capturar";
 
 
 
@@ -695,7 +879,9 @@ mensagem.style.display="block";
 navigator.vibrate?.(300);
 
 
+
 }
+
 
 
 
@@ -712,14 +898,14 @@ let item=itens[atual];
 
 
 
-capturados.push(item);
-
-
-
 objeto.style.display="none";
 
 
 mensagem.style.display="none";
+
+
+
+capturados.push(item);
 
 
 
@@ -728,6 +914,7 @@ atualizar();
 
 
 abrirVideo(item.video);
+
 
 
 };
@@ -739,14 +926,15 @@ abrirVideo(item.video);
 
 
 
-function abrirVideo(v){
+
+function abrirVideo(video){
 
 
 
 playerVideo.style.display="block";
 
 
-videoSkill.src=v;
+videoSkill.src=video;
 
 
 videoSkill.play();
@@ -754,7 +942,9 @@ videoSkill.play();
 
 
 
+
 videoSkill.onended=()=>{
+
 
 
 playerVideo.style.display="none";
@@ -768,7 +958,8 @@ atual++;
 
 
 
-if(atual>=5){
+
+if(atual>=itens.length){
 
 
 fim();
@@ -785,6 +976,7 @@ buscar();
 }
 
 
+
 };
 
 
@@ -797,11 +989,12 @@ buscar();
 
 
 
+
 function atualizar(){
 
 
-
 let html="";
+
 
 
 itens.forEach(i=>{
@@ -827,12 +1020,10 @@ i.icone+"<br>"
 slots.innerHTML=html;
 
 
-contador.innerHTML=
-
-capturados.length+"/5 habilidades";
-
-
 }
+
+
+
 
 
 
@@ -843,9 +1034,16 @@ capturados.length+"/5 habilidades";
 function fim(){
 
 
+
+status.innerHTML=
+
+"🏆 Jornada concluída";
+
+
+
 mensagem.innerHTML=
 
-"🏆 Parabéns!<br>Você conquistou todas as habilidades empreendedoras 🚀";
+"Parabéns! Você conquistou todas as habilidades empreendedoras 🚀";
 
 
 
@@ -856,8 +1054,8 @@ mensagem.style.display="block";
 
 
 
-</script>
 
+</script>
 
 
 </body>
