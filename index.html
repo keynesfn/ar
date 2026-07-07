@@ -15,14 +15,10 @@ Jornada Empreendedora AR
 </title>
 
 
-<!-- CSS -->
-
 <link 
 rel="stylesheet" 
 href="css/style.css">
 
-
-<!-- MODEL VIEWER -->
 
 <script 
 type="module"
@@ -37,31 +33,19 @@ src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.1.0/dist/model-viewer.m
 <body>
 
 
-
-<!-- ===========================
-CAMERA
-=========================== -->
-
+<!-- CAMERA -->
 
 <video
-
 id="camera"
-
 autoplay
-
 playsinline>
-
 </video>
 
 
 
 
 
-
-
-<!-- ===========================
-TELA INICIAL
-=========================== -->
+<!-- TELA INICIAL -->
 
 
 <div id="inicio">
@@ -73,13 +57,13 @@ TELA INICIAL
 
 
 <p>
-Uma experiência de conhecimento em realidade aumentada
+Explore, descubra e desbloqueie habilidades empreendedoras
 </p>
 
 
 <button id="start">
 
-COMEÇAR
+COMEÇAR MISSÃO
 
 </button>
 
@@ -91,12 +75,7 @@ COMEÇAR
 
 
 
-
-
-
-<!-- ===========================
-VIDEO INTRODUÇÃO
-=========================== -->
+<!-- VIDEO INTRO -->
 
 
 <div id="introVideo">
@@ -108,19 +87,9 @@ id="videoIntro"
 
 src="videos/intro.mp4"
 
-playsinline
-
-controls>
+playsinline>
 
 </video>
-
-
-
-<button id="btnEntrar">
-
-INICIAR BUSCA 🚀
-
-</button>
 
 
 </div>
@@ -131,16 +100,10 @@ INICIAR BUSCA 🚀
 
 
 
-
-
-
-<!-- ===========================
-HUD DO JOGO
-=========================== -->
+<!-- HUD -->
 
 
 <div id="hud">
-
 
 
 <div id="status">
@@ -151,21 +114,11 @@ Preparando...
 
 
 
-
-<div id="energia">
-
-</div>
+<div id="energia"></div>
 
 
 
-
-
-<!-- RADAR -->
-
-
-<div id="scanner">
-
-</div>
+<div id="scanner"></div>
 
 
 
@@ -182,7 +135,6 @@ Preparando...
 ⚡ SKILLS
 
 </div>
-
 
 
 
@@ -204,7 +156,6 @@ Preparando...
 
 
 
-
 <div id="nivel">
 
 0/5
@@ -216,7 +167,6 @@ Preparando...
 </div>
 
 
-
 </div>
 
 
@@ -226,12 +176,7 @@ Preparando...
 
 
 
-
-
-<!-- ===========================
-OBJETO 3D
-=========================== -->
-
+<!-- OBJETO 3D -->
 
 
 <model-viewer
@@ -256,16 +201,10 @@ disable-zoom>
 
 
 
+<!-- MENSAGEM -->
 
 
-<!-- ===========================
-MENSAGEM
-=========================== -->
-
-
-<div id="mensagem">
-
-</div>
+<div id="mensagem"></div>
 
 
 
@@ -274,12 +213,7 @@ MENSAGEM
 
 
 
-
-
-
-<!-- ===========================
-VIDEO DAS SKILLS
-=========================== -->
+<!-- VIDEO DAS SKILLS -->
 
 
 <div id="playerVideo">
@@ -307,11 +241,7 @@ controls>
 
 
 
-
-<!-- ===========================
-FORMULÁRIO PERFIL
-=========================== -->
-
+<!-- FORM PERFIL -->
 
 
 <div id="formPerfil">
@@ -319,15 +249,14 @@ FORMULÁRIO PERFIL
 
 <h2>
 
-🚀 Vamos personalizar sua jornada
+🚀 Personalize sua Jornada
 
 </h2>
 
 
-
 <p>
 
-Escolha o caminho que combina com você
+Qual caminho deseja seguir?
 
 </p>
 
@@ -337,10 +266,7 @@ Escolha o caminho que combina com você
 
 id="nomeJogador"
 
-type="text"
-
-placeholder="Digite seu nome">
-
+placeholder="Seu nome">
 
 
 
@@ -349,36 +275,32 @@ placeholder="Digite seu nome">
 <select id="perfilJogador">
 
 
-
 <option value="">
 
-Selecione sua jornada
+Escolha seu perfil
 
 </option>
-
 
 
 <option value="empreendedor">
 
-🚀 Tenho ou quero abrir um negócio
+🚀 Empreendedor
 
 </option>
-
 
 
 
 <option value="profissional">
 
-👔 Quero crescer profissionalmente
+👔 Profissional
 
 </option>
 
 
 
-
 <option value="estudante">
 
-🎓 Estou entrando no mercado
+🎓 Estudante
 
 </option>
 
@@ -392,12 +314,9 @@ Selecione sua jornada
 
 <button id="salvarPerfil">
 
-
-CONTINUAR MISSÃO
-
+CONTINUAR
 
 </button>
-
 
 
 
@@ -410,23 +329,15 @@ CONTINUAR MISSÃO
 
 
 
-
-
-
-
-<!-- ===========================
-FORM FINAL WHATSAPP
-=========================== -->
-
+<!-- FORM WHATSAPP -->
 
 
 <div id="formWhats">
 
 
-
 <h2>
 
-🏆 Jornada concluída!
+🏆 Jornada completa!
 
 </h2>
 
@@ -434,10 +345,9 @@ FORM FINAL WHATSAPP
 
 <p>
 
-Receba conteúdos e oportunidades após o evento
+Receba mais conteúdos do evento
 
 </p>
-
 
 
 
@@ -445,19 +355,12 @@ Receba conteúdos e oportunidades após o evento
 
 id="whatsapp"
 
-type="tel"
-
-placeholder="Seu WhatsApp">
-
-
-
+placeholder="WhatsApp">
 
 
 <button id="enviarLead">
 
-
-QUERO RECEBER 🚀
-
+RECEBER 🚀
 
 </button>
 
@@ -473,10 +376,7 @@ QUERO RECEBER 🚀
 
 
 
-
-<!-- ===========================
-DEBUG
-=========================== -->
+<!-- DEBUG -->
 
 
 <div id="debug">
@@ -492,43 +392,26 @@ DEBUG
 
 
 
-
-<!-- ===========================
-AUDIOS
-=========================== -->
-
+<!-- AUDIO -->
 
 
 <audio 
-
-id="somFound"
-
+id="somFound" 
 src="audio/found.mp3">
-
 </audio>
 
 
 
-
-
 <audio 
-
-id="somCapture"
-
+id="somCapture" 
 src="audio/capture.mp3">
-
 </audio>
-
-
 
 
 
 <audio 
-
-id="somComplete"
-
+id="somComplete" 
 src="audio/complete.mp3">
-
 </audio>
 
 
@@ -536,12 +419,6 @@ src="audio/complete.mp3">
 
 
 
-
-
-
-<!-- ===========================
-JAVASCRIPT
-=========================== -->
 
 
 <script src="js/jornadas.js"></script>
@@ -551,8 +428,6 @@ JAVASCRIPT
 
 
 
-
 </body>
-
 
 </html>
