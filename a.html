@@ -5,11 +5,9 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-<title>Jornada Empreendedora AR</title>
+<title>Jornada Empreendedora</title>
 
 
 <script type="module"
@@ -23,13 +21,14 @@ src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
 html,body{
 
 margin:0;
-width:100%;
 height:100%;
+width:100%;
 overflow:hidden;
 font-family:Arial;
 background:black;
 
 }
+
 
 
 /* CAMERA */
@@ -57,15 +56,27 @@ z-index:1;
 #inicio{
 
 position:fixed;
+
 inset:0;
 
+z-index:100;
+
 background:
-linear-gradient(140deg,#06142e,#005f73,#ffb703);
+
+linear-gradient(
+140deg,
+#06142e,
+#005f73,
+#ffb703
+);
+
 
 display:flex;
+
 flex-direction:column;
 
 justify-content:center;
+
 align-items:center;
 
 text-align:center;
@@ -73,8 +84,6 @@ text-align:center;
 color:white;
 
 padding:30px;
-
-z-index:100;
 
 }
 
@@ -98,11 +107,13 @@ border-radius:50px;
 
 font-size:22px;
 
-background:#00ff99;
-
 font-weight:bold;
 
+background:#00ff99;
+
 }
+
+
 
 
 
@@ -138,8 +149,9 @@ border-radius:30px;
 
 z-index:20;
 
-}
+text-align:center;
 
+}
 
 
 
@@ -149,6 +161,7 @@ z-index:20;
 position:fixed;
 
 right:15px;
+
 top:90px;
 
 background:#000a;
@@ -157,9 +170,9 @@ border:3px solid gold;
 
 color:white;
 
-padding:15px;
-
 font-size:32px;
+
+padding:15px;
 
 border-radius:25px;
 
@@ -179,7 +192,6 @@ text-align:center;
 
 
 #scanner{
-
 
 position:fixed;
 
@@ -204,16 +216,19 @@ rgba(0,255,150,.25),
 transparent 70%
 );
 
+box-shadow:
 
-box-shadow:0 0 40px #00ff99;
+0 0 40px #00ff99;
 
-overflow:hidden;
 
 display:none;
+
+overflow:hidden;
 
 z-index:15;
 
 }
+
 
 
 
@@ -227,7 +242,9 @@ width:50%;
 height:50%;
 
 left:50%;
+
 top:0;
+
 
 background:
 
@@ -238,15 +255,21 @@ transparent
 );
 
 
-transform-origin:0% 100%;
+transform-origin:
 
-animation:girar 2s linear infinite;
+0% 100%;
+
+
+animation:
+
+radar 2s linear infinite;
 
 }
 
 
-@keyframes girar{
 
+
+@keyframes radar{
 
 from{
 
@@ -275,20 +298,27 @@ transform:rotate(360deg);
 
 position:fixed;
 
-width:260px;
-height:260px;
+width:280px;
+
+height:280px;
 
 display:none;
 
 z-index:30;
 
 filter:
+
 drop-shadow(0 0 30px #00ff99);
 
 }
 
 
 
+
+
+
+
+/* MENSAGEM */
 
 
 #mensagem{
@@ -301,11 +331,11 @@ left:50%;
 
 transform:translateX(-50%);
 
-width:85%;
-
 background:#000c;
 
 color:white;
+
+width:85%;
 
 padding:25px;
 
@@ -320,6 +350,9 @@ display:none;
 z-index:40;
 
 }
+
+
+
 
 
 
@@ -342,9 +375,11 @@ z-index:999;
 }
 
 
+
 #videoSkill{
 
 width:100%;
+
 height:100%;
 
 object-fit:cover;
@@ -354,6 +389,7 @@ object-fit:cover;
 
 </style>
 
+
 </head>
 
 
@@ -361,11 +397,12 @@ object-fit:cover;
 <body>
 
 
-<video
-id="camera"
-autoplay
-playsinline>
-</video>
+
+
+
+<video id="camera" autoplay playsinline></video>
+
+
 
 
 
@@ -374,15 +411,18 @@ playsinline>
 <div id="inicio">
 
 
-<h1>🚀 Jornada Empreendedora</h1>
+<h1>
+
+🚀 Jornada Empreendedora
+
+</h1>
 
 
 <p>
-Explore o ambiente para encontrar habilidades
+
+Explore o ambiente e encontre novas habilidades
+
 </p>
-
-
-<h2>🧭 💰 🚀 💡 👑</h2>
 
 
 
@@ -399,12 +439,14 @@ COMEÇAR MISSÃO
 
 
 
+
+
 <div id="hud">
 
 
 <div id="status">
 
-🟢 Preparando...
+Preparando...
 
 </div>
 
@@ -424,7 +466,9 @@ COMEÇAR MISSÃO
 
 </div>
 
+
 </div>
+
 
 
 <div id="scanner"></div>
@@ -436,11 +480,15 @@ COMEÇAR MISSÃO
 
 
 
+
+
+
 <model-viewer
 
 id="objeto"
 
 auto-rotate>
+
 
 </model-viewer>
 
@@ -448,7 +496,11 @@ auto-rotate>
 
 
 
+
+
 <div id="mensagem"></div>
+
+
 
 
 
@@ -466,10 +518,13 @@ playsinline
 
 controls>
 
+
 </video>
 
 
 </div>
+
+
 
 
 
@@ -482,12 +537,14 @@ controls>
 
 const itens=[
 
+
 {
 nome:"Gestão Financeira",
 icone:"💰",
 modelo:"modelos/dotum.glb",
 video:"video1.mp4"
 },
+
 
 {
 nome:"Clientes e Mercado",
@@ -496,12 +553,14 @@ modelo:"modelos/sicoob.glb",
 video:"video2.mp4"
 },
 
+
 {
 nome:"Vendas",
 icone:"🚀",
 modelo:"modelos/sebrae.glb",
 video:"video3.mp4"
 },
+
 
 {
 nome:"Inovação",
@@ -510,6 +569,7 @@ modelo:"modelos/dotum.glb",
 video:"video4.mp4"
 },
 
+
 {
 nome:"Crescimento",
 icone:"👑",
@@ -517,8 +577,8 @@ modelo:"modelos/sicoob.glb",
 video:"video5.mp4"
 }
 
-];
 
+];
 
 
 
@@ -526,7 +586,15 @@ let atual=0;
 
 let capturados=[];
 
-let movimento=false;
+
+let passos=0;
+
+let metaPassos=0;
+
+let ultimoPasso=0;
+
+let aguardandoPassos=false;
+
 
 
 
@@ -539,11 +607,12 @@ start.onclick=async()=>{
 
 inicio.style.display="none";
 
+
 hud.style.display="block";
 
 
 
-await liberarMovimento();
+await liberarSensores();
 
 
 
@@ -551,9 +620,12 @@ let stream=
 
 await navigator.mediaDevices.getUserMedia({
 
-video:{facingMode:"environment"}
+video:{facingMode:"environment"},
+
+audio:false
 
 });
+
 
 
 camera.srcObject=stream;
@@ -572,17 +644,27 @@ buscar();
 
 
 
-async function liberarMovimento(){
+
+
+async function liberarSensores(){
+
 
 
 if(
-typeof DeviceMotionEvent!="undefined" &&
+
+typeof DeviceMotionEvent!="undefined"
+
+&&
+
 typeof DeviceMotionEvent.requestPermission=="function"
+
 ){
 
 await DeviceMotionEvent.requestPermission();
 
 }
+
+
 
 
 
@@ -593,28 +675,110 @@ window.addEventListener(
 (e)=>{
 
 
-let acc=e.accelerationIncludingGravity;
+
+if(!aguardandoPassos)
+
+return;
+
+
+
+let acc=
+
+e.accelerationIncludingGravity;
+
 
 
 if(!acc)return;
 
 
 
-let força=
-
-Math.abs(acc.x)+
-Math.abs(acc.y)+
-Math.abs(acc.z);
 
 
+let forca=
 
-if(força>18){
+Math.sqrt(
+
+acc.x*acc.x+
+
+acc.y*acc.y+
+
+acc.z*acc.z
+
+);
 
 
-movimento=true;
+
+
+
+let impacto=
+
+Math.abs(forca-9.8);
+
+
+
+let agora=Date.now();
+
+
+
+
+if(
+
+impacto>1.8 &&
+
+agora-ultimoPasso>500
+
+){
+
+
+
+ultimoPasso=agora;
+
+
+
+passos++;
+
+
+
+
+status.innerHTML=
+
+"🚶 Explorando...<br>"+
+
+passos+
+
+"/"+
+
+metaPassos+
+
+" passos";
+
+
+
+
+if(passos>=metaPassos){
+
+
+
+aguardandoPassos=false;
+
+
+
+setTimeout(()=>{
+
+
+mostrarObjeto();
+
+
+},1000);
+
 
 
 }
+
+
+
+}
+
 
 
 });
@@ -638,88 +802,29 @@ scanner.style.display="block";
 
 
 
-movimento=false;
+passos=0;
 
 
 
-if(atual===0){
+metaPassos=
 
+Math.floor(
 
-// primeiro item libera direto
+Math.random()*8
 
-aguardarTempo();
-
-
-}
-
-else{
-
-
-status.innerHTML=
-
-"🚶 Continue caminhando...";
-
-
-
-let check=setInterval(()=>{
-
-
-
-if(movimento){
-
-
-clearInterval(check);
-
-
-aguardarTempo();
-
-
-}
-
-
-
-},500);
-
-
-
-}
-
-
-
-}
+)+8;
 
 
 
 
+aguardandoPassos=true;
 
-
-
-
-
-function aguardarTempo(){
 
 
 
 status.innerHTML=
 
-"🟢 Buscando habilidades...";
-
-
-
-let tempo=
-
-Math.floor(Math.random()*8)+8;
-
-
-
-setTimeout(()=>{
-
-
-mostrarObjeto();
-
-
-},tempo*1000);
-
+"🚶 Caminhe para encontrar habilidades";
 
 
 }
@@ -775,12 +880,10 @@ mensagem.innerHTML=
 "Toque para capturar";
 
 
-
 mensagem.style.display="block";
 
 
 navigator.vibrate?.(300);
-
 
 
 }
@@ -793,12 +896,14 @@ navigator.vibrate?.(300);
 
 
 
-
 objeto.onclick=()=>{
 
 
-
 let item=itens[atual];
+
+
+
+capturados.push(item);
 
 
 
@@ -806,10 +911,6 @@ objeto.style.display="none";
 
 
 mensagem.style.display="none";
-
-
-
-capturados.push(item);
 
 
 
@@ -830,7 +931,10 @@ abrirVideo(item.video);
 
 
 
+
+
 function abrirVideo(video){
+
 
 
 playerVideo.style.display="block";
@@ -839,14 +943,22 @@ playerVideo.style.display="block";
 videoSkill.src=video;
 
 
+
 videoSkill.play();
+
+
 
 
 
 videoSkill.onended=()=>{
 
 
+
 playerVideo.style.display="none";
+
+
+videoSkill.src="";
+
 
 
 atual++;
@@ -856,6 +968,7 @@ atual++;
 if(atual>=5)
 
 fim();
+
 
 else
 
@@ -876,17 +989,19 @@ buscar();
 
 
 
+
 function atualizar(){
 
 
 let html="";
 
 
-
 itens.forEach(i=>{
 
 
-html+=capturados.includes(i)
+html +=
+
+capturados.includes(i)
 
 ?
 
@@ -913,17 +1028,21 @@ slots.innerHTML=html;
 
 
 
-
 function fim(){
 
 
-status.innerHTML="🏆 Jornada concluída";
+scanner.style.display="none";
+
+
+status.innerHTML=
+
+"🏆 Jornada concluída";
+
 
 
 mensagem.innerHTML=
 
 "Parabéns! Você conquistou todas as habilidades 🚀";
-
 
 
 mensagem.style.display="block";
