@@ -23,12 +23,7 @@ debug:$("debug"),
 found:$("sndFound"),
 capture:$("sndCapture")
 };
-let jogador={
-nome:"",
-tipo:"",
-fone:"",
-skills:[]
-};
+let jogador={nome:"",tipo:"",fone:"",skills:[]};
 let itens=[ITEM_INICIAL];
 let atual=0;
 let escolheu=false;
@@ -40,25 +35,42 @@ let movimento=0;
 let angulo=0;
 let alvo=0;
 let ativo=false;
+let sensoresAtivos=false;
 el.start.onclick=async()=>{
+try{
 el.inicio.style.display="none";
 el.jogo.style.display="block";
 el.debug.style.display="block";
+el.status.innerHTML="📷 Abrindo câmera...";
+await abrirCamera();
 await sensores();
+buscar();
+}catch(e){
+console.log(e);
+alert("Erro ao iniciar: "+e.message);
+}
+};
+async function abrirCamera(){
+if(!navigator.mediaDevices){
+throw new Error("Câmera não suportada");
+}
 const stream=await navigator.mediaDevices.getUserMedia({
-video:{facingMode:"environment"},
+video:{facingMode:{ideal:"environment"}},
 audio:false
 });
 el.camera.srcObject=stream;
-buscar();
-};
+}
 async function sensores(){
+if(sensoresAtivos)return;
+sensoresAtivos=true;
+try{
 if(typeof DeviceMotionEvent!="undefined"&&DeviceMotionEvent.requestPermission){
 await DeviceMotionEvent.requestPermission();
 }
 if(typeof DeviceOrientationEvent!="undefined"&&DeviceOrientationEvent.requestPermission){
 await DeviceOrientationEvent.requestPermission();
 }
+}catch(e){}
 window.addEventListener("devicemotion",e=>{
 if(!procurando)return;
 const a=e.accelerationIncludingGravity;
@@ -99,7 +111,7 @@ alvo=angulo;
 ativo=true;
 el.msg.style.display="block";
 el.msg.innerHTML="🛰️ Sinal encontrado";
-el.found.play();
+el.found?.play();
 }
 function rastrear(){
 if(!ativo)return;
@@ -118,7 +130,7 @@ el.msg.innerHTML="🧭 Continue procurando";
 el.objeto.onclick=()=>{
 const item=itens[atual];
 ativo=false;
-el.capture.play();
+el.capture?.play();
 el.objeto.style.display="none";
 el.msg.style.display="none";
 jogador.skills.push(item.nome);
@@ -171,26 +183,15 @@ el.lead.style.display="flex";
 el.btnLead.onclick=()=>{
 jogador.fone=el.fone.value;
 console.log(jogador);
-el.lead.innerHTML=`
-<h2>🚀 Obrigado ${jogador.nome}</h2>
-<p>Continue sua jornada empreendedora!</p>
-`;
+el.lead.innerHTML=`<h2>🚀 Obrigado ${jogador.nome}</h2><p>Continue sua jornada empreendedora!</p>`;
 };
 function inventario(){
 let html="";
 itens.forEach(i=>{
-html+=jogador.skills.includes(i.nome)
-?`<div class="slot ok">${i.icone}</div>`
-:`<div class="slot"></div>`;
+html+=jogador.skills.includes(i.nome)?`<div class="slot ok">${i.icone}</div>`:`<div class="slot"></div>`;
 });
 el.slots.innerHTML=html;
 }
 setInterval(()=>{
-el.debug.innerHTML=`
-DEBUG<br>
-👣 ${passos}/${meta}<br>
-📳 ${movimento.toFixed(2)}<br>
-🧭 ${Math.round(angulo)}°<br>
-🎯 ${Math.round(alvo)}°
-`;
+el.debug.innerHTML=`DEBUG<br>👣 ${passos}/${meta}<br>📳 ${movimento.toFixed(2)}<br>🧭 ${Math.round(angulo)}°`;
 },500);
