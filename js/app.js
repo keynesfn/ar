@@ -1,5 +1,12 @@
 const $=id=>document.getElementById(id);
-const el={
+let el={};
+let jogador={nome:"",tipo:"",fone:"",skills:[]};
+let itens=[];
+let atual=0;
+let etapaInicial=true;
+let timer=null;
+document.addEventListener("DOMContentLoaded",()=>{
+el={
 camera:$("camera"),
 inicio:$("inicio"),
 start:$("btnStart"),
@@ -19,179 +26,120 @@ lead:$("lead"),
 fone:$("fone"),
 btnLead:$("btnLead"),
 slots:$("slots"),
-debug:$("debug"),
 found:$("sndFound"),
 capture:$("sndCapture")
 };
-let jogador={nome:"",tipo:"",fone:"",skills:[]};
-let itens=[ITEM_INICIAL];
-let atual=0;
-let escolheu=false;
-let passos=0;
-let meta=0;
-let procurando=false;
-let ultimo=0;
-let movimento=0;
-let angulo=0;
-let alvo=0;
-let ativo=false;
-let sensoresAtivos=false;
-el.start.onclick=async()=>{
+itens=[ITEM_INICIAL];
+el.start.onclick=iniciar;
+el.objeto.onclick=capturar;
+el.btnPerfil.onclick=salvarPerfil;
+el.btnLead.onclick=salvarLead;
+});
+async function iniciar(){
 try{
 el.inicio.style.display="none";
 el.jogo.style.display="block";
-el.debug.style.display="block";
-el.status.innerHTML="📷 Abrindo câmera...";
 await abrirCamera();
-await sensores();
 buscar();
 }catch(e){
-console.log(e);
-alert("Erro ao iniciar: "+e.message);
+alert("Erro câmera: "+e.message);
 }
-};
+}
 async function abrirCamera(){
-if(!navigator.mediaDevices){
-throw new Error("Câmera não suportada");
-}
 const stream=await navigator.mediaDevices.getUserMedia({
 video:{facingMode:{ideal:"environment"}},
 audio:false
 });
 el.camera.srcObject=stream;
 }
-async function sensores(){
-if(sensoresAtivos)return;
-sensoresAtivos=true;
-try{
-if(typeof DeviceMotionEvent!="undefined"&&DeviceMotionEvent.requestPermission){
-await DeviceMotionEvent.requestPermission();
-}
-if(typeof DeviceOrientationEvent!="undefined"&&DeviceOrientationEvent.requestPermission){
-await DeviceOrientationEvent.requestPermission();
-}
-}catch(e){}
-window.addEventListener("devicemotion",e=>{
-if(!procurando)return;
-const a=e.accelerationIncludingGravity;
-if(!a)return;
-const forca=Math.sqrt(a.x*a.x+a.y*a.y+a.z*a.z);
-movimento=Math.abs(forca-9.8);
-if(movimento>1.8&&Date.now()-ultimo>500){
-ultimo=Date.now();
-passos++;
-el.status.innerHTML=`🚶 ${passos}/${meta}`;
-if(passos>=meta){
-procurando=false;
-mostrarItem();
-}
-}
-});
-window.addEventListener("deviceorientation",e=>{
-angulo=e.alpha||0;
-rastrear();
-});
-}
 function buscar(){
+el.status.innerHTML="🛰️ Procurando artefato...";
 el.radar.style.display="block";
 el.objeto.style.display="none";
 el.msg.style.display="none";
-el.sinal.innerHTML="";
-passos=0;
-meta=Math.floor(Math.random()*8)+8;
-procurando=true;
-ativo=false;
-el.status.innerHTML="🟢 Procurando habilidade";
+let tempo=Math.floor(Math.random()*7000)+8000;
+clearTimeout(timer);
+timer=setTimeout(()=>{
+mostrarItem();
+},tempo);
 }
 function mostrarItem(){
-const item=itens[atual];
+let item=itens[atual];
 el.radar.style.display="none";
 el.objeto.src=item.modelo;
-alvo=angulo;
-ativo=true;
-el.msg.style.display="block";
-el.msg.innerHTML="🛰️ Sinal encontrado";
-el.found?.play();
-}
-function rastrear(){
-if(!ativo)return;
-let dif=Math.abs(angulo-alvo);
-if(dif>180)dif=360-dif;
-let sinal=Math.max(0,100-Math.round(dif*4));
-el.sinal.innerHTML=`🛰️ Sinal ${sinal}%`;
-if(dif<15){
 el.objeto.style.display="block";
-el.msg.innerHTML="✨ Toque para capturar";
-}else{
-el.objeto.style.display="none";
-el.msg.innerHTML="🧭 Continue procurando";
+el.msg.style.display="block";
+el.msg.innerHTML="✨ Artefato encontrado<br>Toque para capturar";
+try{
+el.found.play();
+}catch(e){}
 }
-}
-el.objeto.onclick=()=>{
-const item=itens[atual];
-ativo=false;
-el.capture?.play();
-el.objeto.style.display="none";
-el.msg.style.display="none";
+function capturar(){
+let item=itens[atual];
+try{
+el.capture.play();
+}catch(e){}
 jogador.skills.push(item.nome);
 inventario();
+el.objeto.style.display="none";
+el.msg.style.display="none";
 abrirVideo(item.video);
-};
+}
 function abrirVideo(src){
 el.videoBox.style.display="block";
 el.video.src=src;
 el.video.play();
 el.video.onended=()=>{
-el.videoBox.style.display="none";
+el.video.pause();
 el.video.src="";
-proximo();
+el.videoBox.style.display="none";
+proximaEtapa();
 };
 }
-function proximo(){
-if(!escolheu){
+function proximaEtapa(){
+if(etapaInicial){
+etapaInicial=false;
 el.jogo.style.display="none";
 el.perfil.style.display="flex";
 return;
 }
 atual++;
 if(atual>=itens.length){
-fim();
+finalizar();
 }else{
 buscar();
 }
 }
-el.btnPerfil.onclick=()=>{
+function salvarPerfil(){
 if(!el.nome.value||!el.tipo.value){
-alert("Preencha os dados");
+alert("Preencha seus dados");
 return;
 }
 jogador.nome=el.nome.value;
 jogador.tipo=el.tipo.value;
-itens=JORNADAS[jogador.tipo];
 jogador.skills=[];
+itens=JORNADAS[jogador.tipo];
 atual=0;
-escolheu=true;
 el.perfil.style.display="none";
 el.jogo.style.display="block";
 inventario();
 buscar();
-};
-function fim(){
+}
+function finalizar(){
 el.jogo.style.display="none";
 el.lead.style.display="flex";
 }
-el.btnLead.onclick=()=>{
+function salvarLead(){
 jogador.fone=el.fone.value;
-console.log(jogador);
-el.lead.innerHTML=`<h2>🚀 Obrigado ${jogador.nome}</h2><p>Continue sua jornada empreendedora!</p>`;
-};
+console.log("LEAD:",jogador);
+el.lead.innerHTML=`<h2>Obrigado ${jogador.nome} 🚀</h2><p>Jornada concluída!</p>`;
+}
 function inventario(){
 let html="";
 itens.forEach(i=>{
-html+=jogador.skills.includes(i.nome)?`<div class="slot ok">${i.icone}</div>`:`<div class="slot"></div>`;
+html+=jogador.skills.includes(i.nome)
+?`<div class="slot ok">${i.icone}</div>`
+:`<div class="slot"></div>`;
 });
 el.slots.innerHTML=html;
 }
-setInterval(()=>{
-el.debug.innerHTML=`DEBUG<br>👣 ${passos}/${meta}<br>📳 ${movimento.toFixed(2)}<br>🧭 ${Math.round(angulo)}°`;
-},500);
