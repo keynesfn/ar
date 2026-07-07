@@ -21,31 +21,21 @@ src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.1.0/dist/model-viewer.m
 html,body{
 
 margin:0;
-
 width:100%;
-
 height:100%;
-
 overflow:hidden;
-
+background:black;
 font-family:Arial;
 
-background:black;
-
 }
-
-
-/* CAMERA */
 
 
 #camera{
 
 position:fixed;
-
 inset:0;
 
 width:100%;
-
 height:100%;
 
 object-fit:cover;
@@ -55,7 +45,7 @@ z-index:1;
 }
 
 
-/* INICIO */
+/* inicio */
 
 
 #inicio{
@@ -73,14 +63,13 @@ linear-gradient(
 #ffb703
 );
 
-
 display:flex;
 
 flex-direction:column;
 
-justify-content:center;
-
 align-items:center;
+
+justify-content:center;
 
 text-align:center;
 
@@ -88,7 +77,7 @@ color:white;
 
 padding:30px;
 
-z-index:100;
+z-index:1000;
 
 }
 
@@ -99,15 +88,16 @@ padding:20px 50px;
 
 border:0;
 
-border-radius:50px;
+border-radius:40px;
 
 font-size:22px;
 
-background:#00ff99;
-
 font-weight:bold;
 
+background:#00ff99;
+
 }
+
 
 
 /* HUD */
@@ -124,21 +114,21 @@ display:none;
 
 position:fixed;
 
-top:25px;
+top:20px;
 
 left:50%;
 
 transform:translateX(-50%);
 
-background:#000a;
+background:#000b;
 
 color:white;
 
-padding:15px 30px;
+padding:15px 25px;
 
 border-radius:30px;
 
-z-index:20;
+z-index:50;
 
 text-align:center;
 
@@ -146,36 +136,36 @@ text-align:center;
 
 
 
-/* INVENTARIO */
+/* energia */
 
 
-#inventario{
+#energia{
 
 position:fixed;
 
-right:15px;
-
 top:90px;
 
-background:#000a;
+left:50%;
 
-border:3px solid gold;
+transform:translateX(-50%);
 
-color:white;
+color:#00ff99;
 
-font-size:32px;
+font-size:24px;
 
-padding:15px;
+font-weight:bold;
 
-border-radius:25px;
+display:none;
 
-z-index:20;
+z-index:50;
+
+text-shadow:0 0 15px #00ff99;
 
 }
 
 
 
-/* RADAR */
+/* radar */
 
 
 #scanner{
@@ -198,22 +188,13 @@ border-radius:50%;
 
 border:3px solid #00ff99;
 
-background:
-
-radial-gradient(
-circle,
-rgba(0,255,150,.25),
-transparent 70%
-);
-
-
-box-shadow:0 0 40px #00ff99;
-
-overflow:hidden;
+box-shadow:0 0 50px #00ff99;
 
 display:none;
 
-z-index:15;
+overflow:hidden;
+
+z-index:20;
 
 }
 
@@ -232,7 +213,6 @@ left:50%;
 
 top:0;
 
-
 background:
 
 linear-gradient(
@@ -241,7 +221,6 @@ linear-gradient(
 transparent
 );
 
-
 transform-origin:0% 100%;
 
 animation:girar 2s linear infinite;
@@ -249,14 +228,7 @@ animation:girar 2s linear infinite;
 }
 
 
-
 @keyframes girar{
-
-from{
-
-transform:rotate(0deg);
-
-}
 
 to{
 
@@ -267,7 +239,37 @@ transform:rotate(360deg);
 }
 
 
-/* OBJETO */
+
+
+
+#inventario{
+
+position:fixed;
+
+right:15px;
+
+top:90px;
+
+background:#000a;
+
+border:3px solid gold;
+
+padding:15px;
+
+border-radius:25px;
+
+font-size:30px;
+
+color:white;
+
+z-index:50;
+
+}
+
+
+
+
+/* objeto */
 
 
 #objeto{
@@ -280,23 +282,48 @@ top:45%;
 
 transform:translate(-50%,-50%);
 
-width:280px;
+width:300px;
 
-height:280px;
+height:300px;
 
 display:none;
 
-z-index:30;
+z-index:60;
 
 filter:
 
-drop-shadow(0 0 35px #00ff99);
+drop-shadow(0 0 40px #00ff99);
 
 }
 
 
 
-/* MENSAGEM */
+.captura{
+
+animation:capturar .8s;
+
+}
+
+
+
+@keyframes capturar{
+
+
+to{
+
+transform:
+
+translate(-50%,-50%)
+
+scale(0);
+
+opacity:0;
+
+}
+
+}
+
+
 
 
 #mensagem{
@@ -317,21 +344,22 @@ color:white;
 
 padding:25px;
 
-border-radius:30px;
-
-text-align:center;
+border-radius:25px;
 
 font-size:22px;
 
+text-align:center;
+
 display:none;
 
-z-index:40;
+z-index:80;
 
 }
 
 
 
-/* VIDEO */
+
+/* video */
 
 
 #playerVideo{
@@ -352,7 +380,6 @@ z-index:999;
 #videoSkill{
 
 width:100%;
-
 height:100%;
 
 object-fit:cover;
@@ -360,7 +387,6 @@ object-fit:cover;
 }
 
 
-/* DEBUG */
 
 
 #debug{
@@ -375,54 +401,45 @@ background:#000c;
 
 color:#00ff99;
 
-font-family:monospace;
-
-font-size:13px;
-
 padding:10px;
 
-border-radius:10px;
+font-size:12px;
 
-z-index:99999;
-
-line-height:20px;
+z-index:9999;
 
 }
 
 
+
 </style>
 
-  </head>
+</head>
+
 
 
 <body>
 
 
-<!-- CAMERA -->
-
-<video
-id="camera"
-autoplay
-playsinline>
-</video>
+<video id="camera" autoplay playsinline></video>
 
 
 
-<!-- INICIO -->
 
 <div id="inicio">
 
-<h1>
-🚀 Jornada Empreendedora
-</h1>
+
+<h1>🚀 Jornada Empreendedora</h1>
+
 
 <p>
-Explore o ambiente, caminhe e encontre habilidades escondidas
+Encontre habilidades escondidas pelo ambiente
 </p>
 
 
 <button id="start">
+
 COMEÇAR MISSÃO
+
 </button>
 
 
@@ -432,15 +449,20 @@ COMEÇAR MISSÃO
 
 
 
-<!-- HUD -->
-
 <div id="hud">
 
 
 <div id="status">
+
 Preparando...
+
 </div>
 
+
+<div id="energia"></div>
+
+
+<div id="scanner"></div>
 
 
 <div id="inventario">
@@ -460,16 +482,11 @@ Preparando...
 </div>
 
 
-<div id="scanner"></div>
-
-
 </div>
 
 
 
 
-
-<!-- OBJETO 3D -->
 
 
 <model-viewer
@@ -478,7 +495,7 @@ id="objeto"
 
 auto-rotate
 
-rotation-per-second="25deg"
+rotation-per-second="30deg"
 
 interaction-prompt="none"
 
@@ -489,29 +506,18 @@ disable-zoom>
 
 
 
-
 <div id="mensagem"></div>
 
 
+<div id="debug"></div>
 
 
 
 
-<!-- VIDEO -->
 
 <div id="playerVideo">
 
-
-<video
-
-id="videoSkill"
-
-playsinline
-
-controls>
-
-</video>
-
+<video id="videoSkill" playsinline controls></video>
 
 </div>
 
@@ -519,14 +525,11 @@ controls>
 
 
 
+<audio id="somFound" src="found.mp3"></audio>
 
-<!-- DEBUG -->
+<audio id="somCapture" src="capture.mp3"></audio>
 
-<div id="debug">
-
-DEBUG
-
-</div>
+<audio id="somComplete" src="complete.mp3"></audio>
 
 
 
@@ -540,7 +543,6 @@ DEBUG
 
 const itens=[
 
-
 {
 nome:"Gestão Financeira",
 icone:"💰",
@@ -548,14 +550,12 @@ modelo:"modelos/dotum.glb",
 video:"video1.mp4"
 },
 
-
 {
-nome:"Clientes e Mercado",
+nome:"Mercado",
 icone:"🎯",
 modelo:"modelos/sicoob.glb",
 video:"video2.mp4"
 },
-
 
 {
 nome:"Vendas",
@@ -564,14 +564,12 @@ modelo:"modelos/sebrae.glb",
 video:"video3.mp4"
 },
 
-
 {
 nome:"Inovação",
 icone:"💡",
 modelo:"modelos/dotum.glb",
 video:"video4.mp4"
 },
-
 
 {
 nome:"Crescimento",
@@ -580,13 +578,8 @@ modelo:"modelos/sicoob.glb",
 video:"video5.mp4"
 }
 
-
 ];
 
-
-
-
-// CONTROLES
 
 
 let atual=0;
@@ -595,51 +588,35 @@ let capturados=[];
 
 
 
-// passos
-
 let passos=0;
 
-let metaPassos=0;
+let meta=0;
 
-let ultimoPasso=0;
+let ultimo=0;
 
-let aguardando=false;
-
-
-
-// movimento
-
-let ultimaForca=0;
+let andando=false;
 
 
 
-// bussola
+let direcao=0;
 
-let anguloAtual=0;
+let alvo=null;
 
-let anguloItem=null;
+let ativo=false;
 
-let itemAtivo=false;
-
-
-
-let inicioBusca=0;
+let movimento=0;
 
 
 
 
 
-
-
-
-
-// INICIAR
 
 
 start.onclick=async()=>{
 
 
 inicio.style.display="none";
+
 
 hud.style.display="block";
 
@@ -649,17 +626,11 @@ await sensores();
 
 
 
-let stream =
+let stream=
 
 await navigator.mediaDevices.getUserMedia({
 
-video:{
-
-facingMode:"environment"
-
-},
-
-audio:false
+video:{facingMode:"environment"}
 
 });
 
@@ -672,7 +643,6 @@ camera.srcObject=stream;
 buscar();
 
 
-
 };
 
 
@@ -681,198 +651,111 @@ buscar();
 
 
 
-
-
-// SENSORES
-
-
 async function sensores(){
 
 
-
-// IOS
-
-
-if(
-
-typeof DeviceMotionEvent!="undefined"
-
-&&
-
-typeof DeviceMotionEvent.requestPermission=="function"
-
-){
-
+if(DeviceMotionEvent.requestPermission)
 
 await DeviceMotionEvent.requestPermission();
 
 
-}
-
-
-
-
-if(
-
-typeof DeviceOrientationEvent!="undefined"
-
-&&
-
-typeof DeviceOrientationEvent.requestPermission=="function"
-
-){
-
+if(DeviceOrientationEvent.requestPermission)
 
 await DeviceOrientationEvent.requestPermission();
 
 
-}
-
-
-
-
-
-
-
-// PASSOS
 
 
 window.addEventListener(
 
 "devicemotion",
 
-(e)=>{
+e=>{
+
+
+if(!andando)return;
 
 
 
-if(!aguardando)
-
-return;
+let a=e.accelerationIncludingGravity;
 
 
 
-let acc=
-
-e.accelerationIncludingGravity;
+if(!a)return;
 
 
 
-if(!acc)
-
-return;
-
-
-
-
-let forca=
+let força=
 
 Math.sqrt(
 
-acc.x*acc.x+
+a.x*a.x+
 
-acc.y*acc.y+
+a.y*a.y+
 
-acc.z*acc.z
+a.z*a.z
 
 );
 
 
 
-let impacto=
-
-Math.abs(forca-9.8);
-
-
-
-ultimaForca=impacto;
-
-
-
-let agora=Date.now();
-
+movimento=Math.abs(força-9.8);
 
 
 
 if(
 
-impacto>1.8 &&
+movimento>1.8 &&
 
-agora-ultimoPasso>500
+Date.now()-ultimo>500
 
 ){
 
 
-
-ultimoPasso=agora;
-
+ultimo=Date.now();
 
 
 passos++;
 
 
 
-if(passos>=metaPassos){
+if(passos>=meta){
 
 
-
-aguardando=false;
-
+andando=false;
 
 
-mostrarObjeto();
+ativarItem();
 
+
+}
 
 
 }
 
 
 
-}
-
-
-
-}
-
-);
+});
 
 
 
 
-
-
-
-
-
-// GIROSCOPIO
 
 
 window.addEventListener(
 
 "deviceorientation",
 
-(e)=>{
+e=>{
 
 
-if(e.alpha!==null){
+direcao=e.alpha||0;
 
 
-
-anguloAtual=e.alpha;
-
+rastrear();
 
 
-verificarOlhar();
-
-
-
-}
-
-
-
-}
-
-);
-
+});
 
 
 }
@@ -881,58 +764,29 @@ verificarOlhar();
 
 
 
-
-
-
-
-
-// BUSCA
 
 
 function buscar(){
 
 
-
 scanner.style.display="block";
 
-
-mensagem.style.display="none";
-
-
-objeto.style.display="none";
-
-
-
-itemAtivo=false;
-
-
-
-inicioBusca=Date.now();
-
+energia.style.display="none";
 
 
 passos=0;
 
 
-
-metaPassos=
-
-Math.floor(
-
-Math.random()*8
-
-)+8;
+meta=Math.floor(Math.random()*8)+8;
 
 
-
-aguardando=true;
-
+andando=true;
 
 
 
 status.innerHTML=
 
-"🚶 Caminhe para procurar";
+"🚶 Caminhe procurando energia";
 
 
 }
@@ -943,60 +797,30 @@ status.innerHTML=
 
 
 
-
-
-
-
-// APARECE ITEM
-
-
-function mostrarObjeto(){
-
+function ativarItem(){
 
 
 scanner.style.display="none";
 
 
-
-let item=itens[atual];
-
+alvo=direcao;
 
 
-objeto.src=item.modelo;
+ativo=true;
 
 
 
-// salva direção atual
-
-
-anguloItem=anguloAtual;
+objeto.src=itens[atual].modelo;
 
 
 
-itemAtivo=true;
+somFound.play();
 
-
-
-
-status.innerHTML=
-
-"✨ Energia detectada";
-
-
-
-mensagem.innerHTML=
-
-"Olhe ao redor para encontrar o artefato";
 
 
 mensagem.style.display="block";
 
 
-
-navigator.vibrate?.(300);
-
-
-
 }
 
 
@@ -1005,126 +829,120 @@ navigator.vibrate?.(300);
 
 
 
+function rastrear(){
 
 
-// VERIFICAR DIREÇÃO
-
-
-function verificarOlhar(){
-
-
-
-if(!itemAtivo)
-
-return;
+if(!ativo)return;
 
 
 
-let diferenca=
+let dif=Math.abs(direcao-alvo);
 
-Math.abs(
 
-anguloAtual-
+if(dif>180)
 
-anguloItem
+dif=360-dif;
+
+
+
+let pct=
+
+Math.max(
+
+0,
+
+100-Math.round(dif*4)
 
 );
 
 
 
-// ajuste circular 360 graus
-
-if(diferenca>180)
-
-diferenca=360-diferenca;
+energia.style.display="block";
 
 
+energia.innerHTML=
+
+"⚡ Energia "+pct+"%";
 
 
-if(diferenca<18){
 
+if(dif<15){
 
 
 objeto.style.display="block";
 
 
-
 mensagem.innerHTML=
 
-"✨ Encontrado!<br>Toque para capturar";
+"✨ Artefato encontrado<br>Toque para capturar";
 
 
-
-}
-
-else{
-
+}else{
 
 
 objeto.style.display="none";
 
 
-
 mensagem.innerHTML=
 
-"🔎 Continue procurando...";
+dif>0?
 
+"🧭 Continue procurando..."
+
+:
+
+"";
+
+
+}
 
 
 }
 
 
 
-}
 
 
-
-
-
-
-
-
-
-
-// CAPTURA
 
 
 objeto.onclick=()=>{
-
-
-
-if(!itemAtivo)
-
-return;
-
-
 
 
 let item=itens[atual];
 
 
 
-capturados.push(item);
+somCapture.play();
 
 
 
-itemAtivo=false;
+objeto.classList.add("captura");
 
+
+
+setTimeout(()=>{
+
+
+objeto.classList.remove("captura");
 
 
 objeto.style.display="none";
 
 
-mensagem.style.display="none";
+ativo=false;
 
+
+capturados.push(item);
 
 
 atualizar();
 
 
-
 abrirVideo(item.video);
 
+
+
+},800);
 
 
 };
@@ -1137,11 +955,7 @@ abrirVideo(item.video);
 
 
 
-// VIDEO
-
-
 function abrirVideo(v){
-
 
 
 playerVideo.style.display="block";
@@ -1150,18 +964,14 @@ playerVideo.style.display="block";
 videoSkill.src=v;
 
 
-
 videoSkill.play();
-
 
 
 
 videoSkill.onended=()=>{
 
 
-
 playerVideo.style.display="none";
-
 
 
 videoSkill.src="";
@@ -1172,26 +982,18 @@ atual++;
 
 
 
-if(atual>=itens.length){
-
+if(atual>=5)
 
 fim();
 
-
-}else{
-
+else
 
 buscar();
-
-
-}
-
 
 
 };
 
 
-
 }
 
 
@@ -1201,24 +1003,16 @@ buscar();
 
 
 
-
-// INVENTARIO
-
-
 function atualizar(){
 
 
-
-let html="";
-
+let h="";
 
 
 itens.forEach(i=>{
 
 
-html +=
-
-capturados.includes(i)
+h+=capturados.includes(i)
 
 ?
 
@@ -1231,10 +1025,7 @@ i.icone+"<br>"
 
 });
 
-
-
-slots.innerHTML=html;
-
+slots.innerHTML=h;
 
 
 }
@@ -1245,21 +1036,16 @@ slots.innerHTML=html;
 
 
 
-
-
-
 function fim(){
 
 
-status.innerHTML=
-
-"🏆 Jornada concluída";
+somComplete.play();
 
 
 
 mensagem.innerHTML=
 
-"Parabéns! Você conquistou todas as habilidades 🚀";
+"🏆 Parabéns!<br>Você completou a Jornada Empreendedora 🚀";
 
 
 
@@ -1275,59 +1061,22 @@ mensagem.style.display="block";
 
 
 
-
-
-// DEBUG
-
-
 setInterval(()=>{
-
-
-let tempo=
-
-inicioBusca
-
-?
-
-Math.floor(
-
-(Date.now()-inicioBusca)/1000
-
-)
-
-:
-
-0;
-
 
 
 debug.innerHTML=
 
 "DEBUG<br>"+
 
-"⏱ "+tempo+"s<br>"+
+"👣 "+passos+"/"+meta+
 
-"👣 "+passos+"/"+metaPassos+"<br>"+
+"<br>🧭 "+Math.round(direcao)+"°"+
 
-"📳 "+ultimaForca.toFixed(2)+"<br>"+
+"<br>🎯 "+
 
-"🧭 Atual: "+Math.round(anguloAtual)+"°<br>"+
+(alvo?Math.round(alvo)+"°":"-")+
 
-"🎯 Item: "+
-
-(anguloItem!==null?
-
-Math.round(anguloItem)+"°"
-
-:
-
-"-"
-
-)
-
-+"<br>"+
-
-"🎁 "+(atual+1)+"/5";
+"<br>📳 "+movimento.toFixed(2);
 
 
 
@@ -1340,6 +1089,5 @@ Math.round(anguloItem)+"°"
 
 
 </body>
-
 
 </html>
