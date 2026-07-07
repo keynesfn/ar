@@ -1,91 +1,95 @@
-// ==============================
-// CONFIGURAÇÃO DA JORNADA
-// ==============================
+// ===============================
+// JOGADOR
+// ===============================
+
+let jogador = {
+
+    nome:null,
+    perfil:null,
+    whatsapp:null,
+    skills:[]
+
+};
 
 
-const itens = [
+// ===============================
+// CONFIG
+// ===============================
 
-{
-nome:"Gestão Financeira",
-icone:"💰",
-modelo:"modelos/dotum.glb",
-video:"videos/video1.mp4"
-},
 
-{
-nome:"Clientes e Mercado",
-icone:"🎯",
-modelo:"modelos/sicoob.glb",
-video:"videos/video2.mp4"
-},
+const primeiroItem = {
 
-{
-nome:"Vendas",
-icone:"🚀",
-modelo:"modelos/sebrae.glb",
-video:"videos/video3.mp4"
-},
+    nome:"Entrada Jornada",
+    icone:"🚀",
+    modelo:"modelos/dotum.glb",
+    video:"videos/video1.mp4"
 
-{
-nome:"Inovação",
-icone:"💡",
-modelo:"modelos/dotum.glb",
-video:"videos/video4.mp4"
-},
+};
 
-{
-nome:"Crescimento",
-icone:"👑",
-modelo:"modelos/sicoob.glb",
-video:"videos/video5.mp4"
-}
+
+
+let itens = [
+
+    primeiroItem
 
 ];
 
 
 
-// ==============================
-// VARIÁVEIS
-// ==============================
+
+// ===============================
+// CONTROLE
+// ===============================
 
 
 let atual = 0;
 
-let capturados = [];
+
+let capturados=[];
+
+
+let aguardandoPerfil=false;
+
+
+let jornadaCarregada=false;
+
 
 
 // passos
 
-let passos = 0;
+let passos=0;
 
-let metaPassos = 0;
+let metaPassos=0;
 
-let ultimoPasso = 0;
+let ultimoPasso=0;
 
-let procurando = false;
+let procurando=false;
+
 
 
 // sensores
 
-let movimento = 0;
+let movimento=0;
 
-let direcaoAtual = 0;
+let direcaoAtual=0;
 
-let direcaoItem = null;
+let direcaoItem=null;
 
-let itemAtivo = false;
-
-
-let inicioBusca = 0;
+let itemAtivo=false;
 
 
 
+let inicioBusca=0;
 
 
 
-// ==============================
+
+
+
+
+// ===============================
 // COMEÇAR
-// ==============================
+// ===============================
 
 
 start.onclick = async()=>{
@@ -93,14 +97,36 @@ start.onclick = async()=>{
 
 inicio.style.display="none";
 
+
+introVideo.style.display="block";
+
+
+videoIntro.play();
+
+
+
+};
+
+
+
+
+
+
+btnEntrar.onclick=async()=>{
+
+
+introVideo.style.display="none";
+
+
 hud.style.display="block";
+
 
 
 await iniciarSensores();
 
 
 
-let stream = 
+let stream =
 
 await navigator.mediaDevices.getUserMedia({
 
@@ -116,12 +142,11 @@ audio:false
 
 
 
-camera.srcObject = stream;
+camera.srcObject=stream;
 
 
 
 buscarItem();
-
 
 
 };
@@ -133,26 +158,22 @@ buscarItem();
 
 
 
-// ==============================
+// ===============================
 // SENSORES
-// ==============================
-
+// ===============================
 
 
 async function iniciarSensores(){
 
 
 
-// IOS
-
-
 if(
 
-typeof DeviceMotionEvent !== "undefined"
+typeof DeviceMotionEvent!="undefined"
 
 &&
 
-typeof DeviceMotionEvent.requestPermission==="function"
+DeviceMotionEvent.requestPermission
 
 ){
 
@@ -162,15 +183,13 @@ await DeviceMotionEvent.requestPermission();
 
 
 
-
-
 if(
 
-typeof DeviceOrientationEvent !== "undefined"
+typeof DeviceOrientationEvent!="undefined"
 
 &&
 
-typeof DeviceOrientationEvent.requestPermission==="function"
+DeviceOrientationEvent.requestPermission
 
 ){
 
@@ -182,9 +201,7 @@ await DeviceOrientationEvent.requestPermission();
 
 
 
-
-
-// DETECTA PASSOS
+// passos
 
 
 window.addEventListener(
@@ -194,96 +211,70 @@ window.addEventListener(
 (e)=>{
 
 
-if(!procurando)
-
-return;
+if(!procurando)return;
 
 
 
-let acc =
-
-e.accelerationIncludingGravity;
+let a=e.accelerationIncludingGravity;
 
 
-
-if(!acc)
-
-return;
+if(!a)return;
 
 
 
+let forca=Math.sqrt(
 
-let forca = Math.sqrt(
+a.x*a.x+
 
-acc.x*acc.x +
+a.y*a.y+
 
-acc.y*acc.y +
-
-acc.z*acc.z
+a.z*a.z
 
 );
 
 
 
-
-movimento =
-
-Math.abs(forca - 9.8);
+movimento=Math.abs(forca-9.8);
 
 
 
-
-
-let agora = Date.now();
-
-
+let agora=Date.now();
 
 
 
 if(
 
-movimento > 1.8
+movimento>1.8
 
 &&
 
-agora - ultimoPasso > 500
+agora-ultimoPasso>500
 
 ){
 
 
 
-ultimoPasso = agora;
-
+ultimoPasso=agora;
 
 
 passos++;
 
 
 
+status.innerHTML=
 
-status.innerHTML =
-
-"🚶 Explorando... "+
-
-passos+
-
-"/"+
-
-metaPassos;
+"🚶 Explorando "+passos+"/"+metaPassos;
 
 
 
 
-if(passos >= metaPassos){
-
+if(passos>=metaPassos){
 
 
 procurando=false;
 
 
-
-ativarArtefato();
-
+ativarItem();
 
 
 }
@@ -297,13 +288,11 @@ ativarArtefato();
 });
 
 
- 
 
 
 
 
-
-// DIREÇÃO DO CELULAR
+// orientação
 
 
 window.addEventListener(
@@ -313,13 +302,13 @@ window.addEventListener(
 (e)=>{
 
 
-if(e.alpha!==null){
+if(e.alpha!=null){
 
 
 direcaoAtual=e.alpha;
 
 
-verificarDirecao();
+verificaDirecao();
 
 
 }
@@ -328,7 +317,6 @@ verificarDirecao();
 });
 
 
-
 }
 
 
@@ -338,11 +326,9 @@ verificarDirecao();
 
 
 
-
-
-// ==============================
-// BUSCA
-// ==============================
+// ===============================
+// BUSCAR
+// ===============================
 
 
 function buscarItem(){
@@ -353,9 +339,7 @@ scanner.style.display="block";
 
 energia.style.display="none";
 
-
 objeto.style.display="none";
-
 
 mensagem.style.display="none";
 
@@ -364,25 +348,16 @@ mensagem.style.display="none";
 itemAtivo=false;
 
 
-passos=0;
-
-
-
 inicioBusca=Date.now();
 
 
 
-// random 8 até 15 passos
+passos=0;
 
 
-metaPassos =
+metaPassos=
 
-Math.floor(
-
-Math.random()*8
-
-)+8;
-
+Math.floor(Math.random()*8)+8;
 
 
 
@@ -392,7 +367,7 @@ procurando=true;
 
 status.innerHTML=
 
-"🟢 Radar procurando habilidades";
+"🟢 Procurando habilidade";
 
 
 
@@ -406,14 +381,12 @@ status.innerHTML=
 
 
 
-
-// ==============================
-// ITEM ENCONTRADO
-// ==============================
-
+// ===============================
+// ENCONTRO
+// ===============================
 
 
-function ativarArtefato(){
+function ativarItem(){
 
 
 
@@ -421,7 +394,7 @@ scanner.style.display="none";
 
 
 
-let item = itens[atual];
+let item=itens[atual];
 
 
 
@@ -429,12 +402,7 @@ objeto.src=item.modelo;
 
 
 
-
-// fixa posição virtual
-
-
-direcaoItem = direcaoAtual;
-
+direcaoItem=direcaoAtual;
 
 
 itemAtivo=true;
@@ -448,23 +416,13 @@ somFound.play();
 energia.style.display="block";
 
 
-
-status.innerHTML=
-
-"✨ Sinal encontrado";
-
-
-
 mensagem.style.display="block";
+
 
 
 mensagem.innerHTML=
 
-"🧭 Procure o artefato";
-
-
-
-navigator.vibrate?.(300);
+"🛰️ Sinal detectado";
 
 
 
@@ -477,57 +435,43 @@ navigator.vibrate?.(300);
 
 
 
-
-// ==============================
-// GIROSCOPIO - ANCORAGEM
-// ==============================
-
-
-
-function verificarDirecao(){
+// ===============================
+// FIXAR NO AMBIENTE
+// ===============================
 
 
 
-if(!itemAtivo)
-
-return;
+function verificaDirecao(){
 
 
 
+if(!itemAtivo)return;
 
-let diferenca =
 
-Math.abs(
 
-direcaoAtual -
+let dif=Math.abs(
 
-direcaoItem
+direcaoAtual-direcaoItem
 
 );
 
 
 
+if(dif>180)
 
-// ajuste 360 graus
-
-
-if(diferenca>180)
-
-diferenca = 360-diferenca;
+dif=360-dif;
 
 
 
-
-let sinal =
+let sinal=
 
 Math.max(
 
 0,
 
-100 - Math.round(diferenca*4)
+100-Math.round(dif*4)
 
 );
-
 
 
 
@@ -538,14 +482,10 @@ energia.innerHTML=
 
 
 
-
-
-if(diferenca < 15){
-
+if(dif<15){
 
 
 objeto.style.display="block";
-
 
 
 mensagem.innerHTML=
@@ -553,18 +493,10 @@ mensagem.innerHTML=
 "✨ Artefato encontrado<br>Toque para capturar";
 
 
-
-}
-
-else{
-
+}else{
 
 
 objeto.style.display="none";
-
-
-
-if(diferenca > 30){
 
 
 mensagem.innerHTML=
@@ -575,11 +507,6 @@ mensagem.innerHTML=
 }
 
 
-
-}
-
-
-
 }
 
 
@@ -590,19 +517,12 @@ mensagem.innerHTML=
 
 
 
-// ==============================
+// ===============================
 // CAPTURA
-// ==============================
+// ===============================
 
 
 objeto.onclick=()=>{
-
-
-
-if(!itemAtivo)
-
-return;
-
 
 
 
@@ -614,27 +534,21 @@ somCapture.play();
 
 
 
-objeto.classList.add("captura");
-
-
-
-
-setTimeout(()=>{
-
-
-
-objeto.classList.remove("captura");
+itemAtivo=false;
 
 
 objeto.style.display="none";
 
 
-
-itemAtivo=false;
+mensagem.style.display="none";
 
 
 
 capturados.push(item);
+
+
+
+jogador.skills.push(item.nome);
 
 
 
@@ -646,10 +560,6 @@ abrirVideo(item.video);
 
 
 
-},800);
-
-
-
 };
 
 
@@ -661,37 +571,80 @@ abrirVideo(item.video);
 
 
 
-// ==============================
+// ===============================
 // VIDEO
-// ==============================
+// ===============================
 
 
-function abrirVideo(video){
+function abrirVideo(v){
 
 
 
 playerVideo.style.display="block";
 
 
-
-videoSkill.src=video;
-
+videoSkill.src=v;
 
 
 videoSkill.play();
 
 
 
-
 videoSkill.onended=()=>{
-
 
 
 playerVideo.style.display="none";
 
-
-
 videoSkill.src="";
+
+
+
+aposVideo();
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// ===============================
+// DECISÃO APÓS VIDEO
+// ===============================
+
+
+function aposVideo(){
+
+
+
+// terminou primeiro item
+
+
+if(
+
+!jornadaCarregada
+
+){
+
+
+abrirPerfil();
+
+
+return;
+
+
+}
+
 
 
 
@@ -699,16 +652,13 @@ atual++;
 
 
 
-
-if(atual >= itens.length){
-
-
-finalizar();
+if(atual>=itens.length){
 
 
-}
+abrirWhatsapp();
 
-else{
+
+}else{
 
 
 buscarItem();
@@ -718,7 +668,130 @@ buscarItem();
 
 
 
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// FORM PERFIL
+// ===============================
+
+
+function abrirPerfil(){
+
+
+hud.style.display="none";
+
+
+formPerfil.style.display="block";
+
+
+}
+
+
+
+
+
+
+
+salvarPerfil.onclick=()=>{
+
+
+
+if(
+
+!nomeJogador.value ||
+
+!perfilJogador.value
+
+){
+
+alert("Preencha seus dados");
+
+return;
+
+}
+
+
+
+jogador.nome=
+
+nomeJogador.value;
+
+
+
+jogador.perfil=
+
+perfilJogador.value;
+
+
+
+itens =
+
+JORNADAS[jogador.perfil];
+
+
+
+atual=0;
+
+
+capturados=[];
+
+
+
+jornadaCarregada=true;
+
+
+
+formPerfil.style.display="none";
+
+
+hud.style.display="block";
+
+
+
+atualizarInventario();
+
+
+
+buscarItem();
+
+
+
 };
+
+
+
+
+
+
+
+
+
+// ===============================
+// WHATSAPP FINAL
+// ===============================
+
+
+
+function abrirWhatsapp(){
+
+
+
+hud.style.display="none";
+
+
+formWhats.style.display="block";
+
+
+
+somComplete.play();
 
 
 
@@ -730,11 +803,52 @@ buscarItem();
 
 
 
+enviarLead.onclick=()=>{
 
 
-// ==============================
-// INVENTARIO
-// ==============================
+jogador.whatsapp=
+
+whatsapp.value;
+
+
+
+console.log(
+
+"LEAD GERADO",
+
+jogador
+
+);
+
+
+
+formWhats.innerHTML=
+
+`
+
+<h2>🚀 Obrigado ${jogador.nome}</h2>
+
+<p>
+Sua jornada continua!
+</p>
+
+`;
+
+
+};
+
+
+
+
+
+
+
+
+
+
+// ===============================
+// INVENTÁRIO
+// ===============================
 
 
 
@@ -749,16 +863,13 @@ let html="";
 itens.forEach(i=>{
 
 
+html+=
 
-if(
+jogador.skills.includes(i.nome)
 
-capturados.includes(i)
+?
 
-){
-
-
-
-html+=`
+`
 
 <div class="slot ativo">
 
@@ -766,25 +877,15 @@ ${i.icone}
 
 </div>
 
-`;
+`
 
+:
 
+`
 
-}
-
-else{
-
-
-html+=`
-
-<div class="slot vazio">
-
-</div>
+<div class="slot vazio"></div>
 
 `;
-
-
-}
 
 
 
@@ -792,14 +893,13 @@ html+=`
 
 
 
-
 slots.innerHTML=html;
 
 
 
-nivel.innerHTML =
+nivel.innerHTML=
 
-capturados.length+
+jogador.skills.length+
 
 "/"+
 
@@ -817,121 +917,33 @@ itens.length;
 
 
 
-
-
-// ==============================
-// FINAL
-// ==============================
-
-
-function finalizar(){
-
-
-
-somComplete.play();
-
-
-
-scanner.style.display="none";
-
-
-energia.style.display="none";
-
-
-
-status.innerHTML=
-
-"🏆 Jornada concluída";
-
-
-
-mensagem.style.display="block";
-
-
-
-mensagem.innerHTML=
-
-`
-🚀 Parabéns!<br><br>
-
-Você conquistou todas as habilidades empreendedoras!
-
-`;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-// ==============================
+// ===============================
 // DEBUG
-// ==============================
+// ===============================
 
 
 
 setInterval(()=>{
 
 
-
-let tempo =
-
-inicioBusca
-
-?
-
-Math.floor(
-
-(Date.now()-inicioBusca)/1000
-
-)
-
-:
-
-0;
-
-
-
-
 debug.innerHTML=
 
-"DEBUG<br>"+
+`
+DEBUG<br>
 
-"⏱ "+tempo+"s<br>"+
+👣 ${passos}/${metaPassos}<br>
 
-"👣 "+passos+"/"+metaPassos+"<br>"+
+📳 ${movimento.toFixed(2)}<br>
 
-"📳 "+movimento.toFixed(2)+"<br>"+
+🧭 ${Math.round(direcaoAtual)}°<br>
 
-"🧭 Atual: "+Math.round(direcaoAtual)+"°<br>"+
-
-"🎯 Item: "+
-
-(
-
-direcaoItem!==null
-
-?
-
-Math.round(direcaoItem)+"°"
-
-:
-
+🎯 ${
+direcaoItem?
+Math.round(direcaoItem)+"°":
 "-"
+}
 
-)
-
-+"<br>"+
-
-"🎁 "+(atual+1)+"/"+itens.length;
-
+`;
 
 
 },500);
