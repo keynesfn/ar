@@ -4,7 +4,9 @@ icone:"🚀",
 modelo:"modelos/dotum.glb",
 video:"videos/video1.mp4"
 };
+
 const JORNADAS={
+
 empreendedor:[
 {
 nome:"Gestão Financeira",
@@ -37,6 +39,7 @@ modelo:"modelos/sicoob.glb",
 video:"videos/empreendedor/5.mp4"
 }
 ],
+
 profissional:[
 {
 nome:"Atitude de Dono",
@@ -51,7 +54,7 @@ modelo:"modelos/sicoob.glb",
 video:"videos/profissional/2.mp4"
 },
 {
-nome:"Aprendizado",
+nome:"Aprendizado Contínuo",
 icone:"🧠",
 modelo:"modelos/sebrae.glb",
 video:"videos/profissional/3.mp4"
@@ -69,9 +72,10 @@ modelo:"modelos/sicoob.glb",
 video:"videos/profissional/5.mp4"
 }
 ],
+
 estudante:[
 {
-nome:"Talentos",
+nome:"Descubra seus Talentos",
 icone:"🔎",
 modelo:"modelos/dotum.glb",
 video:"videos/estudante/1.mp4"
@@ -83,7 +87,7 @@ modelo:"modelos/sicoob.glb",
 video:"videos/estudante/2.mp4"
 },
 {
-nome:"Equipe",
+nome:"Trabalho em Equipe",
 icone:"🤝",
 modelo:"modelos/sebrae.glb",
 video:"videos/estudante/3.mp4"
@@ -101,4 +105,5 @@ modelo:"modelos/sicoob.glb",
 video:"videos/estudante/5.mp4"
 }
 ]
+
 };
