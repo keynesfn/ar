@@ -5,566 +5,48 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Jornada Empreendedora AR</title>
 
 
-<title>
-Jornada Empreendedora AR
-</title>
+<link rel="stylesheet" href="css/style.css">
 
 
-<script type="module"
-src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+<script 
+type="module"
+src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.1.0/dist/model-viewer.min.js">
 </script>
 
 
-
-<style>
-
-
-html,body{
-
-margin:0;
-width:100%;
-height:100%;
-overflow:hidden;
-font-family:Arial;
-background:black;
-
-}
-
-
-
-/* CAMERA */
-
-#camera{
-
-position:fixed;
-inset:0;
-
-width:100%;
-height:100%;
-
-object-fit:cover;
-
-z-index:1;
-
-}
-
-
-
-/* TELA INICIAL */
-
-
-#inicio{
-
-position:fixed;
-inset:0;
-
-background:
-
-linear-gradient(
-140deg,
-#06142e,
-#005f73,
-#ffb703
-);
-
-
-display:flex;
-
-flex-direction:column;
-
-align-items:center;
-
-justify-content:center;
-
-text-align:center;
-
-color:white;
-
-padding:30px;
-
-z-index:100;
-
-}
-
-
-
-#inicio h1{
-
-font-size:36px;
-
-}
-
-
-
-#start{
-
-padding:20px 50px;
-
-border:0;
-
-border-radius:50px;
-
-background:#00ff99;
-
-font-size:22px;
-
-font-weight:bold;
-
-}
-
-
-
-/* HUD */
-
-
-#hud{
-
-display:none;
-
-}
-
-
-
-#status{
-
-position:fixed;
-
-top:25px;
-
-left:50%;
-
-transform:translateX(-50%);
-
-
-background:#000a;
-
-
-color:white;
-
-
-padding:15px 30px;
-
-
-border-radius:30px;
-
-
-z-index:20;
-
-
-}
-
-
-
-
-
-#inventario{
-
-position:fixed;
-
-right:15px;
-
-top:90px;
-
-
-background:#000a;
-
-border:3px solid gold;
-
-color:white;
-
-
-font-size:32px;
-
-
-padding:15px;
-
-
-border-radius:25px;
-
-
-text-align:center;
-
-
-z-index:20;
-
-
-}
-
-
-
-
-
-
-/* RADAR SUBMARINO */
-
-
-#scanner{
-
-
-position:fixed;
-
-
-top:50%;
-
-left:50%;
-
-
-width:260px;
-
-height:260px;
-
-
-margin-left:-130px;
-
-margin-top:-130px;
-
-
-
-border-radius:50%;
-
-
-border:3px solid #00ff99;
-
-
-
-background:
-
-radial-gradient(
-
-circle,
-
-rgba(0,255,150,.25) 0%,
-
-rgba(0,255,150,.08) 50%,
-
-transparent 70%
-
-);
-
-
-
-box-shadow:
-
-0 0 45px #00ff99;
-
-
-overflow:hidden;
-
-
-display:none;
-
-
-z-index:15;
-
-
-}
-
-
-
-#scanner::after{
-
-
-content:"";
-
-
-position:absolute;
-
-
-width:50%;
-
-height:50%;
-
-
-
-left:50%;
-
-top:0;
-
-
-
-background:
-
-
-linear-gradient(
-
-90deg,
-
-rgba(0,255,150,.8),
-
-transparent
-
-);
-
-
-
-transform-origin:
-
-0% 100%;
-
-
-animation:
-
-radar 2s linear infinite;
-
-
-}
-
-
-
-
-#scanner::before{
-
-
-content:"";
-
-
-position:absolute;
-
-
-inset:40px;
-
-
-border-radius:50%;
-
-
-border:
-
-1px solid rgba(0,255,150,.5);
-
-
-}
-
-
-
-
-
-@keyframes radar{
-
-
-from{
-
-transform:rotate(0deg);
-
-}
-
-
-to{
-
-transform:rotate(360deg);
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-
-/* OBJETO 3D */
-
-
-#objeto{
-
-
-position:fixed;
-
-
-width:260px;
-
-height:260px;
-
-
-display:none;
-
-
-z-index:30;
-
-
-filter:
-
-drop-shadow(0 0 30px #00ff99);
-
-
-}
-
-
-
-
-
-
-
-
-/* MENSAGEM */
-
-
-#mensagem{
-
-
-position:fixed;
-
-
-bottom:40px;
-
-
-left:50%;
-
-
-transform:translateX(-50%);
-
-
-background:#000c;
-
-
-color:white;
-
-
-padding:25px;
-
-
-border-radius:30px;
-
-
-width:85%;
-
-
-font-size:22px;
-
-
-text-align:center;
-
-
-display:none;
-
-
-z-index:40;
-
-
-}
-
-
-
-
-
-
-/* VIDEO */
-
-
-#playerVideo{
-
-
-position:fixed;
-
-
-inset:0;
-
-
-background:black;
-
-
-display:none;
-
-
-z-index:999;
-
-
-}
-
-
-
-
-#videoSkill{
-
-
-width:100%;
-
-
-height:100%;
-
-
-object-fit:cover;
-
-
-}
-
-
-
-</style>
-
 </head>
-
-
-
 
 
 <body>
 
 
-
-
-
-
-<video
-
+<video 
 id="camera"
-
 autoplay
-
 playsinline>
-
 </video>
-
-
-
-
-
 
 
 
 <div id="inicio">
 
-
-<h1>
-
-🚀 Jornada Empreendedora
-
-</h1>
-
+<h1>🚀 Jornada Empreendedora</h1>
 
 <p>
-
-Capture conhecimentos escondidos pelo ambiente
-
+Explore o ambiente e encontre habilidades escondidas
 </p>
 
 
-<h2>
-
-🧭 💰 🚀 💡 👑
-
-</h2>
-
-
-
 <button id="start">
-
 COMEÇAR MISSÃO
-
 </button>
 
-
 </div>
-
-
-
 
 
 
@@ -574,50 +56,45 @@ COMEÇAR MISSÃO
 
 
 <div id="status">
-
-🟢 Buscando habilidades...
-
+Preparando...
 </div>
 
 
-
-
-<div id="inventario">
-
-
-🎒
-
-
-<div id="slots">
-
-
-⬜<br>
-
-⬜<br>
-
-⬜<br>
-
-⬜<br>
-
-⬜
-
-
-</div>
-
-
-</div>
-
-
+<div id="energia"></div>
 
 
 <div id="scanner"></div>
 
 
 
+<div id="inventario">
+
+
+<div class="tituloInv">
+⚡ SKILLS
 </div>
 
 
+<div id="slots">
 
+<div class="slot vazio"></div>
+<div class="slot vazio"></div>
+<div class="slot vazio"></div>
+<div class="slot vazio"></div>
+<div class="slot vazio"></div>
+
+</div>
+
+
+<div id="nivel">
+0/5
+</div>
+
+
+</div>
+
+
+</div>
 
 
 
@@ -629,11 +106,13 @@ id="objeto"
 
 auto-rotate
 
-camera-controls>
+rotation-per-second="30deg"
+
+interaction-prompt="none"
+
+disable-zoom>
 
 </model-viewer>
-
-
 
 
 
@@ -644,12 +123,7 @@ camera-controls>
 
 
 
-
-
-
-
 <div id="playerVideo">
-
 
 <video
 
@@ -661,404 +135,40 @@ controls>
 
 </video>
 
-
 </div>
 
 
 
 
+<div id="debug">
+DEBUG
+</div>
 
 
 
 
+<audio 
+id="somFound"
+src="audio/found.mp3">
+</audio>
 
-<script>
 
+<audio 
+id="somCapture"
+src="audio/capture.mp3">
+</audio>
 
-const itens=[
 
+<audio
+id="somComplete"
+src="audio/complete.mp3">
+</audio>
 
-{
-nome:"Gestão Financeira",
-icone:"💰",
-modelo:"modelos/dotum.glb",
-video:"video1.mp4"
-},
 
 
-{
-nome:"Clientes e Mercado",
-icone:"🎯",
-modelo:"modelos/sicoob.glb",
-video:"video2.mp4"
-},
-
-
-{
-nome:"Vendas",
-icone:"🚀",
-modelo:"modelos/sebrae.glb",
-video:"video3.mp4"
-},
-
-
-{
-nome:"Inovação",
-icone:"💡",
-modelo:"modelos/dotum.glb",
-video:"video4.mp4"
-},
-
-
-{
-nome:"Crescimento",
-icone:"👑",
-modelo:"modelos/sicoob.glb",
-video:"video5.mp4"
-}
-
-
-];
-
-
-
-
-let atual=0;
-
-let capturados=[];
-
-
-
-
-
-
-start.onclick=async()=>{
-
-
-inicio.style.display="none";
-
-
-hud.style.display="block";
-
-
-
-let stream=
-
-await navigator.mediaDevices.getUserMedia({
-
-video:{
-
-
-facingMode:"environment"
-
-
-},
-
-audio:false
-
-
-});
-
-
-
-camera.srcObject=stream;
-
-
-
-buscar();
-
-
-};
-
-
-
-
-
-
-
-
-
-
-function buscar(){
-
-
-
-scanner.style.display="block";
-
-
-status.innerHTML=
-
-"🟢 Buscando habilidades...";
-
-
-
-
-let tempo=
-
-
-Math.floor(
-
-Math.random()*6
-
-)+5;
-
-
-
-
-
-setTimeout(()=>{
-
-
-mostrarObjeto();
-
-
-
-},tempo*1000);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function mostrarObjeto(){
-
-
-
-scanner.style.display="none";
-
-
-
-let item=itens[atual];
-
-
-
-objeto.src=item.modelo;
-
-
-
-objeto.style.display="block";
-
-
-
-objeto.style.left=
-
-Math.random()*50+20+"%";
-
-
-
-objeto.style.top=
-
-Math.random()*35+20+"%";
-
-
-
-
-status.innerHTML=
-
-"✨ Habilidade encontrada!";
-
-
-
-mensagem.innerHTML=
-
-"Toque no artefato para capturar";
-
-
-
-mensagem.style.display="block";
-
-
-
-navigator.vibrate?.(300);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-objeto.onclick=()=>{
-
-
-
-let item=itens[atual];
-
-
-
-objeto.style.display="none";
-
-
-mensagem.style.display="none";
-
-
-
-capturados.push(item);
-
-
-
-atualizar();
-
-
-
-abrirVideo(item.video);
-
-
-
-};
-
-
-
-
-
-
-
-
-
-function abrirVideo(video){
-
-
-
-playerVideo.style.display="block";
-
-
-videoSkill.src=video;
-
-
-videoSkill.play();
-
-
-
-
-
-videoSkill.onended=()=>{
-
-
-
-playerVideo.style.display="none";
-
-
-videoSkill.src="";
-
-
-
-atual++;
-
-
-
-
-if(atual>=itens.length){
-
-
-fim();
-
-
-}
-
-else{
-
-
-buscar();
-
-
-}
-
-
-
-};
-
-
-}
-
-
-
-
-
-
-
-
-
-function atualizar(){
-
-
-let html="";
-
-
-
-itens.forEach(i=>{
-
-
-html +=
-
-capturados.includes(i)
-
-?
-
-i.icone+"<br>"
-
-:
-
-"⬜<br>";
-
-
-});
-
-
-
-slots.innerHTML=html;
-
-
-}
-
-
-
-
-
-
-
-
-
-
-function fim(){
-
-
-
-status.innerHTML=
-
-"🏆 Jornada concluída";
-
-
-
-mensagem.innerHTML=
-
-"Parabéns! Você conquistou todas as habilidades empreendedoras 🚀";
-
-
-
-mensagem.style.display="block";
-
-
-}
-
-
-
-
-</script>
+<script src="js/app.js"></script>
 
 
 </body>
-
 
 </html>
